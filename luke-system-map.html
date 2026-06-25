@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — System Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:#f6f1e6; --paper-2:#efe9da; --paper-card:#fffdf8;
+  --ink:#1a1916; --ink-2:#353029; --ink-mute:#3d3830;
+  --rule:#d8cfba; --rule-soft:#e7dec9;
+  --accent:#2a4a52; --accent-deep:#1d343a; --accent-soft:#6e8e92;
+  --c-cardiac:#6b2a2a; --c-renal:#2a4a52; --c-hepatic:#8a6a1e;
+  --c-msk:#4a5d2b; --c-drug:#5c3b5e; --c-travel:#1d3a3a;
+  --c-cardiac-bg:#fdf3f2; --c-renal-bg:#f0f5f5; --c-hepatic-bg:#fdf8ef;
+  --c-msk-bg:#f3f6ef; --c-drug-bg:#f5f0f8;
+  --cardiac:#6b2a2a; --renal:#2a4a52; --hepatic:#8a6a1e;
+  --msk:#4a5d2b; --gi:#5c3b5e;
+  --cardiac-bg:#fdf3f2; --renal-bg:#f0f5f5; --hepatic-bg:#fdf8ef;
+  --msk-bg:#f3f6ef; --gi-bg:#f5f0f8;
+  --burgundy:#6b2a2a; --ochre:#7a5c18; --moss:#3f5224; --plum:#4a2f4e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+em{font-style:normal;}
+html{-webkit-font-smoothing:antialiased;}
+body{background:#13211f;font-family:system-ui,-apple-system,sans-serif;color:var(--ink);font-size:16px;line-height:1.6;}
+
+.wrap{max-width:1060px;margin:0 auto;background:var(--paper);box-shadow:0 0 90px rgba(0,0,0,.5);}
+
+/* nav bar */
+.topnav{position:sticky;top:0;z-index:100;background:rgba(246,241,230,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);padding:10px 44px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+.topnav a{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:5px 14px;border-right:1px solid var(--rule);white-space:nowrap;}
+.topnav a:first-child{padding-left:0;}
+.topnav a:hover{color:var(--ink);}
+
+/* cover */
+.cover{padding:60px 60px 40px;border-bottom:2px solid var(--ink);}
+.cover .ey{font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c-renal);margin-bottom:14px;}
+.cover h1{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(40px,6vw,68px);letter-spacing:-.02em;line-height:1.0;margin-bottom:20px;}
+.cover h1 em{font-style:normal;color:var(--c-cardiac);font-weight:500;}
+.cover .deck{font-size:18px;color:var(--ink-2);text-wrap:pretty;line-height:1.55;}
+
+/* section */
+.section{padding:60px 60px 24px;border-top:2px solid var(--rule);scroll-margin-top:44px;}
+.section-label{font-family:"Newsreader",serif;font-size:15px;letter-spacing:.02em;color:var(--ink-2);margin-bottom:10px;font-weight:500;}
+.section h2{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(28px,4vw,40px);letter-spacing:-.015em;line-height:1.05;margin-bottom:6px;}
+.section h2 em{font-style:normal;font-weight:600;}
+.section .deck{font-size:16px;color:var(--ink-2);text-wrap:pretty;margin-bottom:28px;}
+
+/* system section colored headers */
+.sys-head{margin:-60px -60px 44px;padding:52px 60px 48px;display:flex;flex-direction:column;}
+#cardiac .sys-head{background:var(--c-cardiac);}
+#renal .sys-head{background:var(--c-renal);}
+#hepatic .sys-head{background:var(--c-hepatic);}
+#msk .sys-head{background:var(--c-msk);}
+#drugs .sys-head{background:var(--c-drug);}
+#conflicts .sys-head{background:var(--ink);}
+#eol .sys-head{background:#1d343a;}
+.sys-head .section-label{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:14px;font-weight:600;}
+.sys-head h2{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(38px,6vw,64px);letter-spacing:-.03em;line-height:1.0;color:#fff;margin-bottom:18px;}
+.sys-head h2 em{font-style:normal;font-weight:600;color:#fff;}
+.sys-head .deck{font-size:17px;color:rgba(255,255,255,.78);text-wrap:pretty;line-height:1.65;margin-bottom:0;}
+
+/* system nodes */
+.nodes-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--rule);margin-bottom:0;}
+.node{padding:22px 24px;position:relative;}
+.node .node-label{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.node h3{font-family:"Newsreader",serif;font-size:28px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;}
+.node p{font-size:16px;color:var(--ink-2);line-height:1.6;text-wrap:pretty;}
+.node.cardiac{background:var(--c-cardiac-bg);border-top:4px solid var(--c-cardiac);}
+.node.cardiac .node-label,.node.cardiac h3{color:var(--c-cardiac);}
+.node.renal{background:var(--c-renal-bg);border-top:4px solid var(--c-renal);}
+.node.renal .node-label,.node.renal h3{color:var(--c-renal);}
+.node.hepatic{background:var(--c-hepatic-bg);border-top:4px solid var(--c-hepatic);}
+.node.hepatic .node-label,.node.hepatic h3{color:var(--c-hepatic);}
+.node.msk{background:var(--c-msk-bg);border-top:4px solid var(--c-msk);}
+.node.msk .node-label,.node.msk h3{color:var(--c-msk);}
+
+/* tension bar */
+.tension-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:0;}
+.tension-item{padding:32px 40px;position:relative;overflow:hidden;background:var(--paper-card);border-top:5px solid;}
+.tension-item.t1{border-color:var(--c-cardiac);}
+.tension-item.t2{border-color:var(--c-renal);}
+.tension-item .ti-num{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px;font-weight:700;display:flex;align-items:center;gap:10px;}
+.tension-item .ti-num::before{content:"";width:8px;height:8px;background:currentColor;opacity:.5;border-radius:1px;flex:none;}
+.tension-item.t1 .ti-num{color:var(--c-cardiac);}
+.tension-item.t1 .ti-num::before{background:var(--c-cardiac);}
+.tension-item.t2 .ti-num{color:var(--c-renal);}
+.tension-item.t2 .ti-num::before{background:var(--c-renal);}
+.tension-item .ti-label{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.tension-item .ti-label .sys{border-radius:4px;padding:8px 14px;font-family:system-ui,-apple-system,sans-serif;font-size:17px;font-weight:700;letter-spacing:.01em;white-space:nowrap;}
+.tension-item.t1 .ti-label .sys{background:oklch(94% 0.02 20);color:var(--c-cardiac);border:1.5px solid var(--c-cardiac);}
+.tension-item.t2 .ti-label .sys{background:oklch(94% 0.02 200);color:var(--c-renal);border:1.5px solid var(--c-renal);}
+.tension-item .ti-label .vs{font-family:"Newsreader",serif;font-size:28px;color:var(--ink-mute);flex:none;}
+.tension-item p{font-size:16px;color:var(--ink-2);line-height:1.65;text-wrap:pretty;}
+
+/* matrix */
+.matrix-wrap{overflow-x:auto;margin-bottom:8px;}
+table.matrix{width:100%;border-collapse:collapse;font-size:14px;}
+table.matrix th{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:10px 14px;border:1px solid var(--rule);background:var(--paper-2);text-align:center;color:var(--ink-mute);white-space:nowrap;}
+table.matrix th.row-h{text-align:left;min-width:200px;background:var(--accent-deep);color:#fff;}
+table.matrix th.sys-cardiac{color:var(--cardiac);background:var(--cardiac-bg);}
+table.matrix th.sys-renal{color:var(--renal);background:var(--renal-bg);}
+table.matrix th.sys-hepatic{color:var(--hepatic);background:var(--hepatic-bg);}
+table.matrix th.sys-msk{color:var(--msk);background:var(--msk-bg);}
+table.matrix th.sys-gi{color:var(--gi);background:var(--gi-bg);}
+table.matrix td{padding:10px 12px;border:1px solid var(--rule);vertical-align:middle;text-align:center;line-height:1.35;}
+table.matrix td.row-label{text-align:left;font-weight:600;color:var(--ink);background:var(--paper-card);padding:10px 14px;}
+table.matrix td.row-label span{display:block;font-weight:400;font-size:12px;color:var(--ink-mute);margin-top:2px;}
+table.matrix td.row-label .dose{display:inline-block;margin-top:4px;font-size:11px;font-weight:700;color:var(--accent);background:var(--renal-bg);padding:1px 7px;border-radius:3px;}
+.c-stress{background:var(--cardiac-bg);color:var(--cardiac);font-weight:700;font-size:12px;}
+.c-moderate{background:var(--hepatic-bg);color:var(--hepatic);font-weight:600;font-size:12px;}
+.c-benefit{background:var(--msk-bg);color:var(--msk);font-weight:700;font-size:12px;}
+.c-neutral{background:var(--paper-2);color:var(--ink-mute);font-size:12px;}
+.c-gap{background:#f5f0f8;color:var(--gi);font-weight:700;font-size:12px;}
+table.matrix tr.section-row td{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;border-color:oklch(30% 0.03 200);}
+table.matrix tr.section-row.sr-food td{background:var(--hepatic);color:#fff;}
+table.matrix tr.section-row.sr-meds td{background:var(--cardiac);color:#fff;}
+table.matrix tr.section-row.sr-supps td{background:var(--msk);color:#fff;}
+table.matrix tr.section-row.sr-gaps td{background:var(--gi);color:#fff;}
+
+/* prose */
+.prose{margin-bottom:28px;}
+.prose p{margin-bottom:20px;color:var(--ink-2);text-wrap:pretty;font-size:17px;line-height:1.72;}
+.prose p:last-child{margin-bottom:0;}
+.prose strong{color:var(--ink);}
+
+/* what/not/would blocks */
+.wwnw{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:32px;}
+.wwnw-block{background:var(--paper-card);padding:22px 24px;}
+.wwnw-block .ww-label{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px;font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--rule);}
+.wwnw-block ul{margin-left:18px;font-size:16px;color:var(--ink-2);line-height:1.65;}
+.wwnw-block li{margin-bottom:6px;}
+
+/* conflict grid */
+.conflict-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+.conflict-card{border:1px solid var(--rule);background:var(--paper-card);padding:22px 24px;}
+.conflict-card .cc-pair{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--c-drug);margin-bottom:10px;font-weight:700;}
+.conflict-card h4{font-family:"Newsreader",serif;font-size:24px;font-weight:600;letter-spacing:-.015em;margin-bottom:10px;color:var(--ink);}
+.conflict-card p{font-size:16px;color:var(--ink-2);line-height:1.65;text-wrap:pretty;}
+.conflict-card .cc-resolution{margin-top:14px;padding:10px 14px;background:var(--c-msk-bg);border-left:3px solid var(--c-msk);font-size:15px;color:var(--ink-2);line-height:1.6;}
+.conflict-card .cc-resolution strong{color:var(--c-msk);font-size:13px;font-family:system-ui,-apple-system,sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* Montana */
+.montana-header{background:var(--c-travel);color:#e8f0ee;padding:44px 60px 36px;margin:-60px -60px 36px;}
+.montana-header .mh-ey{font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9ecbc6;margin-bottom:8px;}
+.montana-header h2{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(32px,4vw,48px);letter-spacing:-.02em;color:#fff;line-height:1.0;margin-bottom:16px;}
+.montana-header .mh-sub{font-size:16px;color:rgba(255,255,255,.78);text-wrap:pretty;line-height:1.65;}
+.montana-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);}
+.m-card{background:var(--paper-card);padding:20px 22px;}
+.m-card .mc-system{font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+.m-card h4{font-family:"Newsreader",serif;font-size:20px;font-weight:500;letter-spacing:-.01em;margin-bottom:8px;color:var(--ink);}
+.m-card ul{margin-left:16px;font-size:15px;color:var(--ink-2);line-height:1.6;}
+.m-card li{margin-bottom:4px;}
+.m-card .severity{display:inline-block;font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border:1px solid;margin-bottom:8px;}
+.sev-high{color:var(--c-cardiac);border-color:var(--c-cardiac);background:var(--c-cardiac-bg);}
+.sev-med{color:var(--c-hepatic);border-color:var(--c-hepatic);background:var(--c-hepatic-bg);}
+.sev-low{color:var(--c-msk);border-color:var(--c-msk);background:var(--c-msk-bg);}
+
+/* EOL */
+.eol-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:28px;}
+.eol-cell{background:var(--paper-card);padding:18px 20px;}
+.eol-cell .ec-label{font-family:system-ui,-apple-system,sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;font-weight:700;}
+.eol-cell ul{margin-left:14px;font-size:15px;color:var(--ink-2);line-height:1.65;}
+.eol-cell li strong{color:var(--ink);}
+
+/* footnote */
+.footnote{font-size:13px;color:var(--ink-mute);margin-top:12px;line-height:1.7;padding:12px 16px;background:var(--paper-2);border-left:3px solid var(--rule);}
+
+/* footer */
+footer{padding:36px 60px;border-top:1px solid var(--rule);font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.02em;color:var(--ink-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+/* sidebar */
+.doc-sidenav{position:fixed;left:0;top:0;bottom:0;width:160px;background:var(--accent-deep);display:flex;flex-direction:column;z-index:500;overflow-y:auto;border-right:1px solid rgba(255,255,255,.07);}
+.dsn-home{display:flex;align-items:center;gap:8px;padding:14px 18px;font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:700;color:#fff;text-decoration:none;background:oklch(38% 0.06 185);border-bottom:2px solid oklch(48% 0.08 185);letter-spacing:.02em;text-transform:uppercase;}
+.dsn-home:hover{background:oklch(44% 0.07 185);}
+.dsn-doc{padding:12px 18px 10px;font-family:"Newsreader",serif;font-size:16px;font-weight:500;color:rgba(255,255,255,.9);line-height:1.3;border-bottom:1px solid rgba(255,255,255,.06);}
+.dsn-group{padding:14px 18px 5px;font-family:system-ui,-apple-system,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);}
+.doc-sidenav a.dsn-link{display:block;padding:6px 18px;font-family:system-ui,-apple-system,sans-serif;font-size:14px;color:rgba(255,255,255,.75);text-decoration:none;line-height:1.4;transition:color .12s;}
+.doc-sidenav a.dsn-link:hover{color:#fff;}
+.doc-sidenav a.dsn-link.active{background:rgba(255,255,255,.14);color:#fff;font-weight:600;border-radius:4px;}
+@media(max-width:960px){.doc-sidenav{display:none;}}
+@media(min-width:960px){body{padding-left:160px;}}
+
+/* named gap callout */
+.named-gap{margin:28px 0;background:#fdf3f2;border-left:5px solid var(--c-cardiac);border-radius:0 8px 8px 0;padding:22px 28px;}
+.named-gap .ng-label{font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c-cardiac);margin-bottom:10px;}
+</style>
+</head>
+<body>
+<nav class="doc-sidenav">
+  <a class="dsn-home" href="luke-practitioner-packet.html">← Packet home</a>
+  <div class="dsn-doc">System Map</div>
+  <div class="dsn-group">Sections</div>
+  <a class="dsn-link" href="#overview">Overview</a>
+  <a class="dsn-link" href="#cardiac">Cardiac</a>
+  <a class="dsn-link" href="#renal">Renal</a>
+  <a class="dsn-link" href="#hepatic">Hepatic</a>
+  <a class="dsn-link" href="#msk">Musculoskeletal</a>
+  <a class="dsn-link" href="#drugs">Full Stack Matrix</a>
+  <a class="dsn-link" href="#conflicts">Conflicts</a>
+  <a class="dsn-link" href="#montana">Michigan → Montana</a>
+  <a class="dsn-link" href="#eol">End of Life</a>
+</nav>
+
+<div class="wrap">
+
+<!-- COVER -->
+<div class="cover" id="overview">
+  <div class="ey">Luke VonDog · June 2026 · System Map</div>
+  <h1>Conditions <em>in Conflict.</em></h1>
+  <p class="deck">Luke does not have one disease. He has four active systems — cardiac, renal, hepatic, and musculoskeletal — each with its own trajectory, and every treatment for one system creates tension in another. This document maps those interactions.</p>
+</div>
+
+<!-- THE FOUR NODES -->
+<div class="section" id="nodes" style="padding-top:36px;padding-bottom:0;">
+  <div class="nodes-grid">
+    <div class="node cardiac">
+      <div class="node-label">System 01 · Primary driver</div>
+      <h3>❤ Cardiac</h3>
+      <p><strong>Presumptive cardiac disease, Lasix-responsive.</strong> 300 mg/day furosemide (8.4 mg/kg/day) without echocardiographic confirmation, without adjunctive cardiac medications (pimobendan, ACE-I, spironolactone). Echocardiography not accessible due to cost. NT-proBNP and troponin not yet drawn.</p>
+    </div>
+    <div class="node renal">
+      <div class="node-label">System 02 · Primary constraint</div>
+      <h3>⬡ Renal</h3>
+      <p><strong>IRIS Stage 2 CKD.</strong> Creatinine 1.0→1.2→1.8 over twelve months. BUN volatile (43→35). Phosphorus 5.1 — above IRIS target of &lt;4.6. SDMA 13, near ceiling. Both furosemide and carprofen are nephrotoxic. Urinalysis overdue since Sep 2023.</p>
+    </div>
+    <div class="node hepatic">
+      <div class="node-label">System 03 · Active concern</div>
+      <h3>◎ Hepatic</h3>
+      <p><strong>Mild hepatocellular changes.</strong> ALT 46→121→128 (trending up). Bilirubin spiked to 1.4, resolved to 0.1. Lipase spiked to 1,382, resolved to 110. Carprofen (chronic NSAID) is the most likely driver. Imaging deferred for QoL.</p>
+    </div>
+    <div class="node msk">
+      <div class="node-label">System 04 · Managed — watch interactions</div>
+      <h3>⊕ Musculoskeletal</h3>
+      <p><strong>Chronic hindlimb OA, multi-modal protocol.</strong> Carprofen 225 mg/day + amantadine 100 mg/day + Librela 20 mg as needed. Librela response is good and documented. Pain control is the quality-of-life anchor for Luke — reducing it has direct daily consequences. But carprofen is simultaneously the drug most stressing both the kidneys and the liver.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TENSION BARS -->
+<div style="background:var(--paper);padding:40px 60px 48px;"><div class="tension-bar">
+  <div class="tension-item t1">
+    <div class="ti-num">Core Tension 1</div>
+    <div class="ti-label"><span class="sys">Cardiac</span><span class="vs">↔</span><span class="sys">Renal</span></div>
+    <p>Furosemide is essential for the heart. Furosemide is nephrotoxic. Reducing furosemide risks respiratory crisis; continuing it accelerates CKD. The only resolution is adding adjunctive cardiac medications that allow a lower diuretic dose — which requires an NT-proBNP or biomarker to justify.</p>
+  </div>
+  <div class="tension-item t2">
+    <div class="ti-num">Core Tension 2</div>
+    <div class="ti-label"><span class="sys">Pain Control</span><span class="vs">↔</span><span class="sys">Kidneys + Liver</span></div>
+    <p>Carprofen controls pain that is real and daily. Carprofen is an NSAID with known nephrotoxic and hepatotoxic risk. The pain is visible; the organ damage is invisible until it isn't. Librela and amantadine partially substitute — the question is whether they can do enough to allow carprofen reduction.</p>
+  </div>
+</div></div>
+
+<!-- CARDIAC SECTION -->
+<div class="section" id="cardiac">
+  <div class="sys-head">
+    <div class="section-label">System 01</div>
+    <h2><em>Cardiac</em> — The Organizing Fact</h2>
+    <p class="deck">Everything in Luke's care plan is arranged around the cardiac disease. It is also the least confirmed diagnosis in the record.</p>
+  </div>
+
+  <div class="wwnw">
+    <div class="wwnw-block">
+      <div class="ww-label">What is known</div>
+      <ul>
+        <li>300 mg/day furosemide — dose not safely reducible without a plan</li>
+        <li>Lasix-responsive: respiratory effort improves markedly on the drug</li>
+        <li>May 2025 acute event: increased respiratory rate, lethargy, 98 lb weight (likely fluid)</li>
+        <li>Dr. Denney: "discontinuing Lasix is considered high-risk for a life-threatening respiratory event"</li>
+        <li>Dose at 8.4 mg/kg/day — at ACVIM Stage D threshold</li>
+        <li>Chloride 106 L on Sep '25 panel — furosemide-related electrolyte loss confirmed</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What is not known</div>
+      <ul>
+        <li><strong>No echocardiogram</strong> — echocardiography not accessible due to cost</li>
+        <li>No NT-proBNP or troponin ever drawn</li>
+        <li>Disease type (DCM vs. MVD vs. other) unknown</li>
+        <li>Whether pimobendan, ACE-I, or spironolactone are indicated</li>
+        <li>Taurine status (diet history overlaps FDA DCM investigation window)</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What would change the picture</div>
+      <ul>
+        <li><strong>NT-proBNP:</strong> quantifies cardiac wall stress without echo; can be drawn at Thornwood</li>
+        <li><strong>Troponin I:</strong> baseline for any future acute event comparison</li>
+        <li><strong>Taurine:</strong> single measurement rules in or out diet-associated DCM (reversible)</li>
+        <li>Adjunctive cardiac medications (pimobendan, ACE-I) could reduce furosemide requirement</li>
+        <li>Resting sleeping respiratory rate baseline established at home (&lt;30 = compensated)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p><strong>Why the cardiac diagnosis matters most.</strong> Luke's cardiac disease is the only one of his four active conditions that can immediately kill him — a respiratory crisis from furosemide discontinuation is a same-day event. The renal disease, hepatic changes, and musculoskeletal pain are all serious, but they operate on a weeks-to-months timescale. This asymmetry means cardiac management appropriately dominates all other decisions. Every other system is being treated within the constraints the cardiac disease sets.</p>
+
+    <div class="named-gap">
+      <div class="ng-label">⚠ Named Gap — Adjunctive Cardiac Medications</div>
+      <p style="margin:0;font-size:17px;color:var(--ink-2);line-height:1.72;text-wrap:pretty;"><strong>Standard ACVIM-aligned care for a dog at Luke's furosemide dose would include pimobendan</strong> (improves contractility so less diuretic is needed), <strong>an ACE inhibitor</strong> (reduces preload/afterload), and potentially <strong>spironolactone</strong> (supplemental diuretic allowing furosemide reduction). Luke has none of these. This is not a criticism of his care team — it may be a deliberate decision given his CKD (ACE inhibitors require monitoring in Stage 2 CKD) and his quality-of-life focus. But it is a gap worth naming explicitly to any new provider.</p>
+    </div>
+
+    <p><strong>Home monitoring protocol.</strong> The resting sleeping respiratory rate (RSRR) is the most accessible, high-value home metric for cardiac decompensation in a Lasix-managed dog. The method: count breaths per minute while Luke is fully asleep (chest rising and falling), not during REM movements. Target below 30/min. A sustained reading above 30 — especially in the setting of reduced food interest or reduced carrot requests — should prompt same-day veterinary contact.</p>
+  </div>
+</div>
+
+<!-- RENAL SECTION -->
+<div class="section" id="renal">
+  <div class="sys-head">
+    <div class="section-label">System 02</div>
+    <h2><em>Renal</em> — Stage 2 and Rising</h2>
+    <p class="deck">Creatinine has risen from 1.0 to 1.8 in 12 months. The primary stressors are furosemide (unavoidable) and carprofen (potentially reducible).</p>
+  </div>
+
+  <div class="wwnw">
+    <div class="wwnw-block">
+      <div class="ww-label">What is known</div>
+      <ul>
+        <li>IRIS Stage 2 CKD confirmed (creatinine 1.8 mg/dL, Sep '25)</li>
+        <li>Trend: creatinine 1.0→1.2→1.8 over 12 months</li>
+        <li>BUN volatile: 19→31→43→35 across four draws</li>
+        <li>SDMA 11→13 (approaching reference ceiling of 14)</li>
+        <li>Phosphorus 5.1 — above IRIS Stage 2 target of &lt;4.6</li>
+        <li>Chloride 106 L (furosemide effect confirmed)</li>
+        <li>Sep '25 sample: hemolysis 2+ — creatinine 1.8 may be partially artifact</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What is not known</div>
+      <ul>
+        <li><strong>Urinalysis + UPC ratio</strong> — last drawn Sep 2023 (1+ protein, cloudy). Still not rechecked. Proteinuria status unknown.</li>
+        <li>Whether hypertension is present (never assessed)</li>
+        <li>Whether the creatinine 1.8 is true or partially artifact from hemolysis</li>
+        <li>Absolute phosphorus mg/day in Luke's current food</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What would help</div>
+      <ul>
+        <li><strong>Urinalysis + UPC ratio:</strong> substages CKD; if UPC &gt;0.5, ACE inhibitor indicated</li>
+        <li><strong>Blood pressure measurement:</strong> hypertension accelerates CKD progression — never assessed</li>
+        <li><strong>Food phosphorus label:</strong> contact Steve's Real Food for absolute mg/serving</li>
+        <li>Carprofen dose reduction: removes the most reducible nephrotoxic stressor</li>
+        <li>Omega-3 at cardiac doses: renal-protective and anti-cachexia</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HEPATIC SECTION -->
+<div class="section" id="hepatic">
+  <div class="sys-head">
+    <div class="section-label">System 03</div>
+    <h2><em>Hepatic</em> — Trending Up</h2>
+    <p class="deck">ALT has trended from 46→121→128 U/L over three years. Carprofen is the most likely driver.</p>
+  </div>
+
+  <div class="wwnw">
+    <div class="wwnw-block">
+      <div class="ww-label">What is known</div>
+      <ul>
+        <li>ALT trend: 46→121→128 (Sep 2024→Mar 2025→Sep 2025)</li>
+        <li>Bilirubin spiked to 1.4 (Mar 2025), resolved to 0.1 (Sep 2025)</li>
+        <li>Lipase spiked to 1,382 (Mar 2025), resolved to 110 (Sep 2025)</li>
+        <li>Carprofen is hepatically metabolized — likely contributor to ALT trend</li>
+        <li>Dr. G named gallbladder as a concern; imaging deferred for QoL</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What is not known</div>
+      <ul>
+        <li>Bile acid panel (pre/post-prandial) not performed</li>
+        <li>Whether gallbladder pathology is present (ultrasound not performed)</li>
+        <li>Whether ALT rise is carprofen-driven, disease-driven, or both</li>
+        <li>Current ALT (last draw Sep '25 — likely continued to evolve)</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What would change the picture</div>
+      <ul>
+        <li>Carprofen dose reduction: removes most likely driver of ALT trend</li>
+        <li>Bile acid panel: assesses actual liver function (non-invasive blood test)</li>
+        <li>SAMe supplementation: hepatoprotective alongside chronic NSAIDs</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MSK SECTION -->
+<div class="section" id="msk">
+  <div class="sys-head">
+    <div class="section-label">System 04</div>
+    <h2><em>Musculoskeletal</em> — Managed, But at a Cost</h2>
+    <p class="deck">Pain control is the quality-of-life anchor. Carprofen is both the most effective pain agent and the most damaging to the kidneys and liver.</p>
+  </div>
+
+  <div class="wwnw">
+    <div class="wwnw-block">
+      <div class="ww-label">What is known</div>
+      <ul>
+        <li>Chronic hindlimb OA on multi-modal protocol — <strong>right rear primary</strong> (confirmed by owner Jun 2026)</li>
+        <li>Carprofen 225 mg/day (3 × 75 mg tabs, q24h)</li>
+        <li>Amantadine 100 mg/day (NMDA antagonist, adjunctive)</li>
+        <li>Librela 20 mg SC as needed — documented response: "working well" (Mar '26)</li>
+        <li>Gabapentin discussed Aug '25, not started (side effects discussed: wobbly gait)</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What is not known</div>
+      <ul>
+        <li>Radiographic joint structure — no X-rays on file</li>
+        <li>Whether neurogenic component (lumbosacral, disc disease) is present</li>
+        <li>Whether gabapentin would provide enough additional coverage to allow carprofen reduction</li>
+      </ul>
+    </div>
+    <div class="wwnw-block">
+      <div class="ww-label">What would help</div>
+      <ul>
+        <li>Gabapentin trial at low dose (renal dose adjustment needed for CKD)</li>
+        <li>Carprofen dose reduction to 150 mg/day if Librela + amantadine + gabapentin provide coverage</li>
+        <li>High-dose omega-3: anti-inflammatory, may reduce NSAID requirement</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FULL STACK MATRIX -->
+<div class="section" id="drugs">
+  <div class="sys-head">
+    <div class="section-label">Medication Interaction Map</div>
+    <h2>Food, Medication &amp; Supplement Matrix</h2>
+    <p class="deck">Every item Luke currently takes or eats, and the system-by-system impact. Read across any row to understand the full cost/benefit profile. Purple rows are items not yet on board — adding them would have the largest cascading benefit.</p>
+  </div>
+
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th class="row-h">Item</th>
+        <th class="sys-cardiac">❤ Cardiac</th>
+        <th class="sys-renal">⬡ Renal</th>
+        <th class="sys-hepatic">◎ Hepatic</th>
+        <th class="sys-msk">⊕ MSK / Pain</th>
+        <th class="sys-gi">◻ GI / GDV</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="section-row sr-food"><td colspan="6">Food</td></tr>
+      <tr><td class="row-label">Steve's Pork Blocks<span>Primary diet · <strong>4 patties/day</strong> · 8 oz each · as warm soup</span><span class="dose">1,408 kcal/day</span></td><td class="c-benefit">LOW SODIUM<br>Cardiac-appropriate</td><td class="c-benefit">HIGH MOISTURE<br>75% — supports hydration</td><td class="c-neutral">No known hepatotoxic ingredients</td><td class="c-benefit">GREEN-LIPPED MUSSEL<br>Anti-inflammatory; joint support</td><td class="c-benefit">NOVEL PROTEIN<br>No chicken; well-tolerated</td></tr>
+      <tr><td class="row-label">Omega-6:3 ratio in food<span>9:1 per Steve's label</span></td><td class="c-stress">SUBOPTIMAL<br>Cardiac target ~5:1</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-moderate">ELEVATED<br>Higher omega-6 is pro-inflammatory</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Whole Raw Carrots<span>Daily · primary QoL metric</span></td><td class="c-neutral">Neutral</td><td class="c-benefit">LOW PHOSPHORUS<br>Renal-friendly; high water content</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">HIGH FIBER<br>Supports gut motility</td></tr>
+      <tr><td class="row-label">Dehydrated Pork Loin<span>Training treats · small pieces</span></td><td class="c-neutral">Neutral</td><td class="c-moderate">HIGH PROTEIN<br>Concentrated; monitor BUN</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">NOVEL PROTEIN<br>Single-ingredient</td></tr>
+      <tr><td class="row-label">Taurine in food<span>0.23% + added taurine</span></td><td class="c-benefit">PRESENT<br>DCM prevention</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td></tr>
+
+      <tr class="section-row sr-meds"><td colspan="6">Medications</td></tr>
+      <tr><td class="row-label">Furosemide (Lasix)<span>Loop diuretic</span><span class="dose">300 mg/day · DO NOT STOP</span></td><td class="c-benefit">ESSENTIAL<br>Keeps lungs clear; life-maintaining</td><td class="c-stress">NEPHROTOXIC<br>Chloride wasting; volume depletion</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Carprofen (Rimadyl)<span>NSAID · pain control</span><span class="dose">225 mg/day</span></td><td class="c-neutral">Neutral</td><td class="c-stress">NEPHROTOXIC<br>NSAID reduces renal perfusion</td><td class="c-stress">HEPATOTOXIC<br>Likely driver of ALT trend 46→128</td><td class="c-benefit">PAIN RELIEF<br>Primary OA pain control</td><td class="c-moderate">GI ULCER RISK<br>Chronic NSAID; monitor stool</td></tr>
+      <tr><td class="row-label">Bedinvetmab (Librela)<span>Anti-NGF monoclonal antibody</span><span class="dose">20 mg SC · as needed</span></td><td class="c-neutral">Neutral</td><td class="c-benefit">RENAL SPARING<br>No NSAID mechanism</td><td class="c-benefit">HEPATIC SPARING<br>No hepatic metabolism</td><td class="c-benefit">OA PAIN<br>Response documented as good</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Amantadine<span>NMDA antagonist · adjunctive pain</span><span class="dose">100 mg/day</span></td><td class="c-neutral">Neutral</td><td class="c-moderate">RENAL EXCRETION<br>Dose adjust in severe CKD; monitor</td><td class="c-neutral">No hepatic metabolism</td><td class="c-benefit">ADJUNCTIVE PAIN<br>Reduces central sensitization</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Lokivetmab (Cytopoint)<span>Anti-IL-31 · pruritus</span><span class="dose">80 mg SC · every few months</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">PRURITUS CONTROL<br>Reduces skin-related stress</td></tr>
+      <tr><td class="row-label">Simparica Trio<span>HW / flea / tick prevention</span><span class="dose">Label dose · monthly</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Preventive — no systemic interaction</td></tr>
+      <tr><td class="row-label">Simethicone (Gas-X)<span>GDV vigilance</span><span class="dose">250 mg AM · daily</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">GDV PREVENTION<br>Weimaraner breed risk</td></tr>
+
+      <tr class="section-row sr-supps"><td colspan="6">Supplements (current)</td></tr>
+      <tr><td class="row-label">Wuffes Joint Chew<span>1 chew/day</span><span class="dose">Glucosamine 1,250 mg · MSM 400 mg · Chondroitin 150 mg · HA 21 mg</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">JOINT SUPPORT<br>Glucosamine + chondroitin + HA</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Wuffes Advanced Multivitamin<span>2 chews/day</span><span class="dose">EPA 52 mg · DHA 64 mg · Vit D3 167 IU · Vit E 76 IU</span></td><td class="c-moderate">PARTIAL<br>EPA+DHA 116 mg/day — far below cardiac target</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">VIT E + OMEGA-3<br>Anti-inflammatory contribution</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label">Cosequin DS<span>3 tabs/day</span><span class="dose">Glucosamine 1,800 mg · <strong>Chondroitin 900 mg</strong> · MSM 750 mg</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-benefit">CARTILAGE PROTECTION<br>Chondroitin 900 mg slows breakdown</td><td class="c-neutral">Neutral</td></tr>
+
+      <tr class="section-row sr-gaps"><td colspan="6">Missing from stack — named gaps</td></tr>
+      <tr><td class="row-label" style="color:var(--gi);">Gabapentin [discussed, not started]<span>Neurogenic/central pain coverage</span><span class="dose">Would require dose titration; renal adjustment needed</span></td><td class="c-neutral">Neutral</td><td class="c-neutral">Renal excretion — dose adjust; monitor</td><td class="c-neutral">No hepatic metabolism</td><td class="c-gap">POTENTIAL BENEFIT<br>Neurogenic pain; may allow carprofen reduction</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label" style="color:var(--gi);">High-dose fish oil (EPA+DHA)<span>Not currently on board</span><span class="dose">Target: ~1,440 mg EPA+DHA/day</span></td><td class="c-gap">MAJOR GAP<br>Anti-arrhythmic; anti-cachexia; ACVIM endorsed</td><td class="c-gap">RENAL BENEFIT<br>Anti-inflammatory</td><td class="c-gap">MILD BENEFIT<br>Anti-inflammatory</td><td class="c-gap">ANTI-INFLAMMATORY<br>Reduces prostaglandin-driven pain</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label" style="color:var(--gi);">Pimobendan [NOT YET]<span>Requires NT-proBNP basis</span></td><td class="c-gap">MAJOR BENEFIT<br>Reduces furosemide need; improves contractility</td><td class="c-gap">INDIRECT BENEFIT<br>Less furosemide = less renal cost</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label" style="color:var(--gi);">ACE Inhibitor [NOT YET]<span>Requires UPC ratio first</span></td><td class="c-gap">BENEFIT<br>Reduces cardiac preload/afterload</td><td class="c-gap">RENAL-PROTECTIVE<br>If UPC &gt;0.5, reduces glomerular damage</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td></tr>
+      <tr><td class="row-label" style="color:var(--gi);">Phosphorus binder [NOT YET]<span>Serum phos 5.1 — IRIS target &lt;4.6</span></td><td class="c-neutral">Neutral</td><td class="c-gap">RENAL BENEFIT<br>Slows CKD progression</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td><td class="c-neutral">Neutral</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="footnote"><span style="color:var(--msk);font-weight:600;">Green</span> = benefit &nbsp;·&nbsp; <span style="color:var(--cardiac);font-weight:600;">Red</span> = stress / cost &nbsp;·&nbsp; <span style="color:var(--hepatic);font-weight:600;">Amber</span> = moderate risk &nbsp;·&nbsp; <span style="color:var(--gi);font-weight:600;">Purple</span> = not yet prescribed &nbsp;·&nbsp; Adding adjunctive cardiac medications (pimobendan, ACE-I) reduces furosemide need → reduces renal cost → creates headroom for carprofen reduction.</div>
+</div>
+
+<!-- CONFLICTS -->
+<div class="section" id="conflicts">
+  <div class="sys-head">
+    <div class="section-label">Where the Systems Fight</div>
+    <h2>Six Active Conflicts</h2>
+    <p class="deck">Each of these is a clinical decision that has no clean answer — managing one system requires accepting cost in another. A new provider needs to know all six are live before adjusting anything. Each card ends with a resolution path.</p>
+  </div>
+
+  <div class="conflict-grid">
+    <div class="conflict-card">
+      <div class="cc-pair">Cardiac ↔ Renal</div>
+      <h4>The furosemide bind</h4>
+      <p>Furosemide is essential for cardiac management and cannot be stopped. It is also nephrotoxic, accelerating CKD progression with every dose. The dose is both the treatment and the diagnostic marker — the heart's condition is inferred from how much furosemide it takes to keep Luke comfortable.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> NT-proBNP to characterize cardiac status; adjunctive cardiac medications (pimobendan, ACE-I) to reduce furosemide requirement; urinalysis + UPC to substage CKD and determine whether ACE-I is indicated.</div>
+    </div>
+    <div class="conflict-card">
+      <div class="cc-pair">Pain Control ↔ Renal + Hepatic</div>
+      <h4>The carprofen dilemma</h4>
+      <p>Carprofen manages real, daily pain. It is also an NSAID with confirmed nephrotoxic and hepatotoxic effects. ALT has trended from 46 to 128 over three years. Furosemide + carprofen together stress the kidneys from two different mechanisms simultaneously. Librela and amantadine partially substitute but may not fully cover OA pain.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> Trial gabapentin (renal dose adjustment needed); consider carprofen reduction to 150 mg/day if multi-modal coverage is adequate; high-dose omega-3 provides anti-inflammatory support.</div>
+    </div>
+    <div class="conflict-card">
+      <div class="cc-pair">Nutrition ↔ Renal + Cardiac</div>
+      <h4>The phosphorus and omega-3 gaps</h4>
+      <p>Luke's serum phosphorus is above the IRIS target and the dietary phosphorus content of the current food is unknown. His omega-3 intake is 6% of the cardiac-indicated dose. Both are nutritional levers that are addressable without a clinic visit.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> Obtain food phosphorus content; high-dose fish oil supplementation to cardiac dose; consider phosphorus binder if food phosphorus is elevated.</div>
+    </div>
+    <div class="conflict-card">
+      <div class="cc-pair">Cardiac Cachexia ↔ Protein Restriction</div>
+      <h4>Weight loss and muscle wasting</h4>
+      <p>Luke has lost ~19 lb over 10 months (98→79.1 lb). Some is appropriate (fluid off diuresis) but cardiac cachexia is a genuine concern. IRIS Stage 2 recommends moderate protein restriction — but excessive restriction in a cachectic patient accelerates muscle loss.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> Omega-3 at cardiac doses is muscle-preserving (anti-cachexia effect). Monitor weight monthly. Current 4 patties/day (1,408 kcal) meets maintenance needs.</div>
+    </div>
+    <div class="conflict-card">
+      <div class="cc-pair">Cardiac Diagnosis ↔ Evidence</div>
+      <h4>The empirical treatment problem</h4>
+      <p>The cardiac diagnosis rests entirely on furosemide response. No imaging, no biomarkers, no disease type confirmation. This means adjunctive cardiac medications (pimobendan, ACE-I) cannot be justified by standard criteria without additional workup.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> NT-proBNP and troponin I drawn at next Thornwood visit. These are blood tests — no echocardiography required. A significantly elevated NT-proBNP would justify adjunctive therapy.</div>
+    </div>
+    <div class="conflict-card">
+      <div class="cc-pair">QoL Focus ↔ Diagnostic Workup</div>
+      <h4>The workup deferral pattern</h4>
+      <p>Multiple high-value tests have been named and deferred: bile acid panel, imaging, urinalysis. These reflect a deliberate QoL-focused approach by Rikki and the Thornwood team. Any new provider should understand this context and not treat deferrals as oversight.</p>
+      <div class="cc-resolution"><strong>Resolution path:</strong> Urinalysis and UPC are low-burden (urine sample only) and highest clinical value. NT-proBNP is a blood draw. These two are the minimum workup for a new provider visit.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTANA -->
+<div class="section" id="montana" style="border-top:2px solid var(--rule);">
+  <div class="montana-header">
+    <div class="mh-ey">Travel risk assessment · July–August 2026</div>
+    <h2>Michigan → Montana</h2>
+    <div class="mh-sub">Ada, Michigan (~680 ft) to Bozeman, Montana (~4,820 ft). A 4,140-foot altitude gain, a wildfire smoke season, a different emergency care landscape, and a dog with presumptive cardiac disease, IRIS Stage 2 CKD, and 300 mg/day of furosemide. This is a complex travel scenario that warrants explicit pre-departure planning.</div>
+  </div>
+
+  <div class="montana-grid" style="border-top:1px solid var(--rule);">
+    <div class="m-card">
+      <div class="mc-system" style="color:var(--c-cardiac);">Cardiac — High Priority</div>
+      <div class="severity sev-high">High concern</div>
+      <h4>Altitude &amp; cardiac workload</h4>
+      <ul>
+        <li>At 4,820 ft, partial oxygen pressure (PaO2) is ~17% lower than sea level</li>
+        <li>Reduced oxygen availability increases cardiac workload</li>
+        <li>A dog already on maximum-dose diuretics has less reserve</li>
+        <li>Wildfire smoke Jul–Aug further reduces air quality and oxygen availability</li>
+        <li>Action: establish resting respiratory rate baseline in Michigan before departure</li>
+      </ul>
+    </div>
+    <div class="m-card">
+      <div class="mc-system" style="color:var(--c-renal);">Renal — Medium-High Priority</div>
+      <div class="severity sev-med">Medium-high concern</div>
+      <h4>Altitude, dehydration &amp; kidney stress</h4>
+      <ul>
+        <li>Altitude increases insensible water loss through increased respiration rate</li>
+        <li>Furosemide causes ongoing fluid loss — combined dehydration risk is real</li>
+        <li>Dehydration can acutely worsen creatinine in a Stage 2 CKD dog</li>
+        <li>Action: maintain warm soup feeding architecture; monitor water intake</li>
+      </ul>
+    </div>
+    <div class="m-card">
+      <div class="mc-system" style="color:var(--c-msk);">Musculoskeletal — Low-Medium</div>
+      <div class="severity sev-low">Monitor</div>
+      <h4>Terrain &amp; activity level</h4>
+      <ul>
+        <li>Montana terrain (uneven, elevation change) may exacerbate hindlimb OA</li>
+        <li>Heat can worsen arthritis comfort; plan walks for morning and evening</li>
+        <li>Action: Librela timing — coordinate with Thornwood so injection is active on arrival</li>
+      </ul>
+    </div>
+    <div class="m-card">
+      <div class="mc-system" style="color:var(--c-msk);">Emergency care landscape</div>
+      <div class="severity sev-high">Plan required</div>
+      <h4>Foothills Veterinary Hospital</h4>
+      <ul>
+        <li><strong>Foothills Veterinary Hospital</strong> — 707 Bridger Drive, Suite E, Bozeman MT 59715</li>
+        <li>(406) 556-0604 · Mon–Fri 8am–6pm · fvhmt.com</li>
+        <li>Emergency services available</li>
+        <li>Action: call ahead to establish Luke's record before departure</li>
+        <li>Action: carry Luke at a Glance at all times during travel</li>
+        <li>Action: Thornwood contact details: (616) 676-1251 · <a href="https://www.thornwoodvet.com">thornwoodvet.com</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- EOL SECTION -->
+<div class="section" id="eol" style="padding-bottom:40px;">
+  <div class="sys-head">
+    <div class="section-label">Quality of Life Framework</div>
+    <h2>End-of-Life Context</h2>
+    <p class="deck">This is not an imminent-decision document. It is a planning framework that Rikki has opened with the Thornwood team and that any new provider should understand exists. The end-of-life conversation was explicitly opened in the May 14, 2025 visit note.</p>
+  </div>
+
+  <div class="eol-grid">
+    <div class="eol-cell">
+      <div class="ec-label">Signals the household watches</div>
+      <ul>
+        <li><strong>Carrot enthusiasm:</strong> daily QoL signal — Rikki tracks appetite for carrots as a barometer, not a count. A noticeable shift in interest precedes decline by hours to days.</li>
+        <li><strong>Resting respiratory rate:</strong> target &lt;30 breaths/min while fully asleep. Not formally tracked yet — establishing a baseline is a named open item.</li>
+        <li><strong>Willingness to engage:</strong> greets, follows Rikki, responds to routine cues.</li>
+      </ul>
+    </div>
+    <div class="eol-cell">
+      <div class="ec-label">What a crisis looks like</div>
+      <ul>
+        <li>Increased respiratory rate &amp; effort at rest (&gt;30 breaths/min while sleeping)</li>
+        <li>Open-mouth breathing or blue-gray gums — emergency</li>
+        <li>Non-productive retching + distended abdomen — GDV emergency</li>
+        <li>Sudden collapse or severe lethargy</li>
+        <li>Refusal to eat for 24+ hours in a food-motivated dog</li>
+      </ul>
+    </div>
+    <div class="eol-cell">
+      <div class="ec-label">What Rikki needs from providers</div>
+      <ul>
+        <li><strong>An explicit framework:</strong> what the team is watching for; at what point the conversation changes from management to transition planning.</li>
+        <li><strong>No surprises:</strong> she has Sam's death as context; she knows what an unprepared crisis looks like and does not want to repeat it.</li>
+        <li><strong>Honesty about trajectory:</strong> she is capable of holding difficult information and prefers it to uncertainty.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Luke VonDog · System Map · Conditions in Conflict · Compiled June 2026</span>
+  <span>Data through March 9, 2026</span>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+(function() {
+  function init() {
+    const links = document.querySelectorAll('.doc-sidenav a.dsn-link[href^="#"]');
+    if (!links.length) return;
+    const ids = [...new Set([...links].map(a => a.getAttribute('href').slice(1)))];
+    const sideNav = document.querySelector('.doc-sidenav');
+    function update() {
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) current = id;
+      }
+      links.forEach(a => a.classList.remove('active'));
+      document.querySelectorAll(`.doc-sidenav a.dsn-link[href="#${current}"]`).forEach(a => a.classList.add('active'));
+      if (sideNav) {
+        const active = document.querySelector('.doc-sidenav a.dsn-link.active');
+        if (active) {
+          const top = active.offsetTop;
+          const h = sideNav.clientHeight;
+          if (top < sideNav.scrollTop || top > sideNav.scrollTop + h - 48) {
+            sideNav.scrollTop = top - h / 2;
+          }
+        }
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+</body>
+</html>

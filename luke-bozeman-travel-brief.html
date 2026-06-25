@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — Bozeman Travel Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f6f1e6; --paper-2: #efe9da; --paper-card: #fff;
+  --ink: #1a1916; --ink-2: #353029; --ink-mute: #6b6457;
+  --rule: #d8cfba; --rule-soft: #e7dec9;
+  --accent: #2a4a52; --accent-soft: #6e8e92;
+  --burgundy: #6b2a2a; --moss: #4a5d2b; --ochre: #8a6a1e;
+  --danger: #6b2a2a; --danger-bg: #f9efee;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #2a2620; font-family: "Source Serif 4", Georgia, serif; color: var(--ink); -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.5; }
+
+.sheet {
+  max-width: 820px;
+  margin: 28px auto;
+  background: var(--paper);
+  padding: 42px 52px 52px;
+  box-shadow: 0 8px 50px rgba(0,0,0,.45);
+}
+
+/* Header */
+.head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px 32px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 20px;
+  margin-bottom: 26px;
+  align-items: start;
+}
+.head .ey {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 7px;
+}
+.head h1 {
+  font-family: "Newsreader", serif; font-weight: 400;
+  font-size: 36px; letter-spacing: -.015em; line-height: 1.05; color: var(--ink);
+}
+.head h1 em { font-style: italic; color: var(--accent); }
+.head .pid {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; color: var(--ink-2); line-height: 1.8; text-align: right;
+}
+.head .pid b { color: var(--ink); }
+
+/* Critical band */
+.critical {
+  background: var(--danger-bg);
+  border: 1.5px solid var(--danger);
+  border-left: 5px solid var(--danger);
+  padding: 18px 22px;
+  margin-bottom: 26px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 32px;
+}
+.critical .citem .clbl {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--danger); font-weight: 600; margin-bottom: 4px;
+}
+.critical .citem p { font-size: 13px; color: var(--ink); line-height: 1.4; }
+.critical .citem p b { font-weight: 600; color: var(--danger); }
+
+/* Two-column layout */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-bottom: 26px; }
+.cols.wide { grid-template-columns: 1.4fr 1fr; }
+
+/* Card blocks */
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+}
+.card.red { border-top-color: var(--danger); }
+.card.moss { border-top-color: var(--moss); }
+.card.ochre { border-top-color: var(--ochre); }
+.card-head {
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--rule);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-mute); display: flex; align-items: center; justify-content: space-between;
+}
+.card-head b { color: var(--accent); }
+.card-body { padding: 14px 16px; }
+
+/* Diagnosis list */
+.dx-list { list-style: none; }
+.dx-list li {
+  padding: 9px 0; border-bottom: 1px solid var(--rule-soft);
+  font-size: 13px; display: flex; gap: 10px; align-items: baseline;
+}
+.dx-list li:last-child { border-bottom: none; }
+.dx-list li .num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; color: var(--accent); flex: none; padding-top: 2px;
+}
+.dx-list li b { font-weight: 600; color: var(--ink); display: block; font-size: 13.5px; }
+.dx-list li span { font-size: 12px; color: var(--ink-mute); }
+
+/* Med table */
+table.meds { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.meds thead th {
+  font-family: "JetBrains Mono", monospace; font-size: 9px;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-mute);
+  text-align: left; padding: 6px 10px 5px; border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+table.meds td { padding: 8px 10px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+table.meds tr:last-child td { border-bottom: none; }
+table.meds .drug b { font-weight: 600; font-size: 13.5px; color: var(--ink); }
+table.meds .drug .gen { display: block; font-size: 11px; color: var(--ink-mute); font-family: "JetBrains Mono", monospace; margin-top: 1px; }
+table.meds .warn { color: var(--danger); font-weight: 600; font-size: 11px; }
+
+/* Altitude + avoid */
+.avoid-list { list-style: none; }
+.avoid-list li { padding: 6px 0; border-bottom: 1px solid var(--rule-soft); font-size: 13px; display: flex; gap: 8px; }
+.avoid-list li:last-child { border-bottom: none; }
+.avoid-list li::before { content: "✕"; color: var(--danger); font-family: "JetBrains Mono", monospace; font-size: 10px; flex: none; padding-top: 2px; }
+
+.alt-note {
+  font-size: 13px; color: var(--ink-2); line-height: 1.5; padding: 12px 0 4px;
+}
+.alt-note b { color: var(--ink); font-weight: 600; }
+
+/* Contacts */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.contact-item { padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); }
+.contact-item:nth-child(odd) { border-right: 1px solid var(--rule-soft); }
+.contact-item .cn { font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 3px; }
+.contact-item .cv { font-size: 13px; color: var(--ink); }
+.contact-item .cv b { font-weight: 600; color: var(--accent); }
+
+/* Full-width med section */
+.full { margin-bottom: 26px; }
+
+footer {
+  margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule);
+  font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-mute);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+footer .acc { color: var(--accent); }
+
+@media print {
+  html, body { background: #fff; }
+  .sheet { margin: 0; box-shadow: none; padding: 24px 32px; max-width: 100%; }
+}
+@media (max-width: 700px) {
+  .sheet { padding: 24px 20px; margin: 0; }
+  .cols, .cols.wide, .contact-grid { grid-template-columns: 1fr; }
+  .critical { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="sheet" data-screen-label="Bozeman Travel Brief">
+
+  <nav style="font-family:system-ui,-apple-system,sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:28px;display:flex;gap:16px;"><a href="luke-practitioner-packet.html" style="color:#fff;text-decoration:none;background:oklch(38% 0.06 185);padding:5px 12px;border-radius:4px;">← Packet home</a></nav>
+
+  <div class="head">
+    <div>
+      <div class="ey">Travel Brief · Bozeman, MT · July – August 2026</div>
+      <h1>Luke <em>VonDog</em></h1>
+    </div>
+    <div class="pid">
+      <b>12 yr · MN Weimaraner · Blue</b><br>
+      35.9 kg / 79.1 lb · BCS 5/9<br>
+      Microchip <b>941000016858399</b><br>
+      Owner <b>Rikki Delaine</b><br>
+      Thornwood Patient <b>#4677</b>
+    </div>
+  </div>
+
+  <!-- Critical -->
+  <div class="critical">
+    <div class="citem">
+      <div class="clbl">⚠ Critical — never stop</div>
+      <p><b>Do NOT discontinue furosemide.</b> Stopping risks an acute respiratory event. If Luke won't take it in food, try goat cheese, freeze-dried meat, or warm soup — but do not let a dose lapse.</p>
+    </div>
+    <div class="citem">
+      <div class="clbl">⚠ Critical — dose limit</div>
+      <p><b>Never exceed prescribed Lasix or Rimadyl doses.</b> Both are nephrotoxic at elevated levels. Luke is IRIS Stage 2 CKD; the kidney-cardiac-NSAID tradeoff has been explicitly named by Thornwood.</p>
+    </div>
+  </div>
+
+  <!-- Diagnoses + Altitude side by side -->
+  <div class="cols wide">
+    <div class="card">
+      <div class="card-head">Active diagnoses</div>
+      <div class="card-body">
+        <ul class="dx-list">
+          <li><span class="num">01</span><div><b>Presumptive cardiac disease, Lasix-responsive</b><span>No echocardiogram on file. Diagnosis is empirical — respiratory rate and effort improve markedly on furosemide. Treat as CHF.</span></div></li>
+          <li><span class="num">02</span><div><b>Chronic kidney disease, IRIS Stage 2</b><span>Creatinine 1.8 mg/dL (Sep 2025). BUN trending; phosphorus above IRIS renal-protective target.</span></div></li>
+          <li><span class="num">03</span><div><b>Chronic hindlimb osteoarthritis</b><span>Multi-modal protocol on board (carprofen + amantadine + Librela). Right-rear primary.</span></div></li>
+          <li><span class="num">04</span><div><b>Mild hepatocellular changes</b><span>ALT 128 U/L (Sep 2025). Carprofen and furosemide both contribute hepatic load.</span></div></li>
+          <li><span class="num">05</span><div><b>Benign cutaneous lesions</b><span>Two FNA-confirmed lipomas. Small cheek mass (~2 mm, monitor, aspirate if changes).</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card moss" style="margin-bottom:16px;">
+        <div class="card-head">Altitude — Bozeman ~4,820 ft</div>
+        <div class="card-body">
+          <p class="alt-note"><b>Confirm hydration status on arrival.</b> Furosemide at altitude increases dehydration risk. Monitor resting sleeping respiratory rate (threshold: &gt;30 breaths/min = decompensation flag). If breathing labors or rate climbs, treat as cardiac emergency and contact Thornwood immediately.</p>
+        </div>
+      </div>
+      <div class="card red">
+        <div class="card-head">Avoid / do not give</div>
+        <div class="card-body">
+          <ul class="avoid-list">
+            <li>Aspirin or ibuprofen (NSAID toxicity + renal)</li>
+            <li>Prednisone (major behavioral side effects on record)</li>
+            <li>Grain-free diets (DCM investigation history)</li>
+            <li>Pig ears or high-sodium treats</li>
+            <li>Additional furosemide without Thornwood guidance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medications full width -->
+  <div class="full">
+    <div class="card">
+      <div class="card-head">Current medications — as of March 9, 2026 visit <b>· confirm with owner before any changes</b></div>
+      <div class="card-body" style="padding:0;">
+        <table class="meds">
+          <thead>
+            <tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Route</th><th>Purpose</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="drug"><b>Furosemide</b><span class="gen">Lasix · loop diuretic</span></td>
+              <td>50 mg ×3 AM + 50 mg ×3 PM<br><b style="color:var(--danger);">= 300 mg/day total</b></td>
+              <td>q12h</td><td>PO</td>
+              <td>Presumptive CHF — fluid off lungs</td>
+              <td class="warn">NEVER STOP</td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Carprofen</b><span class="gen">Rimadyl · NSAID</span></td>
+              <td>3 tablets</td><td>q24h</td><td>PO</td>
+              <td>Primary OA pain</td>
+              <td>With food. Renal + hepatic load.</td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Bedinvetmab</b><span class="gen">Librela · anti-NGF mAb</span></td>
+              <td>20 mg</td><td>Monthly</td><td>SC</td>
+              <td>OA pain (injection)</td>
+              <td>Clinic-administered.</td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Lokivetmab</b><span class="gen">Cytopoint · anti-IL-31</span></td>
+              <td>80 mg</td><td>~q2 months</td><td>SC</td>
+              <td>Itch / allergic skin</td>
+              <td>Clinic-administered.</td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Amantadine</b><span class="gen">NMDA antagonist</span></td>
+              <td>100 mg</td><td>q24h</td><td>PO</td>
+              <td>Adjunctive nerve pain</td>
+              <td>Added May 2025.</td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Simparica Trio</b><span class="gen">parasite prevention</span></td>
+              <td>Label dose</td><td>Monthly</td><td>PO</td>
+              <td>HW, flea, tick, worms</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="drug"><b>Simethicone</b><span class="gen">Gas-X</span></td>
+              <td>250 mg (×2)</td><td>AM</td><td>PO</td>
+              <td>Gas / GDV vigilance</td>
+              <td>With AM feeding.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacts -->
+  <div class="card">
+    <div class="card-head">Emergency contacts &amp; home clinic</div>
+    <div class="card-body" style="padding:0;">
+      <div class="contact-grid">
+        <div class="contact-item"><div class="cn">Primary clinic</div><div class="cv"><b>Thornwood Veterinary Clinic &amp; Kennel</b></div></div>
+        <div class="contact-item"><div class="cn">Thornwood phone</div><div class="cv"><b>(616) 676-1251</b></div></div>
+        <div class="contact-item"><div class="cn">Address</div><div class="cv">1501 Buttrick Ave SE, Ada, MI 49301</div></div>
+        <div class="contact-item"><div class="cn">Owner</div><div class="cv">Rikki Delaine</div></div>
+        <div class="contact-item"><div class="cn">Primary DVMs</div><div class="cv">Dr. Kaitlyn Denney (KD) · Dr. G</div></div>
+        <div class="contact-item"><div class="cn">Full records</div><div class="cv">Luke at a Glance — ask owner</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-top:32px;border-top:2px solid #1a1916;padding-top:24px;">
+    <div style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6b6457;margin-bottom:16px;">Pre-Departure Checklist — Michigan to Montana</div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:#d8cfba;border:1px solid #d8cfba;">
+      <div style="background:#fdf5f3;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Medications: full supply for 8+ weeks.</strong> Furosemide, carprofen, amantadine. Do not assume Bozeman pharmacies carry all generics.</div><span style="font-size:11px;font-weight:700;color:#6b2a2a;border:1px solid #6b2a2a;padding:2px 7px;white-space:nowrap;">Critical</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Librela injection timed for full trip coverage.</strong> Coordinate with Thornwood so the injection is given ~1–2 weeks before departure.</div><span style="font-size:11px;font-weight:700;color:#6b2a2a;border:1px solid #6b2a2a;padding:2px 7px;white-space:nowrap;">Critical</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Luke at a Glance: printed and in the go-bag.</strong> Any Bozeman vet should have a document in their hand within 30 seconds.</div><span style="font-size:11px;font-weight:700;color:#6b2a2a;border:1px solid #6b2a2a;padding:2px 7px;white-space:nowrap;">Critical</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Foothills Veterinary Hospital confirmed.</strong> 707 Bridger Drive, Suite E, Bozeman · (406) 556-0604 · fvhmt.com. Call ahead to establish Luke's record.</div><span style="font-size:11px;font-weight:600;color:#8a6a1e;border:1px solid #8a6a1e;padding:2px 7px;white-space:nowrap;">Important</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Resting sleeping respiratory rate baseline established in Michigan.</strong> Measure 3 consecutive nights before departure. Document the value.</div><span style="font-size:11px;font-weight:600;color:#8a6a1e;border:1px solid #8a6a1e;padding:2px 7px;white-space:nowrap;">Important</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Food supply for full duration.</strong> Steve's Real Food Pork &amp; Shellfish Blocks — confirm Bozeman retailers or ship to address. Do not improvise food.</div><span style="font-size:11px;font-weight:600;color:#8a6a1e;border:1px solid #8a6a1e;padding:2px 7px;white-space:nowrap;">Important</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Simparica Trio supply for trip duration.</strong> Continue without interruption. Daily tick checks.</div><span style="font-size:11px;font-weight:600;color:#2a4a52;border:1px solid #2a4a52;padding:2px 7px;white-space:nowrap;">Prep</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>AirNow.gov bookmarked.</strong> Check daily AQI. Keep Luke indoors when AQI &gt;100 (wildfire smoke season).</div><span style="font-size:11px;font-weight:600;color:#2a4a52;border:1px solid #2a4a52;padding:2px 7px;white-space:nowrap;">Prep</span></div>
+      <div style="background:#fff;display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;"><input type="checkbox"><div style="font-size:15px;color:#353029;line-height:1.55;"><strong>Simethicone supply confirmed.</strong> Gas-X 125 mg tabs, 250 mg AM daily. Travel disrupts routine — GDV risk increases.</div><span style="font-size:11px;font-weight:600;color:#2a4a52;border:1px solid #2a4a52;padding:2px 7px;white-space:nowrap;">Prep</span></div>
+    </div>
+  </div>
+
+</div>
+
+<footer style="max-width:820px;margin:0 auto 28px;padding:12px 52px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b6457;display:flex;justify-content:space-between;">
+  <span><span style="color:#2a4a52;">LUKE VONDOG</span> · BOZEMAN TRAVEL BRIEF · JULY–AUG 2026</span>
+  <span>THORNWOOD VET · (616) 676-1251</span>
+</footer>
+
+</body>
+</html>

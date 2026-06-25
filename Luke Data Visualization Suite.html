@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke — Data Visualization Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f6f1e6; --paper-2: #ede8d8; --paper-card: #ffffff;
+  --ink: #1a1916; --ink-2: #3a332a; --ink-mute: #3d3830;
+  --rule: #d4cab4; --rule-soft: #e4daca;
+  --accent: #2a4a52; --accent-soft: #6e8e92; --accent-deep: #1d343a;
+  --burgundy: #6b2a2a; --ochre: #7a5c18; --moss: #3f5224; --plum: #4a2f4e;
+  --sidebar: 260px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; font-size: 17px; }
+body { margin: 0; background: #13211f; color: var(--ink); font-family: system-ui, -apple-system, sans-serif; line-height: 1.65; }
+a { color: var(--accent); text-decoration: none; }
+
+.shell { display: grid; grid-template-columns: var(--sidebar) 1fr; max-width: 1300px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 90px rgba(0,0,0,.5); min-height: 100vh; gap: 0; }
+
+/* ── Sidebar ── */
+.side { position: sticky; top: 0; align-self: start; height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: var(--accent-deep); color: #e7eeec; border-right: 1px solid rgba(255,255,255,.1); }
+.side .brand { padding: 24px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.side .brand .ey { font-size: 12px; color: var(--accent-soft); margin-bottom: 6px; }
+.side .brand h1 { font-family: "Newsreader", serif; font-weight: 500; font-size: 22px; margin: 0 0 4px; color: #fff; line-height: 1.15; }
+.side .brand .sub { font-size: 13px; color: #9ecbc6; line-height: 1.4; }
+.side nav { overflow-y: auto; padding: 8px 10px 30px; flex: 1; }
+.side nav .grp { font-size: 13px; font-weight: 600; color: #9ecbc6; padding: 16px 12px 6px; letter-spacing: .02em; }
+.side nav a { display: flex; align-items: center; gap: 9px; padding: 7px 12px; border-radius: 6px; color: rgba(255,255,255,.88); font-family: system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.35; }
+.side nav a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.side nav a.active { background: rgba(255,255,255,.14); color: #fff; font-weight: 600; }
+.side nav a.active .dot { transform: scale(1.35); }
+.side nav a .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.side nav a .nm { flex: 1; }
+.side nav a .fl { font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.fl.H { background: #5a2420; color: #ffc8c0; }
+.fl.L { background: #5a4a18; color: #ffe8a0; }
+.fl.OK { color: #8fb39c; }
+.fl.Q { background: #3a2c50; color: #d8c8f0; }
+.side .foot { padding: 12px 20px; font-size: 13px; color: #7f9794; border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ── Main ── */
+main { padding: 0 0 100px; min-width: 0; }
+
+/* ── Cover ── */
+.cover { padding: 56px 64px 44px; border-bottom: 2px solid var(--ink); }
+.cover .ey { font-size: 14px; color: var(--accent); margin-bottom: 14px; font-weight: 500; }
+.cover h2 { font-family: "Newsreader", serif; font-weight: 500; font-size: clamp(34px, 4.5vw, 54px); margin: 0 0 18px; letter-spacing: -.015em; line-height: 1.05; }
+.cover h2 em { font-style: normal; font-weight: 600; color: var(--accent); }
+.cover p { font-size: 18px; color: var(--ink-2); text-wrap: pretty; line-height: 1.65; }
+.cover .legend { display: flex; flex-wrap: wrap; gap: 14px 24px; margin-top: 28px; font-size: 15px; color: var(--ink-2); }
+.cover .legend span { display: inline-flex; align-items: center; gap: 8px; }
+.cover .legend .swatch { display: inline-block; width: 24px; height: 11px; border-radius: 2px; }
+
+/* ── Section — consistent background ── */
+.section { padding: 0 64px 48px; border-top: 1px solid var(--rule); scroll-margin-top: 8px; background: var(--paper); }
+.section:first-of-type { border-top: 0; }
+
+/* ── Section header ── */
+.s-head {
+  display: flex; align-items: stretch;
+  margin: 0 -64px 36px; background: var(--accent-deep); color: #fff;
+}
+.s-head-inner {
+  flex: 1; padding: 30px 36px 28px 36px;
+}
+.s-head h3 {
+  font-family: "Newsreader", serif; font-weight: 700;
+  font-size: 46px; margin: 0 0 12px; letter-spacing: -.02em;
+  line-height: 1.0; color: #fff;
+}
+.s-top-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.s-badge {
+  font-size: 17px; font-weight: 700; color: rgba(255,255,255,.95); white-space: nowrap;
+}
+.s-cat {
+  font-size: 16px; color: rgba(255,255,255,.7); font-weight: 400;
+}
+.s-current {
+  text-align: right; white-space: nowrap;
+  display: flex; flex-direction: column; align-items: flex-end;
+  justify-content: center; gap: 10px;
+  padding: 30px 40px 28px 32px;
+  border-left: 1px solid rgba(255,255,255,.14);
+  min-width: 210px;
+}
+.s-current .val {
+  font-family: "Newsreader", serif; font-size: 54px;
+  font-weight: 700; line-height: 1; color: #fff;
+}
+.s-current .val small {
+  font-size: .33em; color: rgba(255,255,255,.85);
+  margin-left: 3px; font-family: system-ui, -apple-system, sans-serif;
+}
+.pill {
+  display: inline-block; font-size: 14px; font-weight: 700;
+  padding: 7px 18px; border-radius: 6px;
+}
+.pill.OK   { background: rgba(80,170,110,.3);  color: #b8f0cc; border: 2px solid rgba(80,200,120,.35); }
+.pill.H    { background: rgba(180,50,30,.4);   color: #ffccc4; border: 2px solid rgba(220,100,80,.4); }
+.pill.L    { background: rgba(160,130,20,.35); color: #ffe8a0; border: 2px solid rgba(210,180,60,.4); }
+.pill.Q    { background: rgba(120,80,150,.35); color: #ddc8f8; border: 2px solid rgba(170,130,210,.4); }
+.pill.WARN { background: rgba(160,100,20,.35); color: #ffe0a8; border: 2px solid rgba(210,160,60,.4); }
+.s-current .pill-date {
+  font-size: 16px; color: rgba(255,255,255,.92); font-weight: 600;
+  margin-top: 4px; letter-spacing: .01em;
+}
+
+/* ── Chart ── */
+.chart-card { background: var(--paper-card); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 20px 12px; margin: 0 0 0; }
+.chart-card .ch-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 20px; }
+.chart-card .ch-title { font-family: "Newsreader", serif; font-size: 17px; color: var(--ink-2); font-weight: 500; }
+.chart-card .ch-ref { font-size: 14px; color: var(--ink-2); text-align: right; max-width: 44ch; line-height: 1.4; }
+.chart-inner { width: 100%; min-height: 120px; }
+
+/* ── Prose grid ── */
+.prose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 20px 0 6px; }
+.prose-grid > * { min-width: 0; }
+.blk h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin: 0 0 10px; border-bottom: 2px solid var(--rule); padding-bottom: 6px; }
+.blk p { margin: 0; font-size: 16px; color: var(--ink-2); line-height: 1.7; }
+.blk p em { font-style: normal; color: var(--burgundy); font-weight: 600; }
+.blk p strong { color: var(--ink); }
+.blk ul { margin: 8px 0 0 18px; font-size: 16px; color: var(--ink-2); line-height: 1.7; }
+.blk ul li { margin-bottom: 4px; }
+
+/* ── Adjust panel ── */
+.adjust { margin: 24px 0 0; background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--accent); padding: 20px 24px; border-radius: 0 8px 8px 0; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.adjust .adj-title { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 16px; }
+.adj-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.adj-col h5 { font-size: 14px; font-weight: 700; color: var(--ink); margin: 0 0 8px; border-bottom: 1px solid var(--rule); padding-bottom: 5px; }
+.adj-col ul { margin: 0 0 0 16px; font-size: 15px; color: var(--ink-2); line-height: 1.7; }
+.adj-col li { margin-bottom: 4px; }
+.adj-col.locked h5 { color: var(--burgundy); border-color: var(--burgundy); }
+.adj-col.locked ul { color: var(--burgundy); }
+
+/* ── Data table ── */
+.data-tbl { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 24px; }
+.data-tbl th { font-size: 13px; font-weight: 700; color: var(--ink); text-align: left; padding: 0 14px 10px; border-bottom: 2px solid var(--ink); }
+.data-tbl td { padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-2); vertical-align: top; line-height: 1.5; }
+.data-tbl td.d { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.data-tbl td.v { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); }
+.data-tbl td.r { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; color: var(--ink-2); }
+.data-tbl td.nt { font-size: 14px; color: var(--ink-2); }
+.tag-h { font-size: 12px; padding: 2px 7px; border-radius: 4px; background: #ecd6d0; color: var(--burgundy); margin-left: 5px; font-weight: 600; }
+.tag-l { font-size: 12px; padding: 2px 7px; border-radius: 4px; background: #f3e5c2; color: var(--ochre); margin-left: 5px; font-weight: 600; }
+.tag-iris { font-size: 12px; padding: 2px 7px; border-radius: 4px; background: #e2e8ef; color: var(--accent); margin-left: 5px; font-weight: 600; }
+
+/* ── Gap bar ── */
+.gap-bar-wrap { margin: 24px 0 0; background: var(--paper-card); border: 1px solid var(--rule); border-radius: 8px; padding: 22px 24px; }
+.gap-bar-wrap h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin: 0 0 14px; }
+.gap-track { height: 26px; background: #e7dec9; border-radius: 4px; overflow: hidden; }
+.gap-fill { height: 100%; background: var(--accent); border-radius: 4px 0 0 4px; display: flex; align-items: center; padding-left: 10px; }
+.gap-fill span { font-size: 13px; color: #fff; font-weight: 700; white-space: nowrap; }
+.gap-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 14px; color: var(--ink-2); }
+
+/* ── Open callout ── */
+.open-callout { display: flex; gap: 14px; align-items: flex-start; background: #fdf5e8; border-left: 4px solid var(--ochre); padding: 16px 18px; margin: 24px 0 0; border-radius: 0 8px 8px 0; }
+.open-callout .oc-lab { font-size: 13px; font-weight: 700; color: var(--ochre); white-space: nowrap; padding-top: 2px; }
+.open-callout p { margin: 0; font-size: 16px; color: var(--ink-2); line-height: 1.65; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── Sidebar ── -->
+<aside class="side">
+  <a href="Luke%20Practitioner%20Packet.html" style="display:flex;align-items:center;gap:8px;padding:14px 22px;font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:700;color:#fff;text-decoration:none;background:oklch(38% 0.06 185);border-bottom:2px solid oklch(48% 0.08 185);letter-spacing:.02em;text-transform:uppercase;">← Packet home</a>
+  <div class="brand">
+    <div class="ey">Luke VonDog · June 2026</div>
+    <h1>Data<br><span style="color:#9ecbc6;font-weight:400;">Visualization</span><br>Suite</h1>
+    <div class="sub">Every marker. Every trend. What to do.</div>
+  </div>
+  <nav>
+    <div class="grp">Overview</div>
+    <a href="#weight"><span class="dot" style="background:#2a4a52;"></span><span class="nm">Weight History</span></a>
+    <div class="grp">Cardiac</div>
+    <a href="#lasix"><span class="dot" style="background:#6b2a2a;"></span><span class="nm">Furosemide Dose</span><span class="fl H">↑</span></a>
+    <a href="#omega3"><span class="dot" style="background:#6b2a2a;"></span><span class="nm">Omega-3 Gap</span><span class="fl H">Gap</span></a>
+    <div class="grp">Renal Panel</div>
+    <a href="#creatinine"><span class="dot" style="background:#2a4a52;"></span><span class="nm">Creatinine</span><span class="fl H">H</span></a>
+    <a href="#bun"><span class="dot" style="background:#2a4a52;"></span><span class="nm">BUN</span><span class="fl H">H</span></a>
+    <a href="#sdma"><span class="dot" style="background:#2a4a52;"></span><span class="nm">SDMA</span><span class="fl OK">OK</span></a>
+    <a href="#phosphorus"><span class="dot" style="background:#2a4a52;"></span><span class="nm">Phosphorus</span><span class="fl H">↑IRIS</span></a>
+    <a href="#urinalysis"><span class="dot" style="background:#5c3b5e;"></span><span class="nm">Urinalysis</span><span class="fl Q">MISSING</span></a>
+    <div class="grp">Hepatic Panel</div>
+    <a href="#alt"><span class="dot" style="background:#8a6a1e;"></span><span class="nm">ALT</span><span class="fl H">H</span></a>
+    <a href="#bilirubin"><span class="dot" style="background:#8a6a1e;"></span><span class="nm">Bilirubin</span><span class="fl OK">Resolved</span></a>
+    <a href="#lipase"><span class="dot" style="background:#8a6a1e;"></span><span class="nm">Lipase</span><span class="fl OK">Resolved</span></a>
+    <div class="grp">Hematology</div>
+    <a href="#hematocrit"><span class="dot" style="background:#4a5d2b;"></span><span class="nm">Hematocrit / MCV</span><span class="fl OK">Resolved</span></a>
+    <a href="#platelets"><span class="dot" style="background:#4a5d2b;"></span><span class="nm">Platelets</span><span class="fl H">H</span></a>
+    <div class="grp">Endocrine</div>
+    <a href="#t4"><span class="dot" style="background:#2a4a52;"></span><span class="nm">T4 (Thyroid)</span><span class="fl OK">Normal</span></a>
+    <div class="grp">Missing Biomarkers</div>
+    <a href="#missing"><span class="dot" style="background:#5c3b5e;"></span><span class="nm">What's Not Drawn</span><span class="fl Q">4 gaps</span></a>
+    <div class="grp" style="margin-top:6px;">Complete Record</div>
+    <a href="#complete-record"><span class="dot" style="background:#6b6457;"></span><span class="nm">All tests — all dates</span></a>
+    <div id="complete-record-nav"></div>
+  </nav>
+  <div class="foot">Data current through Mar 9, 2026</div>
+</aside>
+
+<!-- ── Main ── -->
+<main>
+
+<div class="cover">
+  <div class="ey">Clinical Data Reference · Luke VonDog · 12 yr Blue Weimaraner</div>
+  <h2>Every number.<br><em>What it means. What moves it.</em></h2>
+  <p>All of Luke's laboratory data charted over time, with context on what each marker reflects physiologically, how it is currently impacting Luke, and how the numbers move.</p>
+  <div class="legend">
+    <span><span class="swatch" style="background:oklch(78% 0.05 145);opacity:.5;"></span>Reference range (lab)</span>
+    <span><span class="swatch" style="background:#8a6a1e;border-radius:0;height:2px;width:24px;"></span>Clinical threshold (e.g. IRIS target)</span>
+    <span><span class="swatch" style="background:var(--burgundy);border-radius:50%;width:10px;height:10px;"></span>Above range</span>
+    <span><span class="swatch" style="background:var(--ochre);border-radius:50%;width:10px;height:10px;"></span>Below range / concern</span>
+    <span><span class="swatch" style="background:var(--accent);border-radius:50%;width:10px;height:10px;"></span>Within range</span>
+  </div>
+</div>
+
+<!-- ══ WEIGHT ══ -->
+<div class="section" id="weight">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Weight History (lb) — 2016–2026</h3>
+        <div class="s-top-row"><span class="s-badge">Weight</span> <span class="s-cat">Full history · 35 data points</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">79.1<small>lb</small></div>
+      <div><span class="pill OK">BCS 5/9 Ideal</span></div>
+      <div class="pill-date">Mar 9, 2026</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Body weight — 10 year arc</span><span class="ch-ref">35 measurements · May 2016 → Mar 2026</span></div>
+    <div class="chart-inner" id="wt-chart" style="min-height:240px;"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Raw body weight in pounds, measured at every clinic visit. Weight is a compound signal: it reflects fluid status, lean muscle mass, fat stores, and food intake. In Luke's context it is especially informative because his furosemide (a diuretic) actively removes fluid, and cardiac cachexia actively erodes muscle — so weight loss can have multiple overlapping causes.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>The <em>98 lb peak (May 2025)</em> was likely driven by fluid accumulation from cardiac decompensation. The subsequent 19 lb loss over 10 months reflects diuresis, reduced food intake, and probable muscle wasting (cardiac cachexia). The current <strong>79.1 lb at BCS 5/9</strong> is the veterinary team's endorsed ideal. Further <em>unintentional loss should trigger workup</em> (Dr. Denney, Mar '26 visit note).</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to adjust / manage weight in Luke</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>If weight continues to fall</h5>
+        <ul>
+          <li>Increase caloric density of current food — confirm kcal/oz on Pork &amp; Shellfish Nuggets label</li>
+          <li>Wild Biome reconsultation to recalibrate target (1,500 kcal/day set when Luke was heavier)</li>
+          <li>High-dose omega-3 to attenuate cardiac cachexia (muscle-preserving effect)</li>
+          <li>Bloodwork workup if loss accelerates — rule out new process</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>If weight climbs above ~82 lb</h5>
+        <ul>
+          <li>Review furosemide dosing — unexpected weight gain may indicate fluid re-accumulation</li>
+          <li>Monitor resting sleeping respiratory rate as corroborating signal</li>
+          <li>Reassess caloric intake — current food portion not formally calibrated</li>
+        </ul>
+      </div>
+      <div class="adj-col locked">
+        <h5>Constraint</h5>
+        <ul>
+          <li>Protein restriction to protect kidneys must not be so aggressive it accelerates muscle loss — balance with IRIS Stage 2 dietary guidance</li>
+          <li>Sodium restriction relevant for cardiac patients — current food sodium content unknown</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FUROSEMIDE DOSE ══ -->
+<div class="section" id="lasix">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Furosemide (Lasix) Dose Escalation</h3>
+        <div class="s-top-row"><span class="s-badge">Cardiac</span> <span class="s-cat">Medication dose trajectory</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">300<small>mg/d</small></div>
+      <div><span class="pill H">8.4 mg/kg/day</span></div>
+      <div class="pill-date">ACVIM Stage D threshold</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Furosemide daily dose (mg/day)</span><span class="ch-ref">ACVIM Stage D threshold ≥8 mg/kg/day — Luke is at 8.4 mg/kg/day without adjunctive cardiac meds</span></div>
+    <div class="chart-inner" id="lasix-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Furosemide is a loop diuretic: it forces the kidneys to excrete sodium and water, reducing fluid load on the heart. The dose trajectory from 50→100→300 mg/day reflects progressive cardiac disease requiring more diuretic force to keep Luke's lungs clear. The dose is both the treatment and the diagnostic marker — the heart's condition is inferred from how much furosemide it takes to keep Luke comfortable.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>At <em>8.4 mg/kg/day</em>, Luke is at the ACVIM threshold for Stage D refractory CHF — but without the adjunctive cardiac medications (pimobendan, ACE inhibitor, spironolactone) that stage D patients typically also receive. This means <strong>furosemide is doing all of the cardiac work alone</strong>, and its renal cost (chloride wasting, volume depletion) is unmitigated by cardiac offloading agents. The dose cannot safely be reduced without either an echo-guided plan or adjunctive medications.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to adjust the furosemide burden</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Reducing the dose (requires specialist plan)</h5>
+        <ul>
+          <li><strong>Pimobendan</strong> — positive inotrope; improves contractility so less diuretic force is needed. Standard-of-care addition for dogs with confirmed structural disease.</li>
+          <li><strong>ACE inhibitor</strong> (enalapril, benazepril) — reduces cardiac preload and afterload; may allow lower furosemide. Standard ACVIM recommendation.</li>
+          <li><strong>Spironolactone</strong> — potassium-sparing diuretic; supplemental effect allowing furosemide reduction.</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Monitoring dose adequacy</h5>
+        <ul>
+          <li>Resting sleeping respiratory rate (&lt;30 breaths/min is target — not currently tracked at home)</li>
+          <li>Weight stability (sudden gain = fluid re-accumulation)</li>
+          <li>Owner observation of breathing effort and energy level</li>
+          <li>NT-proBNP (cardiac biomarker) if echo is not pursued</li>
+        </ul>
+      </div>
+      <div class="adj-col locked">
+        <h5>Cannot do</h5>
+        <ul>
+          <li>Do not stop or reduce furosemide without a veterinary plan — Dr. Denney has named this as high risk for life-threatening respiratory event</li>
+          <li>All dose changes require monitoring Luke's breathing response within 24–48 hours</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ OMEGA-3 GAP ══ -->
+<div class="section" id="omega3">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Omega-3 (EPA + DHA) — Current vs. Target</h3>
+        <div class="s-top-row"><span class="s-badge">Cardiac · Nutrition</span> <span class="s-cat">Supplementation gap</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">132<small>mg/d</small></div>
+      <div><span class="pill H">6% of target</span></div>
+      <div class="pill-date">~2,300 mg/day indicated</div>
+    </div>
+  </div>
+  <div class="gap-bar-wrap">
+    <h4>Current intake vs. cardiac-indicated dose (Lenox &amp; Bauer, JVIM 2013)</h4>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:5.7%"><span>132 mg</span></div>
+    </div>
+    <div class="gap-labels"><span>0</span><span style="color:var(--burgundy);font-weight:600;">Target: ~2,300 mg/day (40 mg EPA + 25 mg DHA per kg/day)</span><span>2,300 mg</span></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What omega-3s do</h4>
+      <p>EPA and DHA (marine omega-3 fatty acids) reduce cardiac inflammation, attenuate cachexia (muscle wasting), improve appetite, support renal function, and help lower triglycerides. In dogs with cardiac disease, high-dose omega-3 supplementation has been shown to slow the progression of cardiac cachexia and may modestly improve survival time. For IRIS Stage 2 CKD, omega-3s are also renal-protective.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>Luke is receiving approximately <em>132 mg/day</em> from his supplement stack (Wuffes products + Cosequin). The evidence-based cardiac dose for a dog of Luke's weight is approximately <strong>2,300 mg/day combined EPA+DHA</strong>. This gap — 94% of the indicated dose going unfilled — means Luke is receiving none of the documented anti-cachexia, cardiac anti-inflammatory, or renal-protective benefit of omega-3 therapy. This is the most fixable gap in his current protocol.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to close the gap</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Supplement options</h5>
+        <ul>
+          <li><strong>Concentrated fish oil</strong> (Nordic Naturals Omega-3 Pet, Carlson Elite Omega-3): 1,000–2,000 mg EPA+DHA per softgel — 1–3 per day would close the gap</li>
+          <li>Wild Alaskan salmon oil: higher volume needed (~2–4 tsp/day for full dose)</li>
+          <li>Ultra Oil (originally recommended by Wild Biome) — verify EPA+DHA content per serving</li>
+          <li>Confirm no chicken-based source (Wild Biome flagged chicken sensitivity)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Implementation</h5>
+        <ul>
+          <li>Start low, titrate over 1–2 weeks — high-dose fish oil can cause loose stool if introduced abruptly</li>
+          <li>Add to warm food soup (oil disperses well in Luke's existing warm-nugget preparation)</li>
+          <li>Monitor stool consistency; reduce dose if GI signs appear</li>
+          <li>Confirm with Wild Biome in reconsultation — they recommended Ultra Oil in 2024</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Expected benefit timeline</h5>
+        <ul>
+          <li>Anti-inflammatory effect: begins within 2–4 weeks</li>
+          <li>Cachexia attenuation: 4–8 weeks</li>
+          <li>Renal-protective effect: cumulative over months</li>
+          <li>No known contraindications with Luke's current medications at therapeutic doses</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CREATININE ══ -->
+<div class="section" id="creatinine">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Creatinine</h3>
+        <div class="s-top-row"><span class="s-badge">Renal</span> <span class="s-cat">Kidney function</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">1.8<small>mg/dL</small></div>
+      <div><span class="pill H">Above range · IRIS Stage 2</span></div>
+      <div class="pill-date">Sep 11, 2025</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Creatinine (mg/dL)</span><span class="ch-ref">Ref 0.5–1.8 · IRIS Stage 2: 1.4–2.8 · Sample Sep '25 had hemolysis 2+ (possible artifact)</span></div>
+    <div class="chart-inner" id="creat-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Creatinine is a muscle breakdown waste product filtered by the kidneys. When creatinine rises, it signals that the kidneys are filtering less efficiently — either because nephrons have been lost, blood flow is reduced, or there is an acute stress on the kidneys. IDEXX notes the Sep '25 sample had hemolysis 2+, which can falsely elevate creatinine — the true value may be slightly lower than 1.8.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>The trajectory <em>1.0 → 1.2 → 1.8</em> over twelve months confirms a real trend even accounting for the hemolysis caveat. IRIS Stage 2 (1.4–2.8 in dogs) carries actionable recommendations: <strong>dietary phosphorus restriction, avoid nephrotoxic drugs where possible, hydration support.</strong> Both furosemide and carprofen are nephrotoxic — they are actively competing with kidney protection.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to protect the kidneys and slow creatinine progression</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Dietary levers</h5>
+        <ul>
+          <li>Phosphorus restriction below 4.6 mg/dL serum target (dietary phosphorus is the primary lever)</li>
+          <li>Obtain nutrient panel for current food — phosphorus content unknown</li>
+          <li>Hydration: warm soup delivery continues to support this</li>
+          <li>Omega-3 supplementation (renal-protective at cardiac doses)</li>
+          <li>Moderate dietary protein — not severely restricted (would worsen cachexia)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Medication levers</h5>
+        <ul>
+          <li>Carprofen dose reduction: Dr. Denney named this as an option — Librela + amantadine may allow lower NSAID dose</li>
+          <li>ACE inhibitor (if cardiac plan supports it) — also renal-protective in CKD by reducing glomerular hypertension</li>
+          <li>Avoid acute dehydration events — furosemide already stresses volume status</li>
+        </ul>
+      </div>
+      <div class="adj-col locked">
+        <h5>Constraint</h5>
+        <ul>
+          <li>Furosemide cannot be reduced without a cardiac plan — the cardiac disease requires it</li>
+          <li>Urinalysis + UPC ratio needed before stage can be fully substaged — current urinalysis is from 2023</li>
+          <li>If creatinine reaches 2.1–2.8, IRIS guidance escalates to more intensive management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BUN ══ -->
+<div class="section" id="bun">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>BUN — Blood Urea Nitrogen</h3>
+        <div class="s-top-row"><span class="s-badge">Renal</span> <span class="s-cat">Kidney function · protein metabolism</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">35<small>mg/dL</small></div>
+      <div><span class="pill H">Above ref</span></div>
+      <div class="pill-date">Mar 9, 2026</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">BUN (mg/dL)</span><span class="ch-ref">Ref 7–28 · BUN is more volatile than creatinine — dietary and hydration changes affect it quickly</span></div>
+    <div class="chart-inner" id="bun-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>BUN reflects the kidneys' ability to clear urea, a protein breakdown product. Unlike creatinine, BUN is highly influenced by protein intake, hydration status, and GI bleeding. A dog eating more protein or that is mildly dehydrated will have higher BUN even if kidney function is unchanged. This makes BUN useful but not definitive — it always needs to be interpreted alongside creatinine and hydration context.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>BUN rose from 19 to 43 across 2024–2025, then improved to 35 at the March 2026 draw. The Comprehensive Health Overview framed this as "<strong>volatile rather than steadily worsening</strong>" — an important note, but 35 is still above the reference of 28. The volatility itself is informative: <em>furosemide, dietary changes, and hydration shifts</em> can all swing BUN without reflecting true nephron loss.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to move BUN</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Downward levers</h5>
+        <ul>
+          <li>Hydration: warm soup architecture already helps — confirm water volume added is generous</li>
+          <li>Moderate dietary protein reduction (IRIS Stage 2 guidance)</li>
+          <li>Avoid protein-dense treats in excess</li>
+          <li>Treat any concurrent GI bleeding source (would elevate BUN)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Monitoring</h5>
+        <ul>
+          <li>BUN alone is not sufficient — always pair with creatinine and SDMA for renal picture</li>
+          <li>Next full chemistry panel will be most informative if run fasted and non-hemolyzed</li>
+          <li>Track trend over time; single elevated value less meaningful than sustained elevation</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Context notes</h5>
+        <ul>
+          <li>BUN:creatinine ratio 35/1.8 ≈ 19 — within normal range; no obvious prerenal pattern</li>
+          <li>Furosemide-driven volume depletion will keep BUN elevated even with intact nephrons</li>
+          <li>Wild Biome reconsultation can address protein level in current food</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SDMA ══ -->
+<div class="section" id="sdma">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>SDMA — Symmetric Dimethylarginine</h3>
+        <div class="s-top-row"><span class="s-badge">Renal</span> <span class="s-cat">Early kidney marker</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">13<small>µg/dL</small></div>
+      <div><span class="pill WARN">Near top of range</span></div>
+      <div class="pill-date">Sep 11, 2025</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">SDMA (µg/dL)</span><span class="ch-ref">Ref 0–14 · SDMA can detect CKD 1.5–2 years before creatinine rises — Luke is moving toward the ceiling</span></div>
+    <div class="chart-inner" id="sdma-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>SDMA is a kidney filtration marker that rises before creatinine does — it can detect CKD approximately 1.5–2 years earlier. It is less influenced by muscle mass than creatinine (relevant for a dog losing muscle to cachexia). SDMA is included in IRIS staging as a corroborating marker. A rising SDMA within the reference range is still a signal worth tracking.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>SDMA moved from 11 to 13 over one year — both within range, but heading toward the ceiling. At <em>SDMA 13 with creatinine 1.8</em>, the renal picture is consistent: both markers are confirming early Stage 2 CKD, not contradicting it. <strong>The IDEXX interpretive note for Sep '25 specifically recommended urinalysis and additional renal function testing</strong> as the next step — that next step remains unperformed.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to manage SDMA trajectory</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Slowing progression</h5>
+        <ul>
+          <li>Same interventions as creatinine: hydration, phosphorus restriction, lower carprofen dose, omega-3</li>
+          <li>SDMA responds to the same renal-protective measures; it just shows them faster</li>
+          <li>ACE inhibitor (if cardiac plan supports) has renal-protective benefit specifically</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>What to watch</h5>
+        <ul>
+          <li>SDMA ≥14 would push Luke to the edge of the reference range — signals need for more intensive management</li>
+          <li>SDMA ≥25 corresponds to IRIS Stage 3 territory</li>
+          <li>Track at every bloodwork draw (currently every 6–12 months)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>What cannot be undone</h5>
+        <ul>
+          <li>Lost nephrons do not regenerate — current SDMA trajectory reflects real nephron loss, not just functional stress</li>
+          <li>Goal is to slow progression, not reverse it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PHOSPHORUS ══ -->
+<div class="section" id="phosphorus">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Phosphorus</h3>
+        <div class="s-top-row"><span class="s-badge">Renal · Nutrition</span> <span class="s-cat">Renal diet target — most actionable marker</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">5.1<small>mg/dL</small></div>
+      <div><span class="pill H">Above IRIS target</span></div>
+      <div class="pill-date">Sep '25</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Serum phosphorus (mg/dL)</span><span class="ch-ref">Lab ref 2.5–6.1 · IRIS Stage 2 renal-protective target &lt;4.6 mg/dL (dashed line)</span></div>
+    <div class="chart-inner" id="phos-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Serum phosphorus reflects dietary phosphorus absorption and kidney clearance. In CKD, the kidneys lose their ability to excrete phosphorus, so serum levels rise. Elevated phosphorus accelerates kidney damage — it is one of the few CKD progression drivers that is directly diet-modifiable. The IRIS guidelines recommend keeping serum phosphorus below 4.6 mg/dL in Stage 2 dogs.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>Luke's phosphorus has been above the IRIS Stage 2 target for at least the past two draws (5.2 and 5.1). Within the lab's reference range, it looks fine — but <em>the IRIS target of &lt;4.6 is the clinically relevant benchmark</em> for renal protection. The most likely driver is dietary phosphorus intake from the current raw food. <strong>The current food's phosphorus content is unknown</strong> — this is the most actionable open item in the entire nutritional picture.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to lower phosphorus — the most adjustable marker in the renal panel</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Dietary (first line)</h5>
+        <ul>
+          <li>Obtain manufacturer phosphorus content for Steve's Real Food Pork &amp; Shellfish Nuggets (call or email the manufacturer)</li>
+          <li>If phosphorus is high in current food: ask Wild Biome to recommend a lower-phosphorus raw formula (some novel protein options are naturally lower)</li>
+          <li>Reduce high-phosphorus treats and add-ins (organ meat, bone broth if high-P)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Phosphorus binders (if diet alone insufficient)</h5>
+        <ul>
+          <li>Aluminum hydroxide (given with food, binds dietary phosphorus in gut before absorption) — requires prescription and monitoring</li>
+          <li>Calcium carbonate (alternative binder)</li>
+          <li>Epakitin (chitosan + calcium carbonate — labeled for dogs)</li>
+          <li>Start binders only after dietary adjustment fails to reach target</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Target and monitoring</h5>
+        <ul>
+          <li>IRIS Stage 2 target: &lt;4.6 mg/dL serum</li>
+          <li>Recheck phosphorus at next bloodwork draw (3–6 months after dietary change)</li>
+          <li>Correlate with dietary change log for causality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ URINALYSIS ══ -->
+<div class="section" id="urinalysis">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Urinalysis + UPC Ratio</h3>
+        <div class="s-top-row"><span class="s-badge">Renal · Missing</span> <span class="s-cat">Urine — not collected at Sep 2025 draw</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val" style="color:#fff;font-weight:800;letter-spacing:-.02em;">Missing</div>
+      <div><span class="pill Q">Last: Sep 2023</span></div>
+      <div class="pill-date">IDEXX specifically flagged</div>
+    </div>
+  </div>
+  <div class="open-callout">
+    <div class="oc-lab">Urgent gap</div>
+    <p>The September 11, 2025 IDEXX panel note reads verbatim: <em>"A urine sample was not received. The remainder of requested testing has been performed. Please create a new order to resubmit a specimen for a standalone urine test."</em> The last full urinalysis is from September 7, 2023 (1+ protein, cloudy, SG 1.033, pH 7.5, 1+ epithelial cells, 2+ amorphous crystals). The 1+ proteinuria from 2023 was flagged for follow-up and has never been re-evaluated. A UPC ratio would substage Luke's IRIS CKD by proteinuria and guide whether an ACE inhibitor is indicated.</p>
+  </div>
+  <table class="data-tbl" style="margin-top:16px;">
+    <thead><tr><th>Marker</th><th>Sep 2023 value</th><th>Reference</th><th>Significance in Luke</th></tr></thead>
+    <tbody>
+      <tr><td class="d">Specific Gravity</td><td class="v">1.033</td><td class="r">1.015–1.045</td><td class="nt">Within range — concentrating ability preserved at that point</td></tr>
+      <tr><td class="d">pH</td><td class="v">7.5</td><td class="r">5.5–8.5</td><td class="nt">Normal</td></tr>
+      <tr><td class="d">Protein</td><td class="v">1+ <span class="tag-h">Flagged</span></td><td class="r">Negative</td><td class="nt">Mild proteinuria — needs UPC ratio to substage. Never rechecked.</td></tr>
+      <tr><td class="d">Clarity</td><td class="v">Cloudy</td><td class="r">Clear</td><td class="nt">Non-specific; could be crystalline or cellular</td></tr>
+      <tr><td class="d">Amorphous crystals</td><td class="v">2+</td><td class="r">Negative</td><td class="nt">Worth monitoring; may reflect pH or diet</td></tr>
+      <tr><td class="d">UPC ratio</td><td class="v" style="color:var(--plum);">Not measured</td><td class="r">&lt;0.2 non-proteinuric</td><td class="nt">Critical for IRIS substaging. If UPC &gt;0.5, ACE inhibitor indicated.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ ALT ══ -->
+<div class="section" id="alt">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>ALT — Alanine Aminotransferase</h3>
+        <div class="s-top-row"><span class="s-badge">Hepatic</span> <span class="s-cat">Liver stress marker</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">128<small>U/L</small></div>
+      <div><span class="pill H">Above ref</span></div>
+      <div class="pill-date">Sep '25</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">ALT (U/L)</span><span class="ch-ref">Ref 18–121 · Steady upward trend across all three draws — likely carprofen-related hepatocellular stress</span></div>
+    <div class="chart-inner" id="alt-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>ALT is an intracellular liver enzyme that leaks into the bloodstream when hepatocytes (liver cells) are damaged or stressed. Elevated ALT does not diagnose a specific liver disease — it indicates hepatocellular injury and warrants investigation of the cause. In dogs on long-term NSAIDs like carprofen, a rising ALT trend is a recognized adverse effect requiring monitoring and possible dose adjustment.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>The <em>46 → 121 → 128 trend</em> over twelve months is consistent with cumulative hepatocellular stress. At 128, Luke is just above the reference ceiling of 121. Dr. G's email (Mar '25) named "<em>early changes to his gallbladder and potentially his liver</em>" in response to the bilirubin spike at that same draw. <strong>Carprofen is the most likely contributor</strong> — it is the drug with the clearest hepatotoxic risk in this protocol.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to protect the liver and lower ALT</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Primary lever: reduce carprofen</h5>
+        <ul>
+          <li>Dr. Denney explicitly named carprofen dose reduction as an option (Sep '25 email)</li>
+          <li>Librela (anti-NGF) + amantadine (NMDA antagonist) may provide sufficient pain coverage at a lower NSAID dose</li>
+          <li>Reducing from 225 mg/day to 150 mg/day (2 tabs) would reduce both hepatic and renal load</li>
+          <li>Gabapentin (discussed but not started) could also partially substitute</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Hepatoprotective supplements</h5>
+        <ul>
+          <li><strong>SAMe</strong> (S-adenosylmethionine) — hepatoprotective; well-studied in dogs on long-term NSAIDs. Nutramax Denosyl is the veterinary product.</li>
+          <li><strong>Silybin / milk thistle</strong> — antioxidant hepatoprotective; Marin for dogs is the veterinary formulation</li>
+          <li>These can be used alongside continued carprofen if dose reduction is not possible</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Monitoring</h5>
+        <ul>
+          <li>ALT at every bloodwork draw (currently 6–12 months)</li>
+          <li>ALP and GGT should also be tracked (cholestatic markers) — currently within range</li>
+          <li>Bile acid panel (pre- and post-prandial) would characterize liver function beyond enzyme leakage</li>
+          <li>If ALT reaches 2× upper limit (~242), more aggressive intervention warranted</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BILIRUBIN ══ -->
+<div class="section" id="bilirubin">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Bilirubin (Total)</h3>
+        <div class="s-top-row"><span class="s-badge">Hepatic</span> <span class="s-cat">Resolved — continue monitoring</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">0.1<small>mg/dL</small></div>
+      <div><span class="pill OK">Normal · Resolved</span></div>
+      <div class="pill-date">Sep '25 · was 1.4 H (Mar '25)</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Total bilirubin (mg/dL)</span><span class="ch-ref">Ref 0.0–0.3 · Spike to 1.4 (Mar '25) prompted gallbladder/liver concern; resolved by Sep '25</span></div>
+    <div class="chart-inner" id="bili-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Bilirubin is a breakdown product of red blood cells, processed by the liver and excreted in bile. Elevated total bilirubin can reflect cholestasis (bile flow obstruction), hemolysis (red cell breakdown), or hepatocellular disease. The March 2025 spike to 1.4 was 4× the upper limit of normal — significant, and the reason Dr. G's email named gallbladder and liver changes specifically.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>The spike resolved completely by September 2025 (0.1 mg/dL). This is reassuring, but the cause of the March spike was never definitively established — the imaging that would have characterized the gallbladder was deferred for QoL reasons. <strong>The unresolved question is whether the gallbladder is a recurrence risk.</strong> Continue monitoring at each bloodwork draw.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to manage bilirubin going forward</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>If it rises again</h5>
+        <ul>
+          <li>Abdominal ultrasound specifically targeting the gallbladder — deferred in May '25 but would answer the question definitively</li>
+          <li>Rule out hemolysis (CBC corroborating) vs. cholestatic vs. hepatocellular cause</li>
+          <li>Consider ursodiol (ursodeoxycholic acid) for cholestatic causes if gallbladder sludge is found on ultrasound</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Protective measures</h5>
+        <ul>
+          <li>Low-fat diet on days of any GI stress (may reduce gallbladder demand)</li>
+          <li>Carprofen reduction (hepatotoxic NSAID is a candidate trigger)</li>
+          <li>SAMe supplementation protects bile composition</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Current status</h5>
+        <ul>
+          <li>0.1 mg/dL is fully within range — no current action needed</li>
+          <li>Monitor at each draw; flag if returns above 0.5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LIPASE ══ -->
+<div class="section" id="lipase">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Lipase (Canine Pancreatic Lipase)</h3>
+        <div class="s-top-row"><span class="s-badge">GI · Pancreatic</span> <span class="s-cat">Resolved — high point was acute pancreatitis range</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">110<small>U/L</small></div>
+      <div><span class="pill OK">Normal · Resolved</span></div>
+      <div class="pill-date">Sep '25 · was 1,382 H (Mar '25)</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Lipase (U/L)</span><span class="ch-ref">Ref 0–250 · Mar '25 value of 1,382 is >5× upper limit — pancreatitis range. Fully resolved by Sep '25.</span></div>
+    <div class="chart-inner" id="lipase-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Lipase is an enzyme produced by the pancreas to digest fats. An elevation above 2–3× the reference range, combined with compatible symptoms, indicates pancreatitis. Luke's March 2025 value of 1,382 (>5× upper limit) occurred at the same draw that showed elevated bilirubin and ALT — suggesting that either pancreatitis drove the hepatic changes, or a shared biliary/pancreatic event caused both.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>The episode appears to have resolved completely — lipase was 110 (within range) by September 2025, and no clinical signs of pancreatitis were documented in the interval. The trigger is unknown. High-fat dietary exposure, gallbladder involvement, or medication effect are candidates. <strong>Because the episode was subclinical and resolved, no change to the protocol was made</strong> — but diet fat content warrants attention.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to manage pancreatitis risk going forward</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Dietary</h5>
+        <ul>
+          <li>Avoid high-fat treats or abrupt dietary changes (common pancreatitis triggers)</li>
+          <li>Confirm fat content of current food and treats with manufacturer</li>
+          <li>Low-fat diet during any GI illness episode</li>
+          <li>Avoid peanut butter (already removed per Wild Biome) — high fat</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>If lipase rises again</h5>
+        <ul>
+          <li>Clinical pancreatitis requires IV fluids, pain management, and temporary food restriction</li>
+          <li>Abdominal ultrasound to assess pancreatic inflammation</li>
+          <li>Consider cPLI (canine pancreatic lipase immunoreactivity) for specificity</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Current status</h5>
+        <ul>
+          <li>110 U/L — fully resolved, within reference range</li>
+          <li>Monitor at each bloodwork draw</li>
+          <li>Flag if rises above 500 (2× upper limit) — recheck and correlate with symptoms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEMATOCRIT / MCV ══ -->
+<div class="section" id="hematocrit">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Hematocrit &amp; MCV — Anemia Resolution</h3>
+        <div class="s-top-row"><span class="s-badge">Hematology</span> <span class="s-cat">Resolved microcytic anemia — now normal</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">53.2<small>%</small></div>
+      <div><span class="pill OK">Normal · Resolved</span></div>
+      <div class="pill-date">Sep '25 · was 32.0 L (Sep '23)</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="ch-meta"><span class="ch-title">Hematocrit (%) and MCV (fL)</span><span class="ch-ref">Hct ref 41–60% · MCV ref 62–76 fL · Both were critically low in Sep 2023, fully resolved by Sep 2024</span></div>
+    <div class="chart-inner" id="hct-chart"></div>
+  </div>
+  <div class="prose-grid">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Hematocrit is the percentage of blood volume occupied by red blood cells. MCV (Mean Corpuscular Volume) is the average size of individual red blood cells. In September 2023, Luke had <em>microcytic anemia</em> — low Hct (32%) with abnormally small cells (MCV 50). Microcytic anemia typically indicates iron deficiency or chronic inflammatory disease. It resolved completely by September 2024.</p>
+    </div>
+    <div class="blk">
+      <h4>How it resolved and current status</h4>
+      <p>The anemia resolved between Sep '23 and Sep '24 — the Wild Biome consultation and dietary changes (to Steve's Real Food Pork Blocks starting late 2023/early 2024) fall in the same window. Raw meat diet provides excellent bioavailable heme iron, which may have corrected the iron component. <strong>Both Hct (53.2%) and MCV (65 fL) are now within normal range</strong> and have been stable across two draws.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">How to maintain normal hematology</div>
+    <div class="adj-grid">
+      <div class="adj-col">
+        <h5>Keep doing</h5>
+        <ul>
+          <li>Raw meat diet provides heme iron naturally</li>
+          <li>Monitor at each bloodwork draw</li>
+          <li>If anemia returns, check reticulocytes (regenerative vs. non-regenerative)</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>Watch for</h5>
+        <ul>
+          <li>GI blood loss (NSAID use can cause GI ulceration — periodically check stool)</li>
+          <li>Reticulocyte Hgb (22.5 L in Sep '25) — marginal low, watch trend</li>
+          <li>Anemia of chronic disease is possible with cardiac + CKD burden</li>
+        </ul>
+      </div>
+      <div class="adj-col">
+        <h5>If anemia recurs</h5>
+        <ul>
+          <li>Distinguish iron-deficiency (microcytic) from anemia of chronic disease (normocytic)</li>
+          <li>GI ulceration workup if on continued NSAIDs</li>
+          <li>Erythropoietin levels if CKD anemia suspected (a later-stage CKD complication)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PLATELETS ══ -->
+<div class="section" id="platelets">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Platelets</h3>
+        <div class="s-top-row"><span class="s-badge">Hematology</span> <span class="s-cat">Mildly elevated — watch trend</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">481<small>K/µL</small></div>
+      <div><span class="pill H">Above ref</span></div>
+      <div class="pill-date">Sep '25</div>
+    </div>
+  </div>
+  <div class="prose-grid" style="margin-top:18px;">
+    <div class="blk">
+      <h4>What this measures</h4>
+      <p>Platelets are clotting cells. Elevated platelets (thrombocytosis) in dogs is most commonly reactive — a response to inflammation, iron deficiency, or tissue injury — rather than a primary clotting disorder. In Luke's context, the elevation is likely reactive (chronic inflammation from OA and cardiac disease) rather than a primary problem. Only one measurement on record.</p>
+    </div>
+    <div class="blk">
+      <h4>How it is impacting Luke</h4>
+      <p>At 481 K/µL (ref ≤412), the elevation is modest — approximately 17% above the upper limit. No clinical signs of thrombosis or bleeding are documented. <strong>One data point is not a trend.</strong> Rechecking at the next bloodwork draw will determine if this is persistent or was a reactive spike. NSAID therapy (carprofen) can affect platelet function (reduces aggregation) — relevant context.</p>
+    </div>
+  </div>
+  <div class="adjust">
+    <div class="adj-title">Management</div>
+    <div class="adj-grid">
+      <div class="adj-col"><h5>Monitor</h5><ul><li>Recheck at next CBC — assess if persistent or resolved</li><li>If persistently elevated: investigate underlying inflammatory cause</li></ul></div>
+      <div class="adj-col"><h5>Context</h5><ul><li>Carprofen inhibits platelet aggregation — bleeding risk if platelet function also affected</li><li>Note to any surgeon or emergency provider: platelet number elevated but function may be reduced on chronic NSAID</li></ul></div>
+      <div class="adj-col"><h5>Low concern unless</h5><ul><li>Platelets exceed 800–1000 K/µL (primary thrombocytosis territory)</li><li>Signs of thrombosis appear (limb swelling, sudden pain, neurologic signs)</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ T4 ══ -->
+<div class="section" id="t4">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>Total T4 (Thyroid)</h3>
+        <div class="s-top-row"><span class="s-badge">Endocrine</span> <span class="s-cat">Thyroid — low-normal, likely euthyroid</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val">1.7<small>µg/dL</small></div>
+      <div><span class="pill OK">Normal</span></div>
+      <div class="pill-date">Sep '25</div>
+    </div>
+  </div>
+  <div class="prose-grid" style="margin-top:18px;">
+    <div class="blk">
+      <h4>What this measures &amp; Luke's context</h4>
+      <p>Total T4 reflects thyroid hormone output. At 1.7 µg/dL, Luke is in the lower quartile of the reference range. IDEXX's interpretive note states that low-normal T4 (1–2 µg/dL) in a dog with no clinical signs of hypothyroidism is <strong>not by itself a hypothyroid indicator</strong> — euthyroid sick syndrome (low T4 from non-thyroidal illness) is common in dogs with chronic disease. Chronic illness, certain medications, and lab timing all suppress T4 without true thyroid disease.</p>
+    </div>
+    <div class="blk">
+      <h4>How to adjust / when to recheck</h4>
+      <p>No intervention needed based on current value and absence of clinical signs (no weight gain, lethargy beyond current disease burden, cold intolerance, skin changes). If clinical signs of hypothyroidism develop, a free T4 by equilibrium dialysis (gold standard) and TSH would be more informative than total T4. Recheck as part of annual senior panels.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MISSING BIOMARKERS ══ -->
+<div class="section" id="missing">
+  <div class="s-head">
+      <div class="s-head-inner">
+        <h3>What's Not in the Record — and Why It Matters</h3>
+        <div class="s-top-row"><span class="s-badge">Not Drawn</span> <span class="s-cat">Four high-value markers never measured in Luke</span></div>
+      </div>
+      <div class="s-current">
+      <div class="val" style="color:#fff;font-weight:800;">4<small>gaps</small></div>
+      <div><span class="pill Q">All actionable</span></div>
+    </div>
+  </div>
+  <table class="data-tbl" style="margin-top:16px;">
+    <thead><tr><th>Biomarker</th><th>Why it matters for Luke</th><th>What it would tell us</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="d">NT-proBNP<br><span style="font-size:10px;color:var(--ink-mute);">N-terminal pro B-type natriuretic peptide</span></td>
+        <td class="nt">Luke's cardiac diagnosis is entirely empirical. No echo. NT-proBNP is a blood marker of cardiac wall stress — elevated in dogs with structural heart disease.</td>
+        <td class="nt">Would quantify cardiac strain without echocardiography. Guides whether pimobendan/ACE-I are indicated. Baseline for tracking.</td>
+        <td><span class="tag-h">High</span></td>
+      </tr>
+      <tr>
+        <td class="d">Cardiac Troponin I<br><span style="font-size:10px;color:var(--ink-mute);">cTnI</span></td>
+        <td class="nt">Marker of acute cardiac myocyte injury. Useful for baseline and for detecting acute events. Complements NT-proBNP.</td>
+        <td class="nt">Would detect if any recent cardiac myocyte injury has occurred. Useful as a baseline for comparison if Luke has an acute respiratory event.</td>
+        <td><span class="tag-h">Medium</span></td>
+      </tr>
+      <tr>
+        <td class="d">Whole-Blood Taurine<br><span style="font-size:10px;color:var(--ink-mute);">Taurine status</span></td>
+        <td class="nt">Luke's diet history includes long grain-free and novel-protein raw periods (Pork Blocks, Pork &amp; Shellfish) overlapping the FDA's 2018–2019 DCM investigation window. Taurine deficiency is implicated in diet-associated DCM.</td>
+        <td class="nt">Rules in or out taurine-deficient DCM — a treatable/reversible cause. A single measurement. If low, taurine supplementation could improve cardiac function.</td>
+        <td><span class="tag-h">Medium</span></td>
+      </tr>
+      <tr>
+        <td class="d">UPC Ratio<br><span style="font-size:10px;color:var(--ink-mute);">Urine Protein:Creatinine</span></td>
+        <td class="nt">Luke had 1+ proteinuria in Sep 2023 that was flagged for follow-up. It was never rechecked. UPC substages IRIS CKD — if UPC &gt;0.5, ACE inhibitor is indicated to reduce further renal damage.</td>
+        <td class="nt">Definitively answers the proteinuria question. Changes IRIS substage and potentially adds ACE inhibitor to the regimen (which would also help the heart).</td>
+        <td><span class="tag-h" style="background:#ecd6d0;">Urgent</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ COMPLETE RECORD ══ -->
+<div class="section" id="complete-record" style="background:var(--accent-deep);padding:44px 60px 72px;border-top:none;">
+  <div style="font-family:system-ui,-apple-system,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:oklch(72% 0.07 185);margin-bottom:14px;font-weight:600;">Complete Laboratory Record</div>
+  <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(36px,5vw,56px);letter-spacing:-.025em;color:#fff;margin-bottom:16px;line-height:1.0;">All tests. All dates.</h2>
+  <p style="font-size:17px;color:oklch(78% 0.04 195);text-wrap:pretty;line-height:1.6;">Every laboratory marker on file — including all CBC, chemistry, coagulation, electrolyte, and metabolic values — charted over time with reference ranges. Tests covered in clinical detail above are not repeated here.</p>
+</div>
+<div id="complete-record-wrap"></div>
+
+</main>
+</div><!-- /shell -->
+
+<script>
+// ── Chart renderer (readable, collision-safe) ────────────────
+function renderChart(containerId, cfg) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const nPts = cfg.data.length;
+  // Taller chart for denser data; minimum 160px
+  const H = nPts <= 2 ? 160 : nPts <= 4 ? 180 : 200;
+  const W = 680;
+  const pad = {t:28, r:52, b:40, l:52};
+  const pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
+
+  const pts = cfg.data;
+  const times = pts.map(p => new Date(p.d).getTime());
+  const vals  = pts.map(p => p.v);
+  const tMin  = Math.min(...times), tMax = Math.max(...times);
+  // For single point, spread the time axis so the dot is centered
+  const tRange = (tMax - tMin) || (tMax * 0.1) || 1;
+
+  const allY = [...vals];
+  if (cfg.refLow  != null) allY.push(cfg.refLow);
+  if (cfg.refHigh != null) allY.push(cfg.refHigh);
+  if (cfg.threshold != null) allY.push(cfg.threshold);
+  const rawMin = Math.min(...allY), rawMax = Math.max(...allY);
+  const spread = rawMax - rawMin || rawMax * 0.2 || 1;
+  const yMin = Math.max(0, rawMin - spread * 0.22);
+  const yMax = rawMax + spread * 0.28;
+
+  const sx = t => {
+    if (nPts === 1) return pad.l + pw * 0.5;
+    return pad.l + ((t - tMin) / tRange) * pw;
+  };
+  const sy = v => pad.t + (1 - (v - yMin) / (yMax - yMin)) * ph;
+  const fmtDate = t => {
+    const d = new Date(t);
+    return (d.getMonth()+1) + '/' + String(d.getFullYear()).slice(2);
+  };
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;overflow:visible">`;
+
+  // plot background
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${pw}" height="${ph}" fill="oklch(97% 0.006 145)" rx="2"/>`;
+
+  // ref band + RIGHT-SIDE ref labels (no more left-edge collision)
+  if (cfg.refLow != null && cfg.refHigh != null) {
+    const y1 = sy(Math.min(cfg.refHigh, yMax)), y2 = sy(Math.max(cfg.refLow, yMin));
+    s += `<rect x="${pad.l}" y="${Math.min(y1,y2)}" width="${pw}" height="${Math.abs(y2-y1)}" fill="oklch(76% 0.055 145)" opacity="0.28"/>`;
+    // ref labels on the RIGHT
+    if (cfg.refHigh <= yMax) s += `<text x="${pad.l+pw+8}" y="${sy(cfg.refHigh)+4}" text-anchor="start" font-size="11" fill="#6e8e92" font-family="monospace" font-weight="600">${cfg.refHigh}</text>`;
+    if (cfg.refLow  >= yMin) s += `<text x="${pad.l+pw+8}" y="${sy(cfg.refLow)+4}"  text-anchor="start" font-size="11" fill="#6e8e92" font-family="monospace" font-weight="600">${cfg.refLow}</text>`;
+  }
+
+  // threshold line + label on right
+  if (cfg.threshold != null && cfg.threshold >= yMin && cfg.threshold <= yMax) {
+    const ty = sy(cfg.threshold);
+    s += `<line x1="${pad.l}" y1="${ty}" x2="${pad.l+pw}" y2="${ty}" stroke="#8a6a1e" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.9"/>`;
+    if (cfg.thresholdLabel) {
+      s += `<text x="${pad.l+pw+8}" y="${ty+4}" font-size="11" fill="#8a6a1e" font-family="monospace" font-weight="600">${cfg.thresholdLabel}</text>`;
+    }
+  }
+
+  // connecting line (skip for single point)
+  if (nPts > 1) {
+    const linePts = pts.map(p => `${sx(new Date(p.d).getTime()).toFixed(1)},${sy(p.v).toFixed(1)}`).join(' ');
+    s += `<polyline points="${linePts}" fill="none" stroke="#2a4a52" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }
+
+  // collision helpers
+  const refHighY = (cfg.refHigh != null && cfg.refHigh <= yMax) ? sy(cfg.refHigh) : null;
+  const refLowY  = (cfg.refLow  != null && cfg.refLow  >= yMin) ? sy(cfg.refLow)  : null;
+  const threshY  = (cfg.threshold != null) ? sy(cfg.threshold) : null;
+  const COLL = 16;
+  const placedLabels = []; // [{x, y}]
+
+  function safeLabelY(dotY, preferAbove) {
+    let ly = preferAbove ? dotY - 14 : dotY + 20;
+    const hits = v => v != null && Math.abs(ly - v) < COLL;
+    if (hits(refHighY) || hits(refLowY) || hits(threshY)) {
+      ly = preferAbove ? dotY + 20 : dotY - 14;
+    }
+    return Math.max(pad.t + 8, Math.min(H - pad.b + 4, ly));
+  }
+  function noStack(lx, ly, preferAbove) {
+    let attempts = 0;
+    while (placedLabels.some(p => Math.abs(p.x - lx) < 52 && Math.abs(p.y - ly) < 16) && attempts < 8) {
+      ly = preferAbove ? ly - 17 : ly + 17;
+      ly = Math.max(pad.t + 6, Math.min(H - pad.b + 6, ly));
+      attempts++;
+    }
+    placedLabels.push({x: lx, y: ly});
+    return ly;
+  }
+
+  // dots + labels
+  pts.forEach((p, i) => {
+    const t  = new Date(p.d).getTime();
+    const x  = sx(t), y = sy(p.v);
+    const isH = cfg.refHigh != null && p.v > cfg.refHigh;
+    const isL = cfg.refLow  != null && p.v < cfg.refLow;
+    const col = isH ? '#6b2a2a' : isL ? '#8a6a1e' : '#2a4a52';
+    const isLast = i === pts.length - 1;
+    const r = isLast ? 6.5 : (nPts <= 3 ? 5.5 : 4.5);
+    s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${col}" stroke="white" stroke-width="2"/>`;
+
+    const shouldLabel = cfg.labelOnly ? cfg.labelOnly.has(i) : true;
+    if (shouldLabel) {
+      const preferAbove = i % 2 === 0;
+      const ly0 = safeLabelY(y, preferAbove);
+      const labelY = noStack(x, ly0, preferAbove);
+      const fs = isLast ? 13 : 11;
+      const fw = isLast ? '700' : '600';
+      s += `<text x="${x.toFixed(1)}" y="${labelY}" text-anchor="middle" font-size="${fs}" fill="${col}" font-weight="${fw}" font-family="monospace">${p.v}</text>`;
+      // date label at bottom
+      s += `<text x="${x.toFixed(1)}" y="${H - pad.b + 18}" text-anchor="middle" font-size="11" fill="#6b6457" font-family="monospace">${fmtDate(t)}</text>`;
+    }
+  });
+
+  // bottom axis line
+  s += `<line x1="${pad.l}" y1="${pad.t+ph}" x2="${pad.l+pw}" y2="${pad.t+ph}" stroke="#d4cab4" stroke-width="1"/>`;
+
+  s += '</svg>';
+  container.innerHTML = s;
+}
+
+// ── Weight chart (custom design) ─────────────────────────────
+(function buildWeightChart() {
+  const el = document.getElementById('wt-chart');
+  if (!el) return;
+  const data = [
+    {d:'2016-05-25',v:58.0},{d:'2016-06-24',v:73.4},{d:'2016-09-01',v:77.2},{d:'2016-11-15',v:75.8},
+    {d:'2017-01-26',v:82.6},{d:'2017-08-04',v:78.9},{d:'2017-08-29',v:77.8},{d:'2018-01-16',v:78.5},
+    {d:'2018-05-15',v:72.5},{d:'2018-06-22',v:73.0},{d:'2018-11-16',v:75.0},{d:'2019-01-08',v:77.1},
+    {d:'2020-02-05',v:79.4},{d:'2020-07-16',v:82.0},{d:'2020-08-17',v:80.0},{d:'2020-10-21',v:85.0},
+    {d:'2022-04-11',v:73.3},{d:'2022-04-19',v:76.0},{d:'2023-03-20',v:79.5},{d:'2023-04-03',v:84.0},
+    {d:'2023-05-23',v:80.4},{d:'2023-08-23',v:86.3},{d:'2023-09-06',v:88.5},{d:'2023-10-30',v:87.0},
+    {d:'2023-12-18',v:83.0},{d:'2024-01-08',v:88.6},{d:'2024-02-21',v:90.1},{d:'2024-03-14',v:87.5},
+    {d:'2024-12-02',v:89.3},{d:'2025-05-14',v:98.0},{d:'2025-06-25',v:90.0},{d:'2025-08-01',v:89.0},
+    {d:'2025-09-11',v:87.4},{d:'2026-03-04',v:79.1},{d:'2026-03-09',v:79.1}
+  ];
+
+  const W = 680, H = 240;
+  const pad = {t:28, r:28, b:36, l:42};
+  const pw = W-pad.l-pad.r, ph = H-pad.t-pad.b;
+  const yMin=50, yMax=105;
+  const xMin=2016, xMax=2027;
+
+  const dateToYr = d => { const [y,m,da]=d.split('-'); return +y+(+m-1)/12+(+da)/365; };
+  const sx = yr => pad.l + (yr-xMin)/(xMax-xMin)*pw;
+  const sxd = d => sx(dateToYr(d));
+  const sy = v => pad.t + (1-(v-yMin)/(yMax-yMin))*ph;
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;overflow:visible">`;
+
+  // Plot background
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${pw}" height="${ph}" fill="oklch(96% 0.008 145)" rx="2"/>`;
+
+  // Horizontal gridlines
+  [60,70,80,90,100].forEach(v => {
+    const y = sy(v);
+    s += `<line x1="${pad.l}" y1="${y}" x2="${pad.l+pw}" y2="${y}" stroke="#d8cfba" stroke-width="1"/>`;
+    s += `<text x="${pad.l-7}" y="${y+4}" text-anchor="end" font-size="10" fill="#9a927f" font-family="monospace">${v}</text>`;
+  });
+
+  // X axis year ticks
+  for (let yr=2016; yr<=2026; yr++) {
+    const x = sx(yr);
+    s += `<line x1="${x}" y1="${pad.t+ph}" x2="${x}" y2="${pad.t+ph+5}" stroke="#d8cfba" stroke-width="1"/>`;
+    s += `<text x="${x}" y="${pad.t+ph+16}" text-anchor="middle" font-size="10" fill="#9a927f" font-family="monospace">${yr}</text>`;
+  }
+
+  // Data line
+  const linePts = data.map(p=>`${sxd(p.d).toFixed(1)},${sy(p.v).toFixed(1)}`).join(' ');
+  s += `<polyline points="${linePts}" fill="none" stroke="#2a4a52" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  // All dots
+  const callouts = new Set([0,29,34]);
+  data.forEach((p,i) => {
+    const x=sxd(p.d).toFixed(1), y=sy(p.v).toFixed(1);
+    const isKey = callouts.has(i);
+    const col = (i===29||i===34) ? '#6b2a2a' : '#2a4a52';
+    s += `<circle cx="${x}" cy="${y}" r="${isKey?6:3}" fill="${col}" stroke="white" stroke-width="${isKey?2:1}"/>`;
+  });
+
+  // Callout labels
+  const [p0,p29,p34] = [data[0],data[29],data[34]];
+  // Adoption
+  s += `<text x="${sxd(p0.d)+14}" y="${sy(p0.v)+2}" font-size="14" fill="#2a4a52" font-weight="600" font-family="Georgia,serif">58 lb</text>`;
+  s += `<text x="${sxd(p0.d)+14}" y="${sy(p0.v)+17}" font-size="11" fill="#6b6457" font-family="Georgia,serif">· adoption</text>`;
+  // Peak
+  s += `<text x="${sxd(p29.d)-10}" y="${sy(p29.v)-10}" text-anchor="end" font-size="14" fill="#6b2a2a" font-weight="600" font-family="Georgia,serif">98 lb</text>`;
+  s += `<text x="${sxd(p29.d)-10}" y="${sy(p29.v)+5}" text-anchor="end" font-size="11" fill="#6b2a2a" font-family="Georgia,serif">· peak</text>`;
+  // Current
+  s += `<text x="${sxd(p34.d)-10}" y="${sy(p34.v)+2}" text-anchor="end" font-size="14" fill="#6b2a2a" font-weight="600" font-family="Georgia,serif">79.1 lb</text>`;
+  s += `<text x="${sxd(p34.d)-10}" y="${sy(p34.v)+17}" text-anchor="end" font-size="11" fill="#6b6457" font-family="Georgia,serif">· now</text>`;
+
+  s += '</svg>';
+  el.innerHTML = s;
+})();
+
+// ── Furosemide dose ──────────────────────────────────────────
+renderChart('lasix-chart', {
+  data: [
+    {d:'2023-10-30',v:50},{d:'2024-02-01',v:100},{d:'2024-12-02',v:300},{d:'2025-05-14',v:300},{d:'2026-03-09',v:300}
+  ],
+  threshold: 8*35.9, thresholdLabel:'8 mg/kg threshold',
+  yLabel: 'mg/day'
+});
+
+// ── Creatinine ───────────────────────────────────────────────
+renderChart('creat-chart', {
+  data: [
+    {d:'2024-09-21',v:1.0},{d:'2025-03-27',v:1.2},{d:'2025-09-11',v:1.8}
+  ],
+  refLow: 0.5, refHigh: 1.8,
+  threshold: 1.4, thresholdLabel:'IRIS Stg2',
+  yLabel: 'mg/dL'
+});
+
+// ── BUN ─────────────────────────────────────────────────────
+renderChart('bun-chart', {
+  data: [
+    {d:'2024-09-21',v:19},{d:'2025-03-27',v:31},{d:'2025-09-11',v:43},{d:'2026-03-09',v:35}
+  ],
+  refLow: 7, refHigh: 28,
+  yLabel: 'mg/dL'
+});
+
+// ── SDMA ─────────────────────────────────────────────────────
+renderChart('sdma-chart', {
+  data: [
+    {d:'2024-09-21',v:11},{d:'2025-09-11',v:13}
+  ],
+  refLow: 0, refHigh: 14,
+  yLabel: 'µg/dL'
+});
+
+// ── Phosphorus ───────────────────────────────────────────────
+renderChart('phos-chart', {
+  data: [
+    {d:'2024-09-21',v:4.3},{d:'2025-03-27',v:5.2},{d:'2025-09-11',v:5.1}
+  ],
+  refLow: 2.5, refHigh: 6.1,
+  threshold: 4.6, thresholdLabel:'IRIS target',
+  yLabel: 'mg/dL'
+});
+
+// ── ALT ─────────────────────────────────────────────────────
+renderChart('alt-chart', {
+  data: [
+    {d:'2024-09-21',v:46},{d:'2025-03-27',v:121},{d:'2025-09-11',v:128}
+  ],
+  refLow: 18, refHigh: 121,
+  yLabel: 'U/L'
+});
+
+// ── Bilirubin ───────────────────────────────────────────────
+renderChart('bili-chart', {
+  data: [
+    {d:'2025-03-27',v:1.4},{d:'2025-09-11',v:0.1}
+  ],
+  refLow: 0.0, refHigh: 0.3,
+  yLabel: 'mg/dL'
+});
+
+// ── Lipase ──────────────────────────────────────────────────
+renderChart('lipase-chart', {
+  data: [
+    {d:'2024-09-21',v:275},{d:'2025-03-27',v:1382},{d:'2025-09-11',v:110}
+  ],
+  refLow: 0, refHigh: 250,
+  yLabel: 'U/L'
+});
+
+// ── Hematocrit + MCV (dual) ──────────────────────────────────
+// Render as two separate mini charts stacked
+(function() {
+  const el = document.getElementById('hct-chart');
+  if (!el) return;
+
+  function mini(data, refLow, refHigh, label, col) {
+    const W=680, H=100, pad={t:22,r:28,b:28,l:52};
+    const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+    const vals=data.map(p=>p.v);
+    const times=data.map(p=>new Date(p.d).getTime());
+    const tMin=Math.min(...times),tMax=Math.max(...times),tRange=tMax-tMin||1;
+    const allY=[...vals,refLow,refHigh];
+    const rawMin=Math.min(...allY),rawMax=Math.max(...allY);
+    const yMin=rawMin-(rawMax-rawMin)*0.18, yMax=rawMax+(rawMax-rawMin)*0.28;
+    const sx=t=>pad.l+((t-tMin)/tRange)*pw;
+    const sy=v=>pad.t+(1-(v-yMin)/(yMax-yMin))*ph;
+    const fmtDate=t=>{const d=new Date(t);return (d.getMonth()+1)+'/'+String(d.getFullYear()).slice(2);};
+
+    // ref label y positions for collision detection
+    const refHY = sy(refHigh)+3;
+    const refLY = sy(refLow)+3;
+
+    let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;overflow:visible">`;
+
+    // Series label top-left above chart
+    s+=`<text x="${pad.l}" y="12" font-size="10" fill="#9a927f" font-family="monospace" font-weight="600">${label}</text>`;
+
+    // ref band
+    const y1=sy(refHigh),y2=sy(refLow);
+    s+=`<rect x="${pad.l}" y="${Math.min(y1,y2)}" width="${pw}" height="${Math.abs(y2-y1)}" fill="oklch(78% 0.055 145)" opacity="0.22"/>`;
+    // ref labels on left — push them away from data area
+    s+=`<text x="${pad.l-4}" y="${refHY}" text-anchor="end" font-size="9" fill="#9fb4b1" font-family="monospace">${refHigh}</text>`;
+    s+=`<text x="${pad.l-4}" y="${refLY}" text-anchor="end" font-size="9" fill="#9fb4b1" font-family="monospace">${refLow}</text>`;
+
+    // connecting line
+    const linePts=data.map(p=>`${sx(new Date(p.d).getTime())},${sy(p.v)}`).join(' ');
+    s+=`<polyline points="${linePts}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;
+
+    // Dots + collision-aware labels
+    const placed=[];
+    data.forEach((p,i)=>{
+      const t=new Date(p.d).getTime(),x=sx(t),y=sy(p.v);
+      const isH=p.v>refHigh,isL=p.v<refLow;
+      const c=isH?'#6b2a2a':isL?'#8a6a1e':col;
+      s+=`<circle cx="${x}" cy="${y}" r="4.5" fill="${c}" stroke="white" stroke-width="1.5"/>`;
+
+      // pick above/below, avoid ref lines
+      let ly = (i%2===0) ? y-11 : y+18;
+      const coll = v => v!=null && Math.abs(ly-v)<13;
+      if (coll(refHY)||coll(refLY)) ly = (i%2===0) ? y+18 : y-11;
+      // avoid stacking
+      for (const pl of placed) if (Math.abs(ly-pl)<12) { ly+=14; break; }
+      placed.push(ly);
+      ly = Math.max(14, Math.min(H-10, ly));
+
+      s+=`<text x="${x}" y="${ly}" text-anchor="middle" font-size="10" fill="${c}" font-weight="600" font-family="monospace">${p.v}</text>`;
+      s+=`<text x="${x}" y="${H-4}" text-anchor="middle" font-size="9" fill="#8b7f70" font-family="monospace">${fmtDate(t)}</text>`;
+    });
+
+    s+='</svg>';
+    return s;
+  }
+  el.innerHTML =
+    mini([{d:'2023-09-07',v:32.0},{d:'2024-09-21',v:53.2},{d:'2025-09-11',v:53.2}],41,60,'Hct%','#4a5d2b') +
+    mini([{d:'2023-09-07',v:50},{d:'2024-09-21',v:69},{d:'2025-09-11',v:65}],62,76,'MCV fL','#4a5d2b');
+})();
+</script>
+
+<script src="luke-labs-data.js"></script>
+<script>
+(function buildCompleteRecord() {
+  if (!window.LUKE_LABS) return;
+
+  const SKIP = new Set(['weight','crea','sdma','bun','phos','alt','tbil','lipase','hct','mcv','plt','t4']);
+
+  const CAT_COLORS = {
+    'Kidney':'#2a4a52','Liver':'#8a6a1e','Pancreas':'#5c3b5e','Proteins':'#234956',
+    'Electrolytes':'#2f6d6e','Metabolic':'#4a5d2b','Thyroid':'#7a5a2a',
+    'Red cells':'#7a2a3a','White cells':'#355a3a','Platelets':'#3a4a7a',
+    'Clotting':'#5a4a6a','Urine':'#2a6a6a'
+  };
+  const CAT_ORDER = ['Kidney','Electrolytes','Liver','Pancreas','Proteins','Metabolic','Red cells','White cells','Platelets','Clotting','Thyroid'];
+  const MONS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function fmtDate(d) {
+    const [y,m] = d.split('-');
+    return MONS[+m-1] + " '" + y.slice(2);
+  }
+  function lastNum(series) {
+    for (let i = series.length-1; i >= 0; i--) if (typeof series[i].v === 'number') return series[i];
+    return null;
+  }
+  function round2(n) { return Math.round(n*100)/100; }
+
+  const ADJUST = {
+    bcratio: { rises:['High-protein diet or treats','Dehydration','GI bleeding (blood digested = extra urea)','Pre-renal causes (reduced blood flow to kidneys)'], falls:['Increased hydration','Reducing dietary protein toward IRIS targets','Treating any GI blood loss source'] },
+    alkp:    { rises:['Steroid medications (prednisone — common in dogs)','Cholestasis / bile flow obstruction','Bone growth or active remodeling','Phenobarbital or certain other drugs'], falls:['Removing the offending drug or treating underlying cause','Ursodiol for cholestatic disease','Generally slow to normalize; weeks to months'] },
+    ast:     { rises:['Liver cell injury (alongside ALT)','Muscle injury or strenuous exercise','Hemolysis in the sample (artifact)'], falls:['Resolving the liver or muscle injury','Resting after exercise','SAMe or milk thistle supplementation (hepatoprotective)'] },
+    ggt:     { rises:['Bile duct obstruction or cholestasis','Steroid use (phenobarbital-induced hepatopathy)','Pancreatic disease affecting bile flow'], falls:['Treating the underlying biliary or drug cause','Has stayed near-zero for Luke — reassuring'] },
+    amyl:    { rises:['Pancreatitis','Kidney disease (reduced clearance — amylase filtered by kidneys)','Salivary gland disease'], falls:['Dietary fat restriction (reduces pancreatic demand)','Treating pancreatitis if clinically present'] },
+    tp:      { rises:['Dehydration / hemoconcentration','Chronic inflammation (globulin-driven)'], falls:['Protein-losing nephropathy (kidney leak)','Protein-losing enteropathy (gut loss)','Severe liver disease (reduced production)','Malnutrition or cachexia'] },
+    alb:     { rises:['Dehydration (relative increase)'], falls:['Kidney protein loss (if UPC elevated)','Liver disease (reduced synthesis)','Chronic inflammation (acute-phase response)','Malnutrition — important to monitor in cardiac cachexia context'] },
+    glob:    { rises:['Chronic infection or inflammation','Allergic disease (long-standing, as in Luke)','Immune stimulation from chronic antigen exposure'], falls:['Resolving underlying inflammation','Immunosuppressive therapy','Not a primary management target in Luke'] },
+    agratio: { rises:['Albumin rises OR globulins fall'], falls:['Albumin falls OR globulins rise — Luke runs low-normal due to his upper-end globulins from allergic disease'] },
+    potassium:{ rises:['Kidney failure (reduced excretion)','ACE inhibitors (spironolactone also raises K)','Addison\'s disease (reduced aldosterone)','Severe tissue destruction'], falls:['Furosemide (loop diuretics excrete potassium — most relevant for Luke)','Vomiting or diarrhea','Low potassium intake'] },
+    sodium:  { rises:['Dehydration / water deficit','Diabetes insipidus'], falls:['Excessive water intake (rare)','Addison\'s disease','SIADH'] },
+    chloride:{ rises:['Dehydration'], falls:['Furosemide — loop diuretics deplete chloride (Luke\'s mild low follows this exactly)','Chronic vomiting (loss of HCl)','Respiratory compensation'] },
+    nakratio:{ rises:['Sodium up or potassium down'], falls:['Sodium down or potassium up — a low ratio can suggest Addison\'s disease; Luke\'s single low (27) was concurrent with mild high potassium and hasn\'t recurred'] },
+    aniongap:{ rises:['Metabolic acidosis — lactic acidosis, uremia, ketoacidosis, toxins','Advanced kidney disease (urate and sulfate accumulation)'], falls:['Hypoalbuminemia (reduced anion) — uncommon to see pathologically low'] },
+    bicarb:  { rises:['Metabolic alkalosis (vomiting, overcorrection)'], falls:['Metabolic acidosis — a key concern in advanced CKD where acid accumulates; Luke\'s values have been normal, a reassuring sign that his CKD hasn\'t acidified his blood yet'] },
+    calcium: { rises:['Certain cancers (lymphoma, anal sac adenocarcinoma — hypercalcemia of malignancy)','Primary hyperparathyroidism','Vitamin D toxicity or rodenticide (cholecalciferol-based)'], falls:['Hypoalbuminemia (calcium binds albumin — apparent fall)','Acute pancreatitis','Hypoparathyroidism'] },
+    glucose: { rises:['Diabetes mellitus (requires fasting confirmation)','Stress hyperglycemia (common in anxious dogs)','Steroid administration'], falls:['Insulinoma (insulin-secreting tumor)','Liver failure (reduced glycogen storage)','Insulin overdose','Prolonged anorexia — less common'] },
+    chol:    { rises:['Hypothyroidism (most common cause in dogs — relevant given Luke\'s low-normal T4)','High-fat diet or pancreatitis','Cushing\'s disease','Cholestasis','Post-prandial (non-fasted sample)'], falls:['Liver failure','Malabsorption','Hyperthyroidism (rare in dogs)'] },
+    ck:      { rises:['Muscle injury or trauma','Strenuous exercise or prolonged restraint during blood draw','Myopathy (inflammatory or metabolic)','Seizures','IM injections'], falls:['Rest and resolution of muscle injury — CK normalizes within 24–72 hours of the inciting event'] },
+    hgb:     { rises:['Dehydration/polycythemia'], falls:['Anemia — same causes as hematocrit; iron, blood loss, bone marrow suppression, chronic disease'] },
+    rbc:     { rises:['Dehydration (hemoconcentration)','High altitude (compensatory — relevant for Bozeman trip)'], falls:['Blood loss','Hemolysis','Bone marrow suppression','Chronic disease anemia'] },
+    mch:     { rises:['Macrocytic anemia — B12/folate deficiency (rare in dogs)'], falls:['Iron deficiency','Microcytic anemia'] },
+    mchc:    { rises:['Hemolysis (artifact or true intravascular hemolysis)','Spherocytosis'], falls:['Iron deficiency anemia','Chronic blood loss'] },
+    rdw:     { rises:['Mixed red cell population — iron-deficiency anemia plus chronic disease anemia existing simultaneously','Recent iron therapy or recovery from acute blood loss','Regenerative anemia'], falls:['Uniform red cell population — normal range'] },
+    retichgb:{ rises:['Adequate iron availability for red cell production'], falls:['Iron restriction — even when serum iron looks normal, the developing red cells may lack iron first; Luke\'s gradual fall (25→23→22.5) fits chronic disease pattern. High-dose omega-3 and heme-iron rich raw diet support iron availability.'] },
+    retic:   { rises:['Regenerative anemia — marrow actively replacing lost cells','Blood loss or hemolysis (marrow response)'], falls:['Non-regenerative anemia — bone marrow suppression, chronic kidney disease (EPO deficiency), hypothyroidism','Normal counts (as in Luke) mean the marrow is producing appropriately'] },
+    wbc:     { rises:['Infection (bacterial most common)','Inflammation','Stress or excitement (epinephrine-driven)','Steroid treatment (especially neutrophilia)','Certain cancers (leukemia)'], falls:['Overwhelming infection (sepsis consuming neutrophils)','Bone marrow suppression','Viral disease (parvovirus, distemper)','Immune-mediated destruction'] },
+    neut:    { rises:['Infection, inflammation, stress, steroid treatment — same as WBC overall'], falls:['Bone marrow suppression','Severe overwhelming infection','Immune-mediated neutropenia'] },
+    lymph:   { rises:['Chronic antigen stimulation (allergic disease — fits Luke)','Lymphoma (often dramatically high)','Certain viral stimulation'], falls:['Stress or steroid treatment (lymphopenia is common and expected)','Viral disease'] },
+    mono:    { rises:['Chronic inflammation or infection','Tissue necrosis or repair'], falls:['Minor fluctuations are generally not clinically significant at Luke\'s levels'] },
+    eos:     { rises:['Allergic disease (Luke\'s skin history explains his elevated 2018 count)','Parasitism','Eosinophilic syndromes','Certain cancers'], falls:['Steroid treatment (eosinopenia is a classic steroid effect)','Stress response','Cytopoint and Apoquel reduce the allergic drive that raises eosinophils'] },
+    baso:    { rises:['Allergic disease or hypersensitivity (very mild and non-specific at Luke\'s counts)','Hypothyroidism'], falls:['Generally present in very small numbers; changes at this level are not clinically significant'] },
+    pt:      { rises:['Liver failure (reduced clotting factor synthesis)','Vitamin K deficiency','Rodenticide (anticoagulant) poisoning','Disseminated intravascular coagulation (DIC)'], falls:['Rarely clinically significant when already normal; Vitamin K supplementation if deficient'] },
+    ptt:     { rises:['Factor deficiencies (VIII, IX, XI)','DIC','Heparin therapy'], falls:['Not clinically relevant when already normal'] },
+  };
+
+  function buildAdjust(id) {
+    const a = ADJUST[id];
+    if (!a) return '';
+    const rItems = a.rises.map(r => `<li>${r}</li>`).join('');
+    const fItems = a.falls.map(f => `<li>${f}</li>`).join('');
+    return `<div class="adjust" style="margin-top:8px;">
+      <div class="adj-title">How this value moves</div>
+      <div class="adj-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="adj-col">
+          <h5>Rises when</h5>
+          <ul>${rItems}</ul>
+        </div>
+        <div class="adj-col">
+          <h5>Falls when</h5>
+          <ul>${fItems}</ul>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const cats = {};
+  LUKE_LABS.tests.forEach(t => {
+    if (SKIP.has(t.id)) return;
+    if (!cats[t.cat]) cats[t.cat] = [];
+    cats[t.cat].push(t);
+  });
+
+  const wrap = document.getElementById('complete-record-wrap');
+  const navWrap = document.getElementById('complete-record-nav');
+  if (!wrap) return;
+
+  CAT_ORDER.forEach(cat => {
+    if (!cats[cat]) return;
+    const col = CAT_COLORS[cat] || '#2a4a52';
+    const tests = cats[cat];
+
+    // Sidebar nav group
+    if (navWrap) {
+      const grp = document.createElement('div');
+      grp.className = 'grp';
+      grp.textContent = cat;
+      navWrap.appendChild(grp);
+      tests.forEach(t => {
+        const ln = lastNum(t.series);
+        const isH = ln && ln.v > t.refHigh;
+        const isL = ln && ln.v < t.refLow;
+        const fl = isH ? '<span class="fl H">H</span>' : isL ? '<span class="fl L">L</span>' : '';
+        const a = document.createElement('a');
+        a.href = '#' + t.id;
+        a.innerHTML = `<span class="dot" style="background:${col}"></span><span class="nm">${t.name}</span>${fl}`;
+        navWrap.appendChild(a);
+      });
+    }
+
+    // No standalone category header — the section .s-head already shows the category name
+    // const catHeader = ...
+
+    tests.forEach(t => {
+      const ln = lastNum(t.series);
+      const isH = ln && ln.v > t.refHigh;
+      const isL = ln && ln.v < t.refLow;
+      const pillClass = isH ? 'H' : isL ? 'L' : 'OK';
+      const pillText = isH ? 'Above range' : isL ? 'Below range' : 'Within range';
+      const curVal = ln ? round2(ln.v) : '—';
+      const latestInfo = ln ? fmtDate(ln.d) : '';
+
+      // Table rows
+      let rows = '';
+      t.series.forEach(s => {
+        const v = typeof s.v === 'number' ? round2(s.v) : s.v;
+        const flag = s.f === 'H' ? '<span class="tag-h">H</span>' : s.f === 'L' ? '<span class="tag-l">L</span>' : '';
+        const note = (t.pointNote && t.pointNote[s.d]) || '';
+        rows += `<tr><td class="d">${fmtDate(s.d)}</td><td class="v">${v}${flag}</td><td class="r">${t.refLow}–${t.refHigh} ${t.unit||''}</td><td class="nt">${note}</td></tr>`;
+      });
+      if (t.extraRows) t.extraRows.forEach(e => {
+        rows += `<tr><td class="d">${e.d}</td><td class="v">${e.v}</td><td class="r">${e.label||''}</td><td class="nt">${e.note||''}</td></tr>`;
+      });
+
+      const watchHTML = t.watch
+        ? `<div class="open-callout"><div class="oc-lab">Watch</div><p>${t.watch}</p></div>`
+        : '';
+
+      const sec = document.createElement('div');
+      sec.className = 'section';
+      sec.id = t.id;
+      sec.innerHTML = `
+        <div class="s-head">
+      <div class="s-head-inner">
+        <h3>${t.name}</h3>
+        <div class="s-top-row"><span class="s-badge">${t.cat}</span></div>
+      </div>
+      <div class="s-current">
+            <div class="val">${curVal}<small> ${t.unit||''}</small></div>
+            <div><span class="pill ${pillClass}">${pillText}</span></div>
+            <div class="pill-date">${latestInfo}</div>
+    </div>
+        </div>
+        <div class="chart-card">
+          <div class="ch-meta"><span class="ch-title">${t.name}</span><span class="ch-ref">${t.refNote||''}</span></div>
+          <div class="chart-inner" id="chart-${t.id}"></div>
+        </div>
+        <div class="prose-grid">
+          <div class="blk"><h4>What this measures</h4><p>${t.about}</p></div>
+          <div class="blk"><h4>How it is impacting Luke</h4><p>${t.impact}</p></div>
+        </div>
+        ${buildAdjust(t.id)}
+        ${watchHTML}
+        <table class="data-tbl" style="margin-top:16px;">
+          <thead><tr><th>Date</th><th>Value</th><th>Reference / assay</th><th>Note</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+      wrap.appendChild(sec);
+
+      // Render chart
+      const numPts = t.series.filter(s => typeof s.v === 'number');
+      if (numPts.length > 0) {
+        renderChart('chart-' + t.id, {
+          data: numPts.map(s => ({d: s.d, v: s.v})),
+          refLow: t.refLow,
+          refHigh: t.refHigh,
+          yLabel: t.unit || ''
+        });
+      }
+    });
+  });
+
+  // Urinalysis
+  const ua = LUKE_LABS.urine;
+  if (ua && navWrap) {
+    const grp = document.createElement('div'); grp.className = 'grp'; grp.textContent = 'Urine'; navWrap.appendChild(grp);
+    const a = document.createElement('a'); a.href = '#ua-full';
+    a.innerHTML = `<span class="dot" style="background:#2a6a6a"></span><span class="nm">Urinalysis</span>`;
+    navWrap.appendChild(a);
+  }
+  if (ua && wrap) {
+  // No standalone urine category header — section header carries the label
+
+    let uaRows = '';
+    ua.rows.forEach(r => {
+      uaRows += `<tr><td style="font-weight:600;color:var(--ink)">${r[0]}</td><td style="font-family:'JetBrains Mono',monospace;font-size:12.5px;">${r[1]}</td><td style="font-family:'JetBrains Mono',monospace;font-size:12.5px;">${r[2]}</td><td style="font-size:12.5px;color:var(--ink-mute);">${r[3]||''}</td></tr>`;
+    });
+
+    const sec = document.createElement('div');
+    sec.className = 'section'; sec.id = 'ua-full';
+    sec.innerHTML = `
+      <div class="s-head">
+      <div class="s-head-inner">
+        <h3>${ua.name}</h3>
+        <div class="s-top-row"><span class="s-badge">UA</span> <span class="s-cat">Urine</span></div>
+      </div>
+      <div class="s-current"><div class="val" style="color:#fff;font-size:42px;font-weight:800;">2 on file</div><div><span class="pill Q">Last: Sep 2023</span></div>
+    </div>
+      </div>
+      <div class="prose-grid">
+        <div class="blk"><h4>What this measures</h4><p>${ua.about}</p></div>
+        <div class="blk"><h4>How it is impacting Luke</h4><p>${ua.impact}</p></div>
+      </div>
+      <table class="data-tbl" style="margin-top:16px;">
+        <thead><tr><th>Test</th><th>${ua.columns[0]}</th><th>${ua.columns[1]}</th><th>Significance</th></tr></thead>
+        <tbody>${uaRows}</tbody>
+      </table>
+      <p style="font-size:13px;color:var(--ink-mute);margin-top:12px;">${ua.note}</p>`;
+    wrap.appendChild(sec);
+  }
+})();
+</script>
+
+<script>
+// ── Scroll spy ──
+(function() {
+  function init() {
+    const navLinks = document.querySelectorAll('.side nav a[href^="#"]');
+    if (!navLinks.length) return;
+
+    const sideNav = document.querySelector('.side nav');
+
+    function update() {
+      const ids = [...navLinks].map(a => a.getAttribute('href').slice(1));
+      const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.getBoundingClientRect().top <= 120) current = s;
+      }
+
+      navLinks.forEach(a => a.classList.remove('active'));
+      if (current) {
+        const active = document.querySelector(`.side nav a[href="#${current.id}"]`);
+        if (active) {
+          active.classList.add('active');
+          // Scroll only the sidebar nav, never the page
+          if (sideNav) {
+            const top = active.offsetTop;
+            const h = sideNav.clientHeight;
+            if (top < sideNav.scrollTop || top > sideNav.scrollTop + h - 48) {
+              sideNav.scrollTop = top - h / 2;
+            }
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="en"><head>
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — New Practitioner Packet</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&amp;family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f6f1e6;
+  --paper-2: #ede8d8;
+  --paper-card: #fdfaf3;
+  --ink: #1a1916;
+  --ink-2: #3a332a;
+  --ink-mute: #3d3830;
+  --rule: #d4cab4;
+  --accent: #2a4a52;
+  --accent-deep: #1d343a;
+  --accent-soft: #6e8e92;
+  --burgundy: #6b2a2a;
+  --ochre: #7a5c18;
+  --moss: #3f5224;
+  --plum: #4a2f4e;
+  --teal-mid: #3a6068;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; font-size: 18px; }
+body {
+  background: #111c1a;
+  color: var(--ink);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+.shell { max-width: 820px; margin: 0 auto; box-shadow: 0 0 120px rgba(0,0,0,.7); }
+
+/* ── Header ── */
+.header { background: var(--accent-deep); padding: 64px 64px 52px; }
+
+.header-label {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px; letter-spacing: .04em; color: oklch(78% 0.06 185);
+  margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+}
+.header-label::before {
+  content: ""; width: 28px; height: 1px; background: var(--accent-soft); flex: none;
+}
+
+.header h1 {
+  font-family: "Newsreader", serif; font-weight: 300;
+  font-size: clamp(44px, 8vw, 80px); line-height: .98;
+  letter-spacing: -.03em; color: #fff; margin-bottom: 28px;
+}
+.header h1 span {
+  display: block; font-weight: 400;
+  color: oklch(72% 0.06 185);
+}
+.header-deck {
+  font-size: 19px; line-height: 1.65;
+  color: oklch(86% 0.04 195); text-wrap: pretty;
+}
+
+/* ── Patient band ── */
+.patient-band {
+  background: oklch(24% 0.03 200);
+  padding: 22px 64px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px 32px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.pb-field { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; letter-spacing: 0; color: oklch(88% 0.035 195); line-height: 1.55; }
+.pb-field b { color: #fff; font-weight: 700; font-size: 16px; }
+.pb-field .pk { display: block; font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: oklch(65% 0.03 195); margin-bottom: 4px; font-weight: 700; }
+
+/* ── Critical strip ── */
+.critical {
+  background: var(--burgundy);
+  padding: 18px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 48px;
+}
+.critical-item {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px; font-weight: 500; letter-spacing: 0;
+  color: #fff; padding: 4px 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.critical-item::before {
+  content: "!";
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 19px; height: 19px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.55);
+  font-size: 12px; font-weight: 700; flex: none;
+}
+
+/* ── Section header shared style ── */
+.section-head {
+  padding: 52px 64px 46px;
+  background: var(--accent-deep);
+  border-bottom: none;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+.section-head-left {}
+.section-head .sh-label {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+  color: oklch(78% 0.06 185); margin-bottom: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head .sh-label::before {
+  content: ""; width: 8px; height: 8px; background: currentColor; opacity: .5; border-radius: 1px; flex: none;
+}
+.section-head h2 {
+  font-family: "Newsreader", serif; font-weight: 300;
+  font-size: 40px; letter-spacing: -.025em; line-height: 1.05;
+  color: #fff;
+}
+.section-head .sh-note {
+  font-family: system-ui, -apple-system, sans-serif; font-size: 12px;
+  color: oklch(72% 0.04 185); letter-spacing: .05em; line-height: 1.8;
+  text-align: right; max-width: 22ch;
+}
+
+/* ── Combined document list ── */
+.doc-list-section {
+  background: var(--paper);
+  padding: 0;
+}
+
+a.doc-row {
+  display: grid;
+  grid-template-columns: 6px 1fr 32px;
+  align-items: center;
+  text-decoration: none; color: inherit;
+  border-bottom: 2px solid var(--rule);
+  transition: background .12s;
+  min-height: 120px;
+}
+a.doc-row:last-child { border-bottom: none; }
+a.doc-row:hover .dr-title { color: var(--accent); }
+a.doc-row:hover .dr-arrow { opacity: 1; transform: translateX(4px); }
+
+/* color variants */
+a.doc-row.d01 { --bar: var(--teal-mid); --num: var(--teal-mid); background: oklch(97% 0.012 185); }
+a.doc-row.d01:hover { background: oklch(95% 0.018 185); }
+a.doc-row.d02 { --bar: var(--moss); --num: var(--moss); background: oklch(97% 0.012 145); }
+a.doc-row.d02:hover { background: oklch(95% 0.018 145); }
+a.doc-row.d03 { --bar: var(--plum); --num: var(--plum); background: oklch(97% 0.010 320); }
+a.doc-row.d03:hover { background: oklch(95% 0.016 320); }
+a.doc-row.d04 { --bar: var(--ochre); --num: var(--ochre); background: oklch(97% 0.014 80); }
+a.doc-row.d04:hover { background: oklch(95% 0.020 80); }
+a.doc-row.d05 { --bar: var(--burgundy); --num: var(--burgundy); background: oklch(97% 0.012 20); }
+a.doc-row.d05:hover { background: oklch(95% 0.018 20); }
+
+.dr-bar { background: var(--bar); width: 10px; align-self: stretch; }
+
+.dr-num {
+  font-family: "Newsreader", serif; font-weight: 500;
+  font-size: 36px; line-height: 1; color: var(--num);
+  margin-right: 14px; flex: none;
+}
+
+.dr-body { padding: 24px 20px 24px 20px; display: flex; flex-direction: column; }
+.dr-title-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+
+.dr-label { display: none; }
+
+.dr-title {
+  font-family: "Newsreader", serif; font-weight: 600;
+  font-size: clamp(22px, 3vw, 30px); letter-spacing: -.015em; line-height: 1.1;
+  color: var(--ink); margin-bottom: 18px;
+  transition: color .12s;
+}
+
+.dr-bullets {
+  list-style: none; display: flex; flex-direction: column; gap: 7px;
+}
+.dr-bullets li {
+  font-size: 15.5px; color: var(--ink-2); line-height: 1.5;
+  padding-left: 14px; position: relative;
+}
+.dr-bullets li::before {
+  content: "";
+  position: absolute; left: 0; top: 8px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent-soft);
+}
+
+.dr-arrow {
+  display: flex; align-items: center; padding-right: 20px;
+  font-size: 22px; color: var(--num);
+  opacity: .6; transition: opacity .12s, transform .12s;
+}
+
+/* ── Contacts ── */
+.contacts-section {
+  background: var(--paper);
+  padding: 0 0 64px;
+  border-top: 2px solid var(--rule);
+}
+.contacts-head {
+  padding: 48px 64px 36px;
+  background: var(--accent-deep);
+  margin-bottom: 36px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+.contacts-head .ch-label {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: oklch(72% 0.06 185); margin-bottom: 10px; font-weight: 700;
+}
+.contacts-head h2 {
+  font-family: "Newsreader", serif; font-weight: 300;
+  font-size: 40px; letter-spacing: -.025em; line-height: 1.05;
+  color: #fff;
+}
+.contacts-head .ch-note {
+  font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 600;
+  color: oklch(72% 0.04 185); line-height: 1.6;
+  text-align: right;
+}
+.contacts-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px; margin: 0 32px;
+}
+.contact {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  border-radius: 0 0 6px 6px;
+  padding: 22px 20px;
+}
+.contact .cv { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+.contact .ck {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px; font-weight: 700;
+}
+.contact .cv b { color: var(--ink); font-weight: 600; }
+.contact .cv a { color: var(--accent); text-decoration: none; }
+.contact .cv a:hover { color: var(--accent-deep); text-decoration: underline; }
+
+/* ── Footer ── */
+.footer {
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule);
+  padding: 16px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+@media (max-width: 640px) {
+  .header, .patient-band, .critical, .doc-list-header,
+  .contacts-section, .footer { padding-left: 24px; padding-right: 24px; }
+  .patient-band { grid-template-columns: 1fr 1fr; }
+  .contacts-grid { grid-template-columns: 1fr; }
+  a.doc-row { grid-template-columns: 5px 1fr 28px; }
+  .dr-num { font-size: 30px; padding-left: 12px; }
+  .header h1 { font-size: 40px; }
+}
+</style>
+</head>
+<body style="">
+<div class="shell">
+
+  <!-- Header -->
+  <div class="header" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding:36px 64px;">
+    <div>
+      <h1 style="font-size:clamp(28px,4vw,44px);">Luke VonDog.<span>Everything a new provider needs.</span></h1>
+      <p class="header-deck">Five documents covering the clinical brief, lab trends, system conflicts, diet and medications, and his complete verbatim record.</p>
+    </div>
+    <img src="luke-photo.png" alt="Luke VonDog" style="width:160px;height:160px;object-fit:cover;object-position:center top;border-radius:8px;border:3px solid rgba(255,255,255,.15);flex:none;">
+  </div>
+
+  <!-- Patient identity strip -->
+  <div style="background:oklch(22% 0.03 200);padding:16px 64px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 32px;border-bottom:1px solid rgba(255,255,255,.08);">
+    <div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.5;">
+      <span style="display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(55% 0.04 195);margin-bottom:4px;">Patient</span>
+      <strong style="color:#fff;font-size:15px;white-space:nowrap;">Luke VonDog</strong><br>
+      <span style="color:oklch(82% 0.03 195);font-size:13px;white-space:nowrap;">Blue Weimaraner · neutered male · 12 yr</span>
+    </div>
+    <div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.5;">
+      <span style="display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(55% 0.04 195);margin-bottom:4px;">Weight · Date of birth</span>
+      <strong style="color:#fff;font-size:15px;white-space:nowrap;">79.1 lb</strong> <span style="color:oklch(82% 0.03 195);font-size:13px;">/ 35.9 kg </span><br>
+      <span style="color:oklch(82% 0.03 195);font-size:13px;white-space:nowrap;">May 31, 2014</span>
+    </div>
+    <div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.5;">
+      <span style="display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(55% 0.04 195);margin-bottom:4px;">Microchip</span>
+      <strong style="color:#fff;font-size:15px;white-space:nowrap;">941000016858399</strong><br>
+      <span style="color:oklch(82% 0.03 195);font-size:13px;white-space:nowrap;">Owner: Rikki Delaine · (616) 970-7690</span>
+    </div>
+  </div>
+
+  <!-- Combined document list -->
+  <div class="doc-list-section">
+
+    <a class="doc-row d01" href="Luke%20at%20a%20Glance.html">
+      <div class="dr-bar"></div>
+      <div class="dr-body">
+        <div class="dr-title-row"><span class="dr-num">1</span><div class="dr-title">Luke at a Glance</div></div>
+        <ul class="dr-bullets">
+          <li>What is Luke's diagnosis, and what makes his case complex</li>
+          <li>Which lab values need attention, and which direction they're trending</li>
+          <li>Six clinical questions the record has not yet answered</li>
+          <li>How Rikki measures Luke's quality of life at home</li>
+        </ul>
+      </div>
+      <div class="dr-arrow">→</div>
+    </a>
+
+    <a class="doc-row d02" href="Luke%20Data%20Visualization%20Suite.html">
+      <div class="dr-bar"></div>
+      <div class="dr-body">
+        <div class="dr-title-row"><span class="dr-num">2</span><div class="dr-title">Data Visualization Suite</div></div>
+        <ul class="dr-bullets">
+          <li>10 years of bloodwork charted — every trend and inflection point</li>
+          <li>What each marker means for a dog with Luke's combination of conditions</li>
+          <li>What would need to change to move each number</li>
+        </ul>
+      </div>
+      <div class="dr-arrow">→</div>
+    </a>
+
+    <a class="doc-row d03" href="Luke%20System%20Map.html">
+      <div class="dr-bar"></div>
+      <div class="dr-body">
+        <div class="dr-title-row"><span class="dr-num">3</span><div class="dr-title">System Map — Conditions in Conflict</div></div>
+        <ul class="dr-bullets">
+          <li>Why every treatment decision involves a tradeoff across four organ systems</li>
+          <li>How everything Luke takes maps against cardiac, renal, hepatic, and MSK</li>
+          <li>Six named conflicts — each with a resolution path</li>
+          <li>Altitude and health risk context for the Montana trip</li>
+        </ul>
+      </div>
+      <div class="dr-arrow">→</div>
+    </a>
+
+    <a class="doc-row d04" href="Luke%20Diet%20%26%20Medication%20Matrix.html">
+      <div class="dr-bar"></div>
+      <div class="dr-body">
+        <div class="dr-title-row"><span class="dr-num">4</span><div class="dr-title">Diet &amp; Medication Matrix</div></div>
+        <ul class="dr-bullets">
+          <li>Everything Luke eats and takes, mapped against all four organ systems</li>
+          <li>Whether his current caloric and nutrient intake meets his needs</li>
+          <li>What’s missing from the stack and what would most improve his trajectory</li>
+        </ul>
+      </div>
+      <div class="dr-arrow">→</div>
+    </a>
+
+    <a class="doc-row d05" href="Luke_Verbatim_Timeline_v2.html">
+      <div class="dr-bar"></div>
+      <div class="dr-body">
+        <div class="dr-title-row"><span class="dr-num">5</span><div class="dr-title">All of Luke VonDog's Data — Verbatim Timeline</div></div>
+        <ul class="dr-bullets">
+          <li>The complete unedited record — nothing summarized or interpreted</li>
+          <li>Every Thornwood visit, email, and clinical note from 2016 to 2026</li>
+          <li>The source of truth behind every summary in this packet</li>
+        </ul>
+      </div>
+      <div class="dr-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- Contacts -->
+  <div class="contacts-section">
+    <div class="contacts-head">
+      <div>
+        <div class="ch-label">People &amp; places</div>
+        <h2>Key Contacts</h2>
+      </div>
+      <div class="ch-note">Bozeman travel<br>Jul–Aug 2026</div>
+    </div>
+  <div class="contacts-grid">
+      <div class="contact">
+        <div class="ck">Primary clinic</div>
+        <div class="cv"><b>Thornwood Veterinary Clinic &amp; Kennel</b><br>1501 Buttrick Ave SE, Ada, MI 49301<br>(616) 676-1251<br>Dr. Kaitlyn Denney · Dr. G<br><a href="https://www.thornwoodvet.com" style="color:oklch(68% 0.08 185);">thornwoodvet.com</a></div>
+      </div>
+      <div class="contact">
+        <div class="ck">Owner &amp; caregiver</div>
+        <div class="cv"><b>Rikki Delaine</b><br>Ada, Michigan<br>(616) 970-7690<br><a href="mailto:RikkiDelaine84@gmail.com" style="color:oklch(68% 0.08 185);">RikkiDelaine84@gmail.com</a></div>
+      </div>
+      <div class="contact" style="border-top-color: var(--teal-mid);">
+        <div class="ck" style="color:var(--teal-mid);">Bozeman veterinarian (Jul–Aug 2026)</div>
+        <div class="cv" style=""><b>Foothills Veterinary Hospital</b><br>707 Bridger Drive, Suite E<br>Bozeman, MT 59715<br>(406) 556-0604 ·&nbsp;<div>Mon–Fri 8am–6pm<br><a href="https://fvhmt.com" style="color:oklch(68% 0.08 185);">fvhmt.com</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Luke VonDog · New Practitioner Packet · Compiled June 2026</span>
+  </div>
+
+</div>
+
+
+</body></html>
