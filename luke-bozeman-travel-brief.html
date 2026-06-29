@@ -326,5 +326,18 @@ footer .acc { color: var(--accent); }
   <span>THORNWOOD VET · (616) 676-1251</span>
 </footer>
 
+<script>
+(function(){
+  var links = document.querySelectorAll('a[data-packet-home], #packet-home-link');
+  links.forEach(function(link){
+    var path = window.location.pathname;
+    if(path.indexOf('/packet/') !== -1 || window.location.hostname.indexOf('github.io') !== -1) {
+      link.href = 'luke-practitioner-packet.html';
+    } else {
+      link.href = 'Luke Practitioner Packet.html';
+    }
+  });
+})();
+</script>
 </body>
 </html>

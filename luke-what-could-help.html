@@ -55,11 +55,11 @@ body {
   padding: 14px 18px;
   font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 700;
   color: #fff; text-decoration: none;
-  background: oklch(38% 0.06 185);
-  border-bottom: 2px solid oklch(48% 0.08 185);
+  background: #2a5c55;
+  border-bottom: 2px solid #3a7068;
   letter-spacing: .02em; text-transform: uppercase;
 }
-.dsn-home:hover { background: oklch(44% 0.07 185); }
+.dsn-home:hover { background: #326660; }
 .dsn-doc {
   padding: 12px 18px 8px;
   font-family: "Newsreader", serif; font-size: 15px; font-weight: 500;
@@ -95,16 +95,16 @@ body {
 }
 .cover .ey {
   font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  color: oklch(72% 0.07 185); margin-bottom: 16px;
+  color: #8bbbb6; margin-bottom: 16px;
 }
 .cover h1 {
   font-family: "Newsreader", serif; font-weight: 300;
   font-size: clamp(40px, 6vw, 64px); letter-spacing: -.025em; line-height: 1.0;
   color: #fff; margin-bottom: 20px;
 }
-.cover h1 em { font-style: normal; color: oklch(72% 0.07 185); font-weight: 400; }
+.cover h1 em { font-style: normal; color: #8bbbb6; font-weight: 400; }
 .cover .deck {
-  font-size: 18px; color: oklch(80% 0.04 195);
+  font-size: 18px; color: #b8d0ce;
   max-width: 60ch; text-wrap: pretty; line-height: 1.6;
 }
 .cover-meta {
@@ -112,7 +112,7 @@ body {
   border-top: 1px solid rgba(255,255,255,.1);
   display: flex; gap: 40px; flex-wrap: wrap;
 }
-.cover-meta .cm-field { font-size: 14px; color: oklch(70% 0.04 195); }
+.cover-meta .cm-field { font-size: 14px; color: #88b0ae; }
 .cover-meta .cm-field b { color: #fff; font-weight: 600; display: block; margin-bottom: 2px; }
 
 /* ── Section ── */
@@ -205,15 +205,15 @@ body {
 
 /* ── Priority summary header ── */
 .summary-band {
-  background: oklch(24% 0.03 200);
+  background: #1e3038;
   padding: 20px 64px;
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background-color: oklch(24% 0.03 200);
+  gap: 1px; background-color: #1e3038;
 }
-.sb-item { padding: 16px 24px; background: oklch(20% 0.025 200); }
-.sb-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: oklch(55% 0.04 195); margin-bottom: 6px; }
+.sb-item { padding: 16px 24px; background: #192830; }
+.sb-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6a9a98; margin-bottom: 6px; }
 .sb-count { font-family: "Newsreader", serif; font-size: 36px; font-weight: 300; color: #fff; line-height: 1; }
-.sb-desc { font-size: 13px; color: oklch(65% 0.03 195); margin-top: 4px; }
+.sb-desc { font-size: 13px; color: #7ea8a6; margin-top: 4px; }
 
 /* ── Footer ── */
 footer {
@@ -258,27 +258,27 @@ footer a { color: var(--accent-soft); text-decoration: none; }
   <p class="deck">Every named gap, testable intervention, dietary lever, and monitoring protocol that could meaningfully improve Luke's trajectory — organized by system and ranked by priority.</p>
   <div class="cover-meta">
     <div class="cm-field"><b>Patient</b>Luke VonDog · 12 yr · Blue Weimaraner · neutered male</div>
-    <div class="cm-field"><b>Primary clinic</b>Thornwood Veterinary Clinic · Dr. Denney / Dr. G · <a href="https://www.thornwoodvet.com" style="color:oklch(68% 0.08 185);">thornwoodvet.com</a></div>
+    <div class="cm-field"><b>Primary clinic</b>Thornwood Veterinary Clinic · Dr. Denney / Dr. G · <a href="https://www.thornwoodvet.com" style="color:#7ab3ae;">thornwoodvet.com</a></div>
     <div class="cm-field"><b>Compiled</b>June 2026</div>
   </div>
 </div>
 
 <!-- Summary band -->
-<div style="background:oklch(20% 0.025 200);padding:24px 64px;display:flex;gap:2px;">
-  <div style="flex:1;padding:16px 20px;background:oklch(24% 0.03 200);border-left:4px solid var(--cardiac);">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(60% 0.04 195);margin-bottom:4px;">High priority</div>
+<div style="background:#192830;padding:16px 20px;display:flex;gap:2px;flex-wrap:wrap;">
+  <div style="flex:1 1 160px;padding:14px 16px;background:#1e3038;border-left:4px solid var(--cardiac);">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#759e9c;margin-bottom:4px;">High priority</div>
     <div style="font-family:'Newsreader',serif;font-size:32px;font-weight:300;color:#fff;line-height:1;">6</div>
-    <div style="font-size:13px;color:oklch(62% 0.03 195);margin-top:3px;">Actions with immediate clinical value</div>
+    <div style="font-size:13px;color:#78a0a0;margin-top:3px;">Actions with immediate clinical value</div>
   </div>
-  <div style="flex:1;padding:16px 20px;background:oklch(24% 0.03 200);border-left:4px solid var(--hepatic);">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(60% 0.04 195);margin-bottom:4px;">Medium priority</div>
+  <div style="flex:1 1 160px;padding:14px 16px;background:#1e3038;border-left:4px solid var(--hepatic);">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#759e9c;margin-bottom:4px;">Medium priority</div>
     <div style="font-family:'Newsreader',serif;font-size:32px;font-weight:300;color:#fff;line-height:1;">5</div>
-    <div style="font-size:13px;color:oklch(62% 0.03 195);margin-top:3px;">Meaningful improvements available</div>
+    <div style="font-size:13px;color:#78a0a0;margin-top:3px;">Meaningful improvements available</div>
   </div>
-  <div style="flex:1;padding:16px 20px;background:oklch(24% 0.03 200);border-left:4px solid oklch(50% 0.02 195);">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:oklch(60% 0.04 195);margin-bottom:4px;">Worth discussing</div>
+  <div style="flex:1 1 160px;padding:14px 16px;background:#1e3038;border-left:4px solid #608080;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#759e9c;margin-bottom:4px;">Worth discussing</div>
     <div style="font-family:'Newsreader',serif;font-size:32px;font-weight:300;color:#fff;line-height:1;">4</div>
-    <div style="font-size:13px;color:oklch(62% 0.03 195);margin-top:3px;">Lower urgency but not trivial</div>
+    <div style="font-size:13px;color:#78a0a0;margin-top:3px;">Lower urgency but not trivial</div>
   </div>
 </div>
 
@@ -795,5 +795,116 @@ footer a { color: var(--accent-soft); text-decoration: none; }
 })();
 </script>
 
+<style>
+/* ═══ MOBILE ≤ 959px ══════════════════════════════════════ */
+@media (max-width: 959px) {
+  body { padding-left: 0; }
+  .wrap { max-width: 100%; }
+
+  /* Sidebar → sticky top bar */
+  .doc-sidenav {
+    display: flex; position: sticky; top: 0; left: auto; bottom: auto;
+    width: 100%; height: auto; flex-direction: row; align-items: center;
+    overflow: hidden; z-index: 500;
+    border-right: none; border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .dsn-home { flex-shrink: 0; padding: 12px 14px; font-size: 12px; border-bottom: none; }
+  .dsn-doc  { flex: 1; font-size: 14px; padding: 0 14px; border-bottom: none;
+              white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dsn-group, .doc-sidenav a.dsn-link { display: none; }
+
+  /* Cover */
+  .cover { padding: 28px 20px 24px; }
+  .cover h1 { font-size: clamp(26px, 8vw, 48px); }
+  .cover .deck { font-size: 16px; max-width: none; }
+  .cover-meta { gap: 16px; margin-top: 20px; padding-top: 18px; }
+  .cover-meta .cm-field { font-size: 13px; }
+
+  /* Summary band (CSS-class version) */
+  .summary-band { padding: 14px 20px; grid-template-columns: 1fr; }
+  .sb-item { padding: 12px 16px; }
+  .sb-count { font-size: 28px; }
+
+  /* Sections */
+  .section { padding: 28px 20px 32px; }
+  .section-head { margin-bottom: 24px; }
+  .section-head h2 { font-size: clamp(22px, 6vw, 36px); }
+  .section-head .sh-deck { font-size: 15px; max-width: none; }
+
+  /* Intervention cards */
+  .interventions { gap: 12px; }
+  .card-head { padding: 14px 16px 12px; gap: 10px; }
+  .card-name { font-size: 16px; }
+  .card-body { grid-template-columns: 1fr; gap: 14px; padding: 14px 16px 18px; }
+  .cb-section p, .cb-section li { font-size: 14px; line-height: 1.6; }
+  .cb-section h4 { font-size: 10px; }
+
+  footer { padding: 18px 20px; flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+</style>
+<style>
+/* ═══ DYSLEXIA-FRIENDLY TYPOGRAPHY ══════════════════════════
+   Consistent across all packet pages. Increases body line-
+   height, letter + word spacing, and bumps up any text that
+   was below 15px to ensure comfortable reading on all screens.
+════════════════════════════════════════════════════════════ */
+body {
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  word-spacing: 0.04em;
+}
+
+/* Universal paragraph and list baseline */
+p  { font-size: 17px; line-height: 1.8; }
+li { font-size: 16px; line-height: 1.8; }
+
+/* ── Luke at a Glance ── */
+.body p            { font-size: 17px !important; line-height: 1.8 !important; }
+.body p.lede       { font-size: 19px !important; }
+.body ul li        { font-size: 16px !important; line-height: 1.8 !important; }
+.allcaps           { font-size: 14px !important; line-height: 1.75 !important; }
+.verbatim p        { font-size: 16px !important; line-height: 1.85 !important; }
+.dx-detail         { font-size: 16px; line-height: 1.8; }
+.open-q            { font-size: 15px; line-height: 1.75; }
+.qol-status        { font-size: 15px; line-height: 1.75; }
+.contact-item .cv  { font-size: 15px; line-height: 1.75; }
+.identity-table td { font-size: 15px; line-height: 1.7; }
+.med-table tbody td { font-size: 14px; line-height: 1.7; }
+
+/* ── Data Visualization Suite ── */
+.cover p           { font-size: 18px; line-height: 1.8; }
+.blk p             { font-size: 17px; line-height: 1.8; }
+.blk ul li         { font-size: 16px; line-height: 1.8; }
+.adj-col ul li     { font-size: 15px; line-height: 1.75; }
+.open-callout p    { font-size: 16px; line-height: 1.8; }
+
+/* ── System Map ── */
+.node p            { font-size: 17px; line-height: 1.8; }
+.tension-item p    { font-size: 17px; line-height: 1.8; }
+.conflict-card p   { font-size: 17px; line-height: 1.8; }
+.conflict-card .cc-resolution { font-size: 15px; line-height: 1.75; }
+.wwnw-block ul li  { font-size: 16px; line-height: 1.8; }
+.prose p           { font-size: 17px; line-height: 1.8; }
+.m-card ul li      { font-size: 16px; line-height: 1.75; }
+.eol-cell ul li    { font-size: 15px; line-height: 1.75; }
+.sys-detail        { font-size: 15px; line-height: 1.75; }
+
+/* ── Diet & Medication Matrix ── */
+.food-col li       { font-size: 15px; line-height: 1.75; }
+
+/* ── What Could Help ── */
+.cb-section p      { font-size: 16px; line-height: 1.8; }
+.cb-section li     { font-size: 16px; line-height: 1.8; }
+.section-head .sh-deck { font-size: 17px; line-height: 1.8; }
+
+/* ── Verbatim Timeline ── */
+.feature p         { font-size: 17px !important; line-height: 1.85 !important; }
+.ldg-foot          { font-size: 15px; line-height: 1.75; }
+.dek               { font-size: 18px; line-height: 1.8; }
+
+/* Cover / shared deck text across pages */
+.cover .deck       { font-size: 18px; line-height: 1.8; }
+.cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
+</style>
 </body>
 </html>

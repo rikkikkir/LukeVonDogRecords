@@ -1631,5 +1631,158 @@ renderChart('lipase-chart', {
   }
 })();
 </script>
+
+<style>
+/* ═══ MOBILE ≤ 959px ══════════════════════════════════════════════════════════ */
+@media (max-width: 959px) {
+
+  /* Fix the 2-col grid — sidebar column is still allocated when hidden */
+  .shell { display: block; }
+
+  /* Transform sidebar into sticky top bar */
+  .side {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    z-index: 100;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .side .brand, .side nav, .side .foot { display: none; }
+  .side > a:first-child { flex-shrink: 0; font-size: 12px; padding: 12px 16px; }
+
+  /* Cover */
+  .cover { padding: 28px 20px 22px; }
+  .cover .ey { font-size: 12px; }
+  .cover h2 { font-size: clamp(22px, 7vw, 36px); margin-bottom: 12px; }
+  .cover p { font-size: 15px; }
+  .cover .legend { gap: 8px 14px; font-size: 12px; margin-top: 16px; }
+
+  /* Sections */
+  .section { padding: 0 20px 32px; }
+
+  /* Section header — the s-current panel stacks below */
+  .s-head { flex-direction: column; margin: 0 -20px 24px; }
+  .s-head-inner { padding: 20px 20px 16px; }
+  .s-head h3 { font-size: clamp(20px, 6vw, 32px); }
+  .s-badge { font-size: 14px; }
+  .s-cat   { font-size: 13px; }
+  .s-current {
+    text-align: left;
+    align-items: flex-start;
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding: 14px 20px;
+    min-width: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+  .s-current .val { font-size: 38px; }
+  .s-current .pill-date { font-size: 14px; }
+
+  /* Charts */
+  .chart-card { padding: 14px 14px 10px; }
+  .chart-card .ch-meta { flex-direction: column; gap: 4px; align-items: flex-start; }
+  .chart-card .ch-ref { text-align: left; max-width: none; font-size: 13px; }
+  .chart-card .ch-title { font-size: 15px; }
+
+  /* Prose grid: single col */
+  .prose-grid { grid-template-columns: 1fr; gap: 18px; }
+  .blk p, .blk ul { font-size: 15px; }
+  .blk h4 { font-size: 13px; }
+
+  /* Adjust panel */
+  .adjust { padding: 14px 16px; }
+  .adj-grid { grid-template-columns: 1fr; gap: 14px; }
+  .adj-col ul { font-size: 14px; }
+  .adj-col h5 { font-size: 13px; }
+  .adjust .adj-title { font-size: 14px; }
+
+  /* Data table */
+  .data-tbl { font-size: 13px; }
+  .data-tbl th, .data-tbl td { padding: 7px 8px; }
+  .data-tbl td.d { white-space: normal; }
+  .data-tbl td.v { font-size: 14px; }
+
+  /* Gap bar */
+  .gap-bar-wrap { padding: 14px 16px; }
+  .gap-labels { font-size: 13px; }
+
+  /* Open callout */
+  .open-callout { padding: 12px 14px; gap: 10px; }
+  .open-callout p { font-size: 14px; }
+}
+</style>
+
+<style>
+/* ═══ DYSLEXIA-FRIENDLY TYPOGRAPHY ══════════════════════════
+   Consistent across all packet pages. Increases body line-
+   height, letter + word spacing, and bumps up any text that
+   was below 15px to ensure comfortable reading on all screens.
+════════════════════════════════════════════════════════════ */
+body {
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  word-spacing: 0.04em;
+}
+
+/* Universal paragraph and list baseline */
+p  { font-size: 17px; line-height: 1.8; }
+li { font-size: 16px; line-height: 1.8; }
+
+/* ── Luke at a Glance ── */
+.body p            { font-size: 17px !important; line-height: 1.8 !important; }
+.body p.lede       { font-size: 19px !important; }
+.body ul li        { font-size: 16px !important; line-height: 1.8 !important; }
+.allcaps           { font-size: 14px !important; line-height: 1.75 !important; }
+.verbatim p        { font-size: 16px !important; line-height: 1.85 !important; }
+.dx-detail         { font-size: 16px; line-height: 1.8; }
+.open-q            { font-size: 15px; line-height: 1.75; }
+.qol-status        { font-size: 15px; line-height: 1.75; }
+.contact-item .cv  { font-size: 15px; line-height: 1.75; }
+.identity-table td { font-size: 15px; line-height: 1.7; }
+.med-table tbody td { font-size: 14px; line-height: 1.7; }
+
+/* ── Data Visualization Suite ── */
+.cover p           { font-size: 18px; line-height: 1.8; }
+.blk p             { font-size: 17px; line-height: 1.8; }
+.blk ul li         { font-size: 16px; line-height: 1.8; }
+.adj-col ul li     { font-size: 15px; line-height: 1.75; }
+.open-callout p    { font-size: 16px; line-height: 1.8; }
+
+/* ── System Map ── */
+.node p            { font-size: 17px; line-height: 1.8; }
+.tension-item p    { font-size: 17px; line-height: 1.8; }
+.conflict-card p   { font-size: 17px; line-height: 1.8; }
+.conflict-card .cc-resolution { font-size: 15px; line-height: 1.75; }
+.wwnw-block ul li  { font-size: 16px; line-height: 1.8; }
+.prose p           { font-size: 17px; line-height: 1.8; }
+.m-card ul li      { font-size: 16px; line-height: 1.75; }
+.eol-cell ul li    { font-size: 15px; line-height: 1.75; }
+.sys-detail        { font-size: 15px; line-height: 1.75; }
+
+/* ── Diet & Medication Matrix ── */
+.food-col li       { font-size: 15px; line-height: 1.75; }
+
+/* ── What Could Help ── */
+.cb-section p      { font-size: 16px; line-height: 1.8; }
+.cb-section li     { font-size: 16px; line-height: 1.8; }
+.section-head .sh-deck { font-size: 17px; line-height: 1.8; }
+
+/* ── Verbatim Timeline ── */
+.feature p         { font-size: 17px !important; line-height: 1.85 !important; }
+.ldg-foot          { font-size: 15px; line-height: 1.75; }
+.dek               { font-size: 18px; line-height: 1.8; }
+
+/* Cover / shared deck text across pages */
+.cover .deck       { font-size: 18px; line-height: 1.8; }
+.cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
+</style>
 </body>
 </html>

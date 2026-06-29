@@ -3676,5 +3676,85 @@ table.num td.dim { color: #c3b9a4; font-size: 10px; letter-spacing: .04em; }
     <text x="600" y="690" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="18" letter-spacing="4" fill="#8a6a1e">2016 — 2026</text>
   </svg>
 </template>
+<style>
+/* ═══ MOBILE LEDGER + TABLE ADDITIONS ≤ 959px ══════════════
+   Entry/year layout already handled by @media(max-width:720px).
+════════════════════════════════════════════════════════════ */
+@media (max-width: 959px) {
+  .ledger { padding: 22px 20px 20px; margin: 24px 0; }
+  .ledger-title { font-size: clamp(24px, 7vw, 38px); }
+  .ldg-block { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.num { min-width: 460px; }
+  .counts { grid-template-columns: 1fr 1fr; }
+  .ct { padding: 12px 10px 14px; }
+  .colophon { font-size: 9px; margin-top: 48px; }
+  .dek { font-size: 16px; }
+  .masthead { margin-bottom: 24px; padding-bottom: 14px; }
+}
+</style>
+<style>
+/* ═══ DYSLEXIA-FRIENDLY TYPOGRAPHY ══════════════════════════
+   Consistent across all packet pages. Increases body line-
+   height, letter + word spacing, and bumps up any text that
+   was below 15px to ensure comfortable reading on all screens.
+════════════════════════════════════════════════════════════ */
+body {
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  word-spacing: 0.04em;
+}
+
+/* Universal paragraph and list baseline */
+p  { font-size: 17px; line-height: 1.8; }
+li { font-size: 16px; line-height: 1.8; }
+
+/* ── Luke at a Glance ── */
+.body p            { font-size: 17px !important; line-height: 1.8 !important; }
+.body p.lede       { font-size: 19px !important; }
+.body ul li        { font-size: 16px !important; line-height: 1.8 !important; }
+.allcaps           { font-size: 14px !important; line-height: 1.75 !important; }
+.verbatim p        { font-size: 16px !important; line-height: 1.85 !important; }
+.dx-detail         { font-size: 16px; line-height: 1.8; }
+.open-q            { font-size: 15px; line-height: 1.75; }
+.qol-status        { font-size: 15px; line-height: 1.75; }
+.contact-item .cv  { font-size: 15px; line-height: 1.75; }
+.identity-table td { font-size: 15px; line-height: 1.7; }
+.med-table tbody td { font-size: 14px; line-height: 1.7; }
+
+/* ── Data Visualization Suite ── */
+.cover p           { font-size: 18px; line-height: 1.8; }
+.blk p             { font-size: 17px; line-height: 1.8; }
+.blk ul li         { font-size: 16px; line-height: 1.8; }
+.adj-col ul li     { font-size: 15px; line-height: 1.75; }
+.open-callout p    { font-size: 16px; line-height: 1.8; }
+
+/* ── System Map ── */
+.node p            { font-size: 17px; line-height: 1.8; }
+.tension-item p    { font-size: 17px; line-height: 1.8; }
+.conflict-card p   { font-size: 17px; line-height: 1.8; }
+.conflict-card .cc-resolution { font-size: 15px; line-height: 1.75; }
+.wwnw-block ul li  { font-size: 16px; line-height: 1.8; }
+.prose p           { font-size: 17px; line-height: 1.8; }
+.m-card ul li      { font-size: 16px; line-height: 1.75; }
+.eol-cell ul li    { font-size: 15px; line-height: 1.75; }
+.sys-detail        { font-size: 15px; line-height: 1.75; }
+
+/* ── Diet & Medication Matrix ── */
+.food-col li       { font-size: 15px; line-height: 1.75; }
+
+/* ── What Could Help ── */
+.cb-section p      { font-size: 16px; line-height: 1.8; }
+.cb-section li     { font-size: 16px; line-height: 1.8; }
+.section-head .sh-deck { font-size: 17px; line-height: 1.8; }
+
+/* ── Verbatim Timeline ── */
+.feature p         { font-size: 17px !important; line-height: 1.85 !important; }
+.ldg-foot          { font-size: 15px; line-height: 1.75; }
+.dek               { font-size: 18px; line-height: 1.8; }
+
+/* Cover / shared deck text across pages */
+.cover .deck       { font-size: 18px; line-height: 1.8; }
+.cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
+</style>
 </body>
 </html>
