@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — Helping Luke Thrive</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e6; --paper-2:#efe9da; --paper-card:#fffdf8;
+  --ink:#1a1916; --ink-2:#353029; --ink-mute:#3d3830;
+  --rule:#d8cfba; --rule-soft:#e7dec9;
+  --accent:#2a4a52; --accent-deep:#1d343a; --accent-soft:#6e8e92;
+  --burgundy:#6b2a2a; --ochre:#8a6a1e; --moss:#4a5d2b; --plum:#5c3b5e;
+  --pad:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;font-size:16px;}
+body{background:#2a2620;color:var(--ink);font-family:system-ui,-apple-system,sans-serif;line-height:1.75;letter-spacing:.02em;}
+em{font-style:italic;}
+.shell{max-width:1040px;margin:24px auto;background:var(--paper);box-shadow:0 8px 50px rgba(0,0,0,.5);}
+
+/* header */
+.top{background:var(--accent-deep);color:#e8f0ee;padding:26px var(--pad) 22px;}
+.home{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9ecbc6;text-decoration:none;margin-bottom:16px;}
+.home:hover{color:#fff;}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8bbbb6;margin-bottom:8px;}
+h1{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(30px,7vw,50px);line-height:1;letter-spacing:-.02em;color:#fff;}
+h1 b{font-weight:600;color:#9ecbc6;}
+.deck{font-size:clamp(15px,4vw,18px);color:#c8dada;line-height:1.65;margin-top:14px;max-width:60ch;}
+.disclaim{background:#243b34;color:#cfe0dc;font-size:13px;line-height:1.6;padding:14px var(--pad);border-top:1px solid rgba(255,255,255,.08);}
+.disclaim b{color:#fff;}
+
+/* section frame */
+.wrap{padding:8px var(--pad) 40px;}
+section{padding:26px 0 4px;border-bottom:1px solid var(--rule-soft);}
+section:last-of-type{border-bottom:none;}
+h2{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(22px,5.4vw,30px);color:var(--accent);letter-spacing:-.01em;line-height:1.1;margin-bottom:6px;}
+h2 .n{color:var(--accent-soft);font-size:.7em;margin-right:8px;}
+.lead{font-size:17px;line-height:1.75;color:var(--ink-2);margin:8px 0 18px;max-width:70ch;}
+p{font-size:17px;line-height:1.8;color:var(--ink-2);margin-bottom:12px;max-width:72ch;}
+p b, li b{color:var(--ink);font-weight:600;}
+h3{font-family:"Newsreader",serif;font-weight:600;font-size:20px;color:var(--ink);margin:18px 0 8px;}
+ul{list-style:none;margin:0 0 14px;}
+li{font-size:16px;line-height:1.7;color:var(--ink-2);padding-left:16px;position:relative;margin-bottom:8px;max-width:72ch;}
+li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--accent-soft);}
+
+/* evidence chips */
+.ev{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;vertical-align:1px;color:#fff;white-space:nowrap;}
+.ev.strong{background:var(--moss);} .ev.mod{background:var(--accent);} .ev.weak{background:var(--ochre);}
+.ev.none{background:#8a8172;} .ev.avoid{background:var(--burgundy);}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--ink-mute);margin:10px 0 4px;align-items:center;}
+
+/* red-lines callout */
+.redlines{background:#f3e7e4;border:1.5px solid #d8b3ad;border-left:5px solid var(--burgundy);border-radius:8px;padding:16px 18px;margin:18px 0;}
+.redlines h3{color:var(--burgundy);margin-top:0;}
+.redlines p, .redlines li{color:#4a2a28;}
+.redlines li::before{background:var(--burgundy);}
+
+/* priority cards */
+.rank{display:flex;flex-direction:column;gap:12px;margin:14px 0 6px;}
+.rcard{background:var(--paper-card);border:1px solid var(--rule);border-left:4px solid var(--moss);border-radius:6px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;}
+.rcard .rn{font-family:"Newsreader",serif;font-weight:600;font-size:26px;color:var(--moss);line-height:1;flex:none;}
+.rcard .rt{font-weight:700;color:var(--ink);}
+.rcard p{margin:4px 0 0;font-size:15px;line-height:1.6;}
+
+/* avoid box */
+.avoidbox{background:#f3e7e4;border:1.5px solid #d8b3ad;border-radius:8px;padding:16px 18px;margin:14px 0;}
+.avoidbox h3{color:var(--burgundy);margin-top:0;}
+.avoidbox li::before{content:"✕";background:none;color:var(--burgundy);font-weight:800;font-size:12px;top:2px;width:auto;height:auto;}
+.avoidbox li{padding-left:20px;color:#4a2a28;}
+
+/* vet checklist */
+.vetbox{background:#eef4f2;border:1.5px solid #bcd4cf;border-radius:8px;padding:16px 18px;margin:14px 0;}
+.vetbox h3{color:var(--accent);margin-top:0;}
+.vetbox li::before{content:"☐";background:none;color:var(--accent);font-size:15px;top:0;width:auto;height:auto;}
+.vetbox li{padding-left:24px;}
+
+.note{font-size:14px;color:var(--ink-mute);font-style:italic;line-height:1.6;margin:6px 0 12px;}
+.src{font-size:12px;line-height:1.7;color:var(--ink-mute);word-break:break-word;}
+.src a{color:var(--accent);}
+.foot{background:var(--paper-2);border-top:1px solid var(--rule);padding:16px var(--pad);font-size:12px;color:var(--ink-mute);text-align:center;line-height:1.6;}
+
+@media (min-width:760px){
+  :root{--pad:52px;}
+  .rank{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+}
+
+@media print{
+  @page{size:Letter;margin:.55in;}
+  html,body{background:#fff!important;color:#000!important;}
+  .shell{max-width:none!important;box-shadow:none!important;margin:0;}
+  .top,.disclaim,.redlines,.avoidbox,.vetbox,.ev,.rcard{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  section,.rcard,.redlines,.avoidbox,.vetbox,li{page-break-inside:avoid;}
+  h1,h2,h3{page-break-after:avoid;}
+  a{color:#000!important;text-decoration:none!important;}
+  .home{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="top">
+    <a class="home" href="luke-practitioner-packet.html">← Packet home</a>
+    <div class="kicker">Modern options · filtered for his heart &amp; kidneys</div>
+    <h1>Helping Luke <b>Thrive.</b></h1>
+    <p class="deck">Nutrition, longevity, movement, bodywork and sensory ideas — every one weighed against Luke's cardiac and renal reality, and graded by how good the evidence actually is. Compiled by his owner as a starting point for the professionals who know him.</p>
+  </div>
+
+  <div class="disclaim">
+    <b>This is decision-support for conversation — not medical advice, and not a directive.</b> Luke's mix of advanced (presumptive) heart failure + kidney disease makes him a genuinely fragile, individual case. Nothing here should be <b>started, stopped, or dosed</b> without his own veterinary team — ideally his vet plus a cardiologist, a board-certified veterinary nutritionist (<b>DACVN</b>), and a credentialed rehab therapist (<b>CCRT/CCRP</b>). Owner-compiled from published veterinary sources, as of July 2026.
+  </div>
+
+  <div class="wrap">
+
+    <!-- RED LINES -->
+    <section>
+      <div class="redlines">
+        <h3>Two red lines that filter everything below</h3>
+        <ul>
+          <li><b>Cardiac ceiling (confirmed).</b> 300 mg furosemide ÷ 35.9 kg = <b>8.36 mg/kg/day</b> — at or over the 2019 ACVIM threshold that <em>defines</em> Stage D ("refractory") heart failure. His diuresis is near-maximal and cardiac reserve is minimal. The two things that can tip him into acute pulmonary edema are <b>over-exertion</b> and any <b>acute increase in fluid/preload.</b></li>
+          <li><b>Renal knife-edge.</b> IRIS Stage 2 CKD on a high-dose diuretic means he lives between the kidney's need for hydration and the diuretic's push toward dehydration, with phosphorus already above target (5.1). This filters diet, supplements, fluids, heat, and travel.</li>
+          <li><b>The diagnoses are softer than they look.</b> The heart disease is empiric (no echo/biomarkers); the kidney numbers were drawn on a high diuretic that itself distorts them; no urinalysis since 2023; Weimaraners are a DCM-predisposed breed with no taurine level ever checked. The highest-value "modern" move may be <b>confirming the picture before optimizing around it.</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PRIORITY LIST -->
+    <section>
+      <h2><span class="n">★</span>Start here — the 5 highest-value moves</h2>
+      <p class="lead">Ranked by evidence × benefit × safety <em>for this dog</em>. Each is expanded below.</p>
+      <div class="rank">
+        <div class="rcard"><div class="rn">1</div><div><span class="rt">Close the omega-3 gap</span> <span class="ev mod">Moderate</span><p>Toward ~2,300 mg/day EPA+DHA from purity-tested fish oil (he's at ~6% of that). The only lever with evidence across heart, kidney <em>and</em> joints — and it may let his carprofen dose come down.</p></div></div>
+        <div class="rcard"><div class="rn">2</div><div><span class="rt">A nutritionist-built cooked diet</span> <span class="ev mod">Moderate</span><p>A DACVN can reconcile heart vs. kidney in one recipe: moderate high-quality protein, phosphorus controlled by a binder (not by starving protein), moderate sodium, high moisture, taurine-replete.</p></div></div>
+        <div class="rcard"><div class="rn">3</div><div><span class="rt">Breath-rate monitoring + a Montana plan</span> <span class="ev strong">Strong</span><p>Count sleeping breaths (baseline now, daily on the trip); write an altitude + wildfire-smoke plan with a call-threshold and a destination ER. Cheap, high-yield, catches trouble early.</p></div></div>
+        <div class="rcard"><div class="rn">4</div><div><span class="rt">Therapist-guided gentle rehab + massage</span> <span class="ev weak">Weak but low-risk</span><p>PROM, short controlled land exercise, relaxation massage — real joint benefit with minimal cardiac load. The honest way to honor "the athlete."</p></div></div>
+        <div class="rcard"><div class="rn">5</div><div><span class="rt">Re-confirm the diagnoses</span> <span class="ev strong">Strong</span><p>Echo/NT-proBNP, a taurine level, a clean repeat renal panel + urinalysis/UPC, and an ALT work-up — so everything above is calibrated to reality.</p></div></div>
+      </div>
+    </section>
+
+    <!-- STEP ZERO -->
+    <section>
+      <h2><span class="n">0</span>Step zero — confirm the picture</h2>
+      <p class="lead">Before re-engineering anything, the most evidence-based step is characterizing what's actually being managed. All vet/specialist-led.</p>
+      <ul>
+        <li><b>Echocardiogram + NT-proBNP</b> <span class="ev strong">Strong</span> — confirm CHF and tell valve disease (MMVD) from dilated cardiomyopathy (DCM). Changes the whole plan; Weimaraners can get taurine-responsive DCM.</li>
+        <li><b>Whole-blood taurine level</b> <span class="ev mod">Moderate</span> — cheap; if low, taurine-responsive DCM can partly <em>reverse</em>. Test before treating.</li>
+        <li><b>Repeat renal panel + phosphorus + a fresh urinalysis/UPC</b> <span class="ev mod">Moderate</span> — on a clean, hydrated sample, to true up his IRIS stage before protein/phosphorus decisions (no UA since 2023).</li>
+        <li><b>Work up the rising ALT</b> <span class="ev mod">Moderate</span> — carprofen itself can injure the liver; look before reaching for a liver supplement that could mask the signal.</li>
+      </ul>
+    </section>
+
+    <!-- NUTRITION -->
+    <section>
+      <h2><span class="n">1</span>Nutrition &amp; diet — the cardiac-vs-renal core</h2>
+      <p>Cardiac diets restrict <b>sodium</b> and protect protein; renal diets restrict <b>phosphorus</b> and moderate protein. They collide on protein — and the ACVIM consensus lands in Luke's favor: <b>avoid low-protein renal diets unless severe renal failure is present.</b> He's Stage 2 (mild-moderate), so the default is <b>do not severely protein-restrict him</b> — protect his muscle (his ideal BCS 5/9 is an asset to hold). <span class="ev mod">Moderate</span></p>
+      <p>How a nutritionist reconciles it for <em>this</em> dog:</p>
+      <ul>
+        <li><b>Moderate high-quality protein</b> (egg white / whey are low-phosphorus-per-gram) — not severe restriction.</li>
+        <li><b>Control phosphorus with an intestinal binder</b> given with meals and titrated to blood phosphorus — the pivotal move that lets one diet serve both organs. Target Stage-2 phosphorus ≈ 2.7–4.6 mg/dL (his is 5.1). <span class="ev mod">Moderate–strong</span> This is the single strongest dietary lever in CKD.</li>
+        <li><b>Moderate — not extreme — sodium.</b> Over-restriction activates hormonal systems that can worsen kidney perfusion. The easy owner win is a <b>hidden-sodium audit</b>: pill-pocket cheese/deli meat/peanut butter and treats can quietly dominate a cardiac dog's sodium.</li>
+        <li><b>Build in omega-3</b> (below) and <b>high-moisture feeding</b> (add water/low-sodium broth; multiple water stations).</li>
+      </ul>
+      <h3>Is the raw pork &amp; shellfish diet a good fit? Honestly — no, for three reasons (with one merit).</h3>
+      <ul>
+        <li><b>Phosphorus &amp; protein are unrestricted</b> (raw meat + bone is high in both) — the opposite of what Stage 2 CKD needs. <span class="ev mod">Moderate</span></li>
+        <li><b>Uncontrolled/added sodium</b> (goat milk, shellfish, cured pork) — a cardiac liability.</li>
+        <li><b>Pathogen risk in a higher-risk host.</b> Every major body (FDA, WSAVA, AAHA, AVMA) advises against raw meat diets; pork/shellfish add their own hazards. Luke is a <b>senior on chronic carprofen (GI-vulnerable) with two organ diseases</b>, plus household zoonotic risk. <span class="ev strong">Strong</span></li>
+        <li><b>The one merit — high moisture — is real</b>, and a <em>cooked, reformulated</em> custom diet keeps it while fixing the rest.</li>
+      </ul>
+      <p class="note">DCM / grain-free / taurine: his current diet is meat-based (not the pulse-heavy "BEG" pattern linked to diet-associated DCM), so food-related DCM risk is low — but because his heart diagnosis is unconfirmed in a DCM-prone breed, a <b>taurine level is still worth it.</b></p>
+      <p><b>Who:</b> this is a textbook <b>board-certified veterinary nutritionist (DACVN)</b> problem — no shelf diet fits (renal diets too low-protein for his heart; cardiac diets don't restrict phosphorus for his kidney). Directory: <b>acvn.org</b>.</p>
+    </section>
+
+    <!-- OMEGA-3 -->
+    <section>
+      <h2><span class="n">2</span>Omega-3 (EPA/DHA) — the clearest single win</h2>
+      <p>The one nutrient with <b>moderate evidence across all three of his problems</b>, and it may cut his NSAID load:</p>
+      <ul>
+        <li><b>Kidney</b> <span class="ev mod">Moderate</span> — fish oil was renoprotective in the classic induced-CKD dog study (better GFR, less proteinuria) while omega-6 worsened injury.</li>
+        <li><b>Heart</b> <span class="ev mod">Moderate</span> — reduces arrhythmia and cardiac cachexia, improves appetite/lean mass; ACVIM Class IIa, especially with muscle loss or arrhythmia.</li>
+        <li><b>Joints</b> <span class="ev mod">Moderate</span> — the best-evidenced OA nutraceutical, with a trial showing a <b>carprofen-sparing</b> effect — directly relevant to his rising ALT and CKD.</li>
+      </ul>
+      <p><b>The gap is real.</b> Cardiac/renal target ≈ <b>~2,300 mg EPA+DHA/day</b> for a 35.9 kg dog (joint indications higher; safe ceiling ~5,400 mg). His <b>~132 mg/day is ~6%</b> of that — even a full dose sits well under the ceiling.</p>
+      <ul>
+        <li><b>Source:</b> purity/oxidation-tested <b>fish oil</b> from small cold-water fish. Krill/algal under-deliver EPA; <b>flax is inadequate</b>; <b>avoid cod-liver oil</b> (too much vitamin A/D — the D matters for his kidney).</li>
+        <li><b>Cautions:</b> titrate up slowly (GI upset), count the ~70–110 kcal, pause high-dose ~1–2 weeks before any elective surgery/dental. <b>Vet sets the exact dose</b> and coordinates the carprofen-sparing opportunity.</li>
+      </ul>
+    </section>
+
+    <!-- NUTRACEUTICALS -->
+    <section>
+      <h2><span class="n">3</span>Nutraceuticals &amp; "longevity" nutrients — graded honestly</h2>
+      <ul>
+        <li><b>SAM-e + silybin (Denamarin)</b> <span class="ev mod">Moderate</span> — most relevant to his <b>rising ALT</b> (a controlled study lowered ALT). But <b>diagnose why ALT is rising first.</b></li>
+        <li><b>Taurine / L-carnitine</b> <span class="ev strong">Strong if deficient</span> <span class="ev weak">else weak</span> — big benefit <em>only</em> with documented deficiency. Test, don't assume; L-carnitine is renally cleared — don't megadose in CKD.</li>
+        <li><b>Green-lipped mussel</b> <span class="ev weak">Weak–moderate</span> — fair optional joint adjunct; check the label for sodium/phosphorus.</li>
+        <li><b>CoQ10 (ubiquinol)</b> <span class="ev weak">Weak</span> — raises blood levels but the best canine trial showed <b>no clinical benefit</b>. Safe, low priority.</li>
+        <li><b>Probiotic "kidney/gut" products (Azodyl-type)</b> <span class="ev none">Weak–none</span> — a controlled study found no effect on kidney values. Better renal levers are the diet + binder.</li>
+        <li><b>Keep</b> his glucosamine/chondroitin/MSM (low concern) — but it's not a priority.</li>
+      </ul>
+      <div class="redlines">
+        <h3>Read every "heart/kidney support" label for these four hidden ingredients</h3>
+        <ul>
+          <li><b>Vitamin D</b> (cholecalciferol, cod-liver oil) → hypercalcemia / kidney harm.</li>
+          <li><b>Added phosphorus</b> (bone meal, dicalcium phosphate, organ blends).</li>
+          <li><b>Blind potassium or magnesium</b> — supplement only to a <em>measured</em> level.</li>
+          <li><b>Hidden sodium.</b> Also skip megadose vitamin C (oxalate).</li>
+        </ul>
+        <p class="note" style="margin-bottom:0;">Of his meds, Librela is the "clean" one (no known supplement interactions); amantadine cautions against serotonergic supplements (5-HTP, St. John's Wort).</p>
+      </div>
+    </section>
+
+    <!-- LONGEVITY -->
+    <section>
+      <h2><span class="n">4</span>Frontier longevity — a sober "not for Luke, not now"</h2>
+      <p>The clearest answer comes from the researchers' own rules: <b>the two most rigorous canine longevity trials (Dog Aging Project rapamycin; the Leap Years senolytic trial) both explicitly exclude dogs with significant heart, kidney, and liver disease.</b> Luke is excluded on at least three counts. These are meant for <em>relatively healthy</em> seniors to slow aging — not to treat a fragile, multi-morbid patient.</p>
+      <ul>
+        <li><b>Rapamycin</b> <span class="ev avoid">Experimental · renal risk</span> — the larger controlled dog trial was <b>null</b> for heart benefit; mTOR inhibitors can <b>worsen proteinuria</b> — a direct threat to his kidneys.</li>
+        <li><b>Senolytics (dasatinib)</b> <span class="ev avoid">Contraindication-level</span> — causes <b>fluid retention / pleural effusion</b> — dangerous in CHF.</li>
+        <li><b>NMN / NR (NAD+)</b> <span class="ev weak">Weak/unregulated</span> — no independent canine proof; renally-cleared metabolites → caution in CKD.</li>
+        <li><b>Loyal (LOY-002)</b> <span class="ev weak">Pending</span> — not yet available; a calorie-restriction-mimetic in a cachexia-prone CHF dog is an unquantified concern. Worth <em>watching</em> over 1–2 years as a future, healthier-day question — not for Luke now.</li>
+      </ul>
+      <p class="note">A longevity researcher's honest take: <em>"This dog is exactly who we screen out. His prognosis is governed by his CHF and CKD, not the aging rate these target. Optimize heart, kidney, pain and quality of life instead."</em></p>
+    </section>
+
+    <!-- REHAB -->
+    <section>
+      <h2><span class="n">5</span>Physical therapy &amp; rehab — honoring "the athlete," within the ceiling</h2>
+      <p>Reframed honestly: for a Stage D heart, the kind athletic goal is <b>movement under the heart's ceiling</b> — preserving comfort, dignity and hindlimb function — a permanent "deload," never a peak. Rehab guidance is explicit that it's <b>contraindicated when heart disease isn't well-compensated</b>, and that cardiac/frail dogs work in <b>3–5 minute bouts</b> (they can't signal distress).</p>
+      <ul>
+        <li><b>PROM (passive range of motion)</b> <span class="ev weak">Low-risk</span> — the therapist moves the joints; Luke does zero work → <b>essentially no cardiac load.</b> The lowest-risk hands-on modality; a therapist can teach you to do it gently at home.</li>
+        <li><b>Controlled short land exercise</b> <span class="ev weak">Weak–moderate</span> — slow leash walks, cavaletti (low rails), sit-to-stand, weight-shifting; a 2026 study of exactly this improved hip motion and muscle. <b>Best fit for his OA</b> — flat ground, 3–5 min, frequent rests, stop on any breathing change. No fetch, hills, or heat.</li>
+        <li><b>Gentle balance/proprioception</b> <span class="ev weak">Weak</span> — standing on foam/a disc; low demand, targets senior wobble; keep it short, calm, supervised.</li>
+      </ul>
+      <div class="redlines">
+        <h3>The standout AVOID: swimming / hydrotherapy</h3>
+        <p style="margin-bottom:0;">Water immersion raises <b>pressure that pushes blood into the chest, increasing cardiac preload</b> — exactly the stimulus that can trigger pulmonary edema in a Stage D heart at maximal diuresis. Veterinary sources list heart disease as a hydrotherapy contraindication; <b>swimming is the worst</b> (full immersion + high exertion). If water work is ever raised, only shallow underwater-treadmill, only with cardiology clearance and monitoring — <b>never swimming, never owner-driven.</b> <span class="ev avoid">Mechanism strong</span></p>
+      </div>
+      <p><b>Who:</b> a <b>rehab vet / CCRT-CCRP working directly with his cardiologist</b>, with <b>cardiology clearance before any activity plan</b> — not a DIY program.</p>
+    </section>
+
+    <!-- MASSAGE -->
+    <section>
+      <h2><span class="n">6</span>Stretching &amp; massage / bodywork</h2>
+      <ul>
+        <li><b>Gentle massage / relaxation bodywork</b> <span class="ev weak">Weak, very low-risk</span> — arguably the best fit on the whole list: soothing, eases the compensatory muscle tension arthritic dogs build, owner-deliverable, <b>no cardiac load.</b> Light strokes on thigh/shoulder muscle. <b>Avoid pressing over the spine, bony points, the chest, and the kidney region (mid-back).</b> Stop at any flinch.</li>
+        <li><b>Gentle stretching / PROM at home</b> <span class="ev weak">Weak</span> — good for his hindlimbs; warm up with a couple minutes of calm hands-on (<em>not</em> a brisk walk or a heat pack over his trunk); short holds, never into pain. Best value: have a rehab therapist teach 3–4 stretches on his actual joints.</li>
+        <li><b>Consumer percussion massagers / massage guns</b> <span class="ev none">No evidence — skip</span> — his two off-limit zones (chest for CHF, mid-back for CKD) are exactly what you'd target. Hands do the same job with zero device risk.</li>
+      </ul>
+    </section>
+
+    <!-- SENSORY -->
+    <section>
+      <h2><span class="n">7</span>Sensory &amp; haptic — including Woojer, candidly</h2>
+      <p><b>Woojer &amp; haptic-vibration wearables:</b> essentially <b>no evidence in dogs</b>, and the form-factor collides with his heart. Woojer is a consumer <em>entertainment</em> device (audio→vibration for gaming), never designed, sized, or tested for dogs — and its <b>chest-strap sits directly over the thoracic zone you'd avoid vibrating in a CHF dog</b> (and over the kidneys on the back). <span class="ev none">None</span> If the pull is the <em>soothing sensory</em> idea, the evidence-supported version of that instinct is a <b>pressure wrap</b>, not chest vibration.</p>
+      <p>The genuinely worthwhile options in this family:</p>
+      <ul>
+        <li><b>PEMF (Assisi Loop)</b> <span class="ev mod">Moderate — best device option</span> — a double-blind trial improved gait; <b>non-thermal, non-exerting</b> (doesn't trip his heat/exertion wires), possibly NSAID-sparing. Vet sets placement — over the sore limb/joint, <b>off the chest and kidneys.</b></li>
+        <li><b>Pressure wrap / ThunderShirt</b> <span class="ev weak">Weak–mixed, low-risk</span> — the studied version of "comforting sensory input" (smaller heart-rate rise in wrapped anxious dogs; no adverse effects). Fit snug-not-tight so it never restricts chest expansion; remove if breathing looks labored.</li>
+        <li><b>Photobiomodulation / therapeutic laser</b> <span class="ev mod">Moderate, mixed</span> — he already tolerated it; Class IV lasers make real heat, so the operator must keep it moving and <b>not build heat over the chest.</b></li>
+        <li><b>Therapeutic ultrasound</b> <span class="ev weak">Deprioritize</span> — weak evidence, and its thermal mode is exactly the heat-over-the-trunk to avoid.</li>
+      </ul>
+    </section>
+
+    <!-- ENVIRONMENT -->
+    <section>
+      <h2><span class="n">8</span>Environment &amp; quality of life — where much of the real value lives</h2>
+      <ul>
+        <li><b>Sleeping respiratory rate (SRR) — the single most useful home tool.</b> <span class="ev strong">Moderate–strong</span> Count breaths while he sleeps, log 2–3×/week — <b>daily around Montana.</b> Establish his sea-level baseline <em>now</em> so an altitude-driven rise is detectable; a sustained climb toward/over ~30/min means call the vet (confirm his exact number).</li>
+        <li><b>Air quality — the biggest travel hazard.</b> <span class="ev strong">Strong</span> Wildfire smoke raises heart-failure events within days and hits cardiac patients hardest. Watch <b>AQI daily (AirNow.gov)</b> — 101–150 = cut exertion; 151+ = indoors, potty-only. Run a <b>true-HEPA purifier</b> sized to his rest room; car windows up, <b>AC on recirculate.</b></li>
+        <li><b>Altitude (~4,820 ft).</b> <span class="ev mod">Moderate</span> Less oxygen = more cardiac work. <b>Pre-travel cardiology exam</b>; ask about gradual rest on arrival, whether portable oxygen should travel, and any monitoring/med adjustments. Smoke + altitude + heat <b>stack</b> — the most dangerous combination.</li>
+        <li><b>Orthopedic bedding</b> <span class="ev weak">Weak–moderate</span> — thick solid-foam, <b>waterproof-lined + washable</b> (high-dose furosemide = frequent large urine output), floor-level (no stepping up).</li>
+        <li><b>Ramps + traction</b> <span class="ev weak">Rationale</span> — a vehicle ramp (he's 79 lb) spares arthritic hindlimbs; non-slip runners / toe grips prevent slip-splay falls.</li>
+        <li><b>GDV vigilance</b> <span class="ev mod">Moderate</span> — small, slow-fed meals 2–3×/day; no vigorous activity 1–2 hr around meals; know the signs (unproductive retching, distended abdomen, restlessness = surgical emergency); ask about gastropexy. <b>Default to floor-level bowls</b> (raised-bowl evidence is conflicting and one landmark study associated them with <em>more</em> GDV).</li>
+        <li><b>Warmth, done safely</b> — his thin dilute "blue" coat chills easily and warmth eases stiff joints, but he's the classic burn-risk profile: pet-specific pad, lowest setting, towel barrier, warm only part of the bed, never in a warm car (heat + diuretic + CHF is a dangerous trio).</li>
+        <li><b>Travel logistics</b> — constant water (<b>never restrict water on a diuretic</b>), frequent potty stops, waterproof pads, meds + written records + a destination <b>24-hr ER/cardiology contact identified before departure.</b> Any dose/timing change is vet-only — ignore generic "give an extra furosemide" internet advice.</li>
+        <li><b>QoL tracking</b> — a written weekly log using the <b>HHHHHMM</b> scale (simple) and ideally the cardiac-specific <b>FETCH</b> questionnaire, paired with the SRR log, gives the vet an objective early-warning trend instead of a gut feeling.</li>
+      </ul>
+    </section>
+
+    <!-- AVOID -->
+    <section>
+      <h2><span class="n">✕</span>What to avoid, given his heart + kidneys</h2>
+      <div class="avoidbox">
+        <ul>
+          <li><b>Swimming / full-immersion hydrotherapy</b>, and any over-exertion — hills, fetch, hot-day / smoky-day / high-altitude activity.</li>
+          <li><b>Any single off-the-shelf disease diet</b> — standard renal diets (cachexia risk) <em>and</em> unrestricted-phosphorus cardiac diets are both wrong alone.</li>
+          <li><b>Continuing the raw pork/shellfish diet as-is</b> (unrestricted phosphorus, added sodium, pathogen risk in a senior NSAID dog).</li>
+          <li><b>Owner-initiated subcutaneous or IV fluids</b> — routine in kidney-only dogs, but can trigger pulmonary edema in CHF. Vet-directed only.</li>
+          <li><b>Frontier longevity drugs</b> — rapamycin, dasatinib senolytics, NMN/NR; Loyal isn't available and targets healthier seniors.</li>
+          <li><b>Supplements hiding vitamin D, added phosphorus, blind potassium/magnesium, or sodium;</b> megadose vitamin C.</li>
+          <li><b>Chest- or kidney-region vibration / percussion / heat</b> — Woojer chest strap, massage guns, thermal ultrasound over the trunk, laser dwelling over the chest.</li>
+          <li><b>Over-restricting sodium</b> — the target is <em>moderate</em>, not maximal.</li>
+          <li><b>Raised food bowls by default;</b> high-dose fish oil in the 1–2 weeks before elective surgery/dental.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- VET LIST -->
+    <section>
+      <h2><span class="n">→</span>A short list to bring to the vet team</h2>
+      <div class="vetbox">
+        <ul>
+          <li>Is his empiric CHF worth confirming with echo / NT-proBNP — and could this be DCM (taurine level)?</li>
+          <li>Given the rising ALT + CKD, is carprofen still the right NSAID — can omega-3 + Librela + amantadine reduce NSAID reliance?</li>
+          <li>Referral to a <b>DACVN</b> for a cooked custom diet, and a <b>CCRT/CCRP rehab vet</b> working with cardiology?</li>
+          <li>What is Luke's individual sleeping-breath "call-us" threshold, and what's the written <b>Montana altitude + wildfire-smoke plan</b> (pre-travel exam, oxygen?, destination ER)?</li>
+          <li>Repeat renal panel + phosphorus + UA/UPC on a clean sample — is a phosphate binder indicated at 5.1?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SOURCES -->
+    <section>
+      <h2><span class="n">§</span>Selected sources</h2>
+      <p class="src">
+        ACVIM 2019 MMVD consensus (Keene et al.) · IRIS staging (iris-kidney.com) · ACVN CKD nutrition (Today's Veterinary Practice) · Tufts HeartSmart · WSAVA raw-meat statement · Omega-3 renal (Brown 1998) &amp; MMVD RCT · Fish-oil carprofen-sparing (Fritsch 2010) · CoQ10 negative RCT · SAM-e/silybin &amp; ALT · Azodyl review (SkeptVet) · Dog Aging Project TRIAD eligibility · Rapamycin cardiac RCT (null) · Loyal LOY-002 status · Leap Years critique · Canine OA physiotherapy review · Rehab cardiac contraindication / 3–5 min bouts (Veterinary Practice News) · Hydrotherapy contraindications (IVC Journal) · Immersion &amp; preload in heart failure · ThunderShirt RCT &amp; compression-wrap review · PEMF OA RCT · Laser systematic review · Vibration-therapy (uncontrolled) · AVMA wildfire smoke &amp; pets · EPA HEPA/CADR · Sleeping-respiratory-rate validation · Altitude &amp; pets · Big Barker UPenn pilot · GDV / raised-bowl (Purina Institute / Glickman) · HHHHHMM QoL scale · FETCH cardiac QoL (Freeman 2005).
+      </p>
+      <p class="note">Evidence grades reflect the quality of published veterinary evidence, not certainty for Luke specifically. Full URLs are in the owner's research notes.</p>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    Luke VonDog · Helping Luke Thrive · owner-compiled options for discussion with his veterinary team · July 2026<br>
+    Not medical advice. Nothing to be started, stopped, or dosed without Luke's vet, cardiologist, DACVN nutritionist, and rehab therapist.
+  </div>
+
+</div>
+</body>
+</html>

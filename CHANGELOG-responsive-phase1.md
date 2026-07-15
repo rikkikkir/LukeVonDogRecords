@@ -74,3 +74,24 @@ Legend: 🎨 layout/CSS · 🖨 print/PDF · 🐛 defect fix · 🧭 navigation 
 - No single "Full Packet (print/PDF)" assembly page yet (browsers can't print across separate files) — Phase 2.
 - The travel band + Bozeman links are **time-boxed to Jul–Aug 2026** — remove/demote after the trip.
 - This CHANGELOG file lives in the repo; delete it before/after merge if you don't want it on the live site (it isn't linked from anywhere).
+
+---
+
+# v2 — Evolved version (side-by-side; NEW files, v1 untouched)
+
+Built after a multi-perspective critique (own passes + 4 independent critics: palliative vet, ER-scannability, information design, risk/provenance). New files so v1 and v2 can be compared:
+
+## luke-practitioner-packet-v2.html  (evolved hub)
+- **Two-tier triage:** one dominant red "DO NOT stop furosemide" banner **+ a crisis action** ("→ treat as CHF decompensation"), with the other four flags demoted to a calmer amber "Know this before you manage him" strip. (v1 had five equal-weight flags — no hierarchy.)
+- **Typography fixed:** critical text now ≥17px (was 14–16px — *smaller* than nav labels and below the dyslexia floor); lead flag largest.
+- **NEW "What Rikki wants for Luke" goals-of-care card** — surfaces the previously-buried End-of-Life content from `luke-system-map.html` (the May 14 2025 conversation: signals watched / what a crisis looks like / what Rikki needs) **+ an owner-only "Emergency escalation wishes" slot** (oxygen? hospitalize? CPR? financial ceiling? comfort-first? who consents while traveling?). Left blank — only Rikki can fill it.
+- **Provenance + standalone-safety:** visible "owner-compiled orientation, not a directive" byline; **allergy line** ("none on record"); owner + primary-vet + Bozeman-ER phones and an "as of June 2026" date on the card itself (so a printed sheet stands alone). Hero changed from "Everything a new provider needs" → "An owner's orientation for your team."
+- **Numbers:** global **staleness caption** ("not rechecked since Sep 2025; Mar '26 = BUN only"); colorblind-safe **HIGH chips** (not color-alone); consistent warn logic; emphasized trends; SDMA now dated.
+- **Carrot barometer** added to the goals card with a baseline slot; imperatives softened to observations ("you may want fresh values…"); carprofen mg/kg tagged "owner calc"; travel band relabeled "Travel window" (won't read false in September).
+- Verified desktop + mobile via headless screenshots.
+
+## luke-helping-thrive.html  (NEW — answers "how can I help Luke thrive?")
+- Evidence-graded (STRONG/MODERATE/WEAK/NONE/AVOID), safety-filtered options across nutrition, omega-3, nutraceuticals, frontier longevity, physical therapy/rehab, massage/bodywork, sensory/haptic (incl. an honest Woojer assessment), and environment/QoL — **every item filtered through his cardiac (Stage D) + renal red lines.**
+- Framed throughout as **owner-compiled decision-support for his vet team, not a directive.** Sources cited. Responsive + print-ready.
+- Linked from the v2 hub ("Helping Luke thrive →"). Grounded in a web-research pass (ACVIM 2019 consensus, IRIS, Tufts HeartSmart, Dog Aging Project, etc.).
+- ⚠ **Not medical advice** — it explicitly routes to his vet + a cardiologist + a DACVN nutritionist + a CCRT rehab therapist. Highest-value moves it surfaces: close the omega-3 gap, a nutritionist-built cooked diet (the raw pork/shellfish diet is a poor renal/cardiac fit), breath-rate + Montana air/altitude plan, gentle therapist-guided rehab, and re-confirming the (empiric) diagnoses.
