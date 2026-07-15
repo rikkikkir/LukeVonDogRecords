@@ -19,7 +19,7 @@ html { -webkit-font-smoothing: antialiased; font-size: 17px; }
 body { margin: 0; background: #13211f; color: var(--ink); font-family: system-ui, -apple-system, sans-serif; line-height: 1.65; }
 a { color: var(--accent); text-decoration: none; }
 
-.shell { display: grid; grid-template-columns: var(--sidebar) 1fr; max-width: 1300px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 90px rgba(0,0,0,.5); min-height: 100vh; gap: 0; }
+.shell { display: grid; grid-template-columns: var(--sidebar) 1fr; max-width: 1500px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 90px rgba(0,0,0,.5); min-height: 100vh; gap: 0; }
 
 /* ── Sidebar ── */
 .side { position: sticky; top: 0; align-self: start; height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: var(--accent-deep); color: #e7eeec; border-right: 1px solid rgba(255,255,255,.1); }
@@ -1704,8 +1704,9 @@ renderChart('lipase-chart', {
   .adj-col h5 { font-size: 13px; }
   .adjust .adj-title { font-size: 14px; }
 
-  /* Data table */
-  .data-tbl { font-size: 13px; }
+  /* Data table — let wide tables scroll INSIDE their box instead of
+     stretching the page (no HTML change; width:max-content + overflow) */
+  .data-tbl { font-size: 13px; display: block; width: max-content; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .data-tbl th, .data-tbl td { padding: 7px 8px; }
   .data-tbl td.d { white-space: normal; }
   .data-tbl td.v { font-size: 14px; }
@@ -1717,6 +1718,74 @@ renderChart('lipase-chart', {
   /* Open callout */
   .open-callout { padding: 12px 14px; gap: 10px; }
   .open-callout p { font-size: 14px; }
+}
+
+/* ═══ PRINT / PDF ═══════════════════════════════════════════════
+   The screen design is dark-body / light-shell. The charts are drawn
+   on a LIGHT plot canvas (oklch 97%) with dark, *semantic* strokes and
+   text (teal = normal, burgundy = high, ochre = low), so we deliberately
+   DO NOT recolor SVG text to black — that would erase the colour coding
+   and is unnecessary here (dark-on-light already prints legibly).
+   We force the shell light, drop the nav, collapse the 2-col grid, and
+   preserve the few genuinely dark UI elements (section headers + status
+   pills) via print-color-adjust so their meaning survives on paper.
+   NOTE: a Letter page (~7.4in ≈ 710px) is < 959px, so the mobile query
+   above also matches while printing — hence the .data-tbl reset below,
+   which undoes the mobile horizontal-scroll (paper can't scroll) and
+   lets wide tables wrap/fit the page instead of clipping columns. */
+@media print {
+  @page { size: Letter; margin: 0.55in; }
+
+  html, body, .shell {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Collapse the 2-col app grid into one printable column */
+  .shell {
+    display: block !important;
+    grid-template-columns: none !important;
+    max-width: none !important;
+    box-shadow: none !important;
+  }
+  .side { display: none !important; }
+
+  /* Keep the dark semantic chrome legible: section headers + status
+     pills carry meaning via their colour, so force their backgrounds
+     to print instead of being dropped. */
+  .s-head, .s-head *, .s-current, .pill {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Charts stay on a white card; SVG paint (light canvas + dark,
+     coloured strokes/text) is foreground and prints as-is. */
+  .chart-card {
+    background: #fff !important;
+    border: 1px solid #ccc;
+  }
+  .chart-card svg {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Undo the mobile scroll-table (see NOTE): a printed page can't be
+     scrolled, so restore normal table flow to avoid clipped columns. */
+  .data-tbl {
+    display: table !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Don't slice these units across page breaks */
+  .section, .chart-card, .prose-grid, .data-tbl, table, figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  a { color: #000 !important; text-decoration: none !important; }
+  img, svg { max-width: 100% !important; height: auto; }
 }
 </style>
 

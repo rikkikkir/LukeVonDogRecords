@@ -25,7 +25,7 @@ body {
 }
 
 /* ── Screen wrapper ── */
-.pages { max-width: 900px; margin: 28px auto; display: flex; flex-direction: column; gap: 24px; }
+.pages { max-width: 1140px; margin: 28px auto; display: flex; flex-direction: column; gap: 24px; }
 
 /* ── Page ── */
 .page {
@@ -191,10 +191,19 @@ body {
 
 /* ── Print ── */
 @media print {
-  body { background: #fff; }
+  @page { size: Letter; margin: 0.55in; }
+  html, body { background: #fff !important; color: #000 !important; padding-left: 0 !important; }
+  .doc-sidenav { display: none !important; }
   .pages { margin: 0; gap: 0; max-width: none; }
   .page { box-shadow: none; page-break-after: always; }
   .page:last-child { page-break-after: avoid; }
+  /* Keep the semantic colored bands (red = "do not stop") on paper even when the
+     browser's "background graphics" toggle is off. */
+  .page-head, .critical-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Don't fracture atomic blocks across sheets. */
+  .dx-item, .vital, .lab-cell, .sys-row, .open-item, .qol-item, .contact-item, tr { page-break-inside: avoid; }
+  .sec-label { page-break-after: avoid; }
+  a { color: #000 !important; }
 }
 </style>
 </head>
@@ -237,7 +246,10 @@ body {
 }
 .doc-sidenav a.dsn-link:hover { color: #fff; }
 .doc-sidenav a.dsn-link.active { background: rgba(255,255,255,.14); color: #fff; font-weight: 600; border-radius: 4px; }
-@media (max-width: 960px) { .doc-sidenav { display: none; } }
+/* Desktop: offset content so the fixed 160px sidebar sits BESIDE it, never overlapping
+   (fixes the 960–1220px overlap). Mobile (≤959px block below) demotes the sidebar to a
+   top bar, so there is no 960px nav dead-zone. */
+@media (min-width: 960px) { body { padding-left: 160px; } }
 </style>
 <body>
 
@@ -649,7 +661,7 @@ body {
         </div>
         <div class="open-item">
           <div class="open-num">02</div>
-          <div class="open-q"><b>NT-proBNP + Cardiac Troponin I.</b> Cardiac diagnosis is purely empirical — echocardiography is not accessible due to cost. NT-proBNP and troponin can be drawn at a routine blood panel at Thornwood. Neither has been measured. Would quantify cardiac wall stress and guide whether adjunctive medications (pimobendan, ACE-I) are indicated without imaging.</div>ns.</div>
+          <div class="open-q"><b>NT-proBNP + Cardiac Troponin I.</b> Cardiac diagnosis is purely empirical — echocardiography is not accessible due to cost. NT-proBNP and troponin can be drawn at a routine blood panel at Thornwood. Neither has been measured. Would quantify cardiac wall stress and guide whether adjunctive medications (pimobendan, ACE-I) are indicated without imaging.</div>
           <div class="open-priority priority-h">High</div>
         </div>
         <div class="open-item">
