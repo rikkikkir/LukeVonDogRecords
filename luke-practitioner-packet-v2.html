@@ -649,6 +649,7 @@ a.doc-row.d05:hover { background: #ece3e2; }
       <div class="th-kicker alt">Later chapter · goals of care</div>
       <h3>What Rikki wants for Luke</h3>
       <p>Luke is 12, in the later chapter of two conditions whose treatments conflict. An end-of-life planning conversation was opened with the Thornwood team on <b>May 14, 2025</b> — this is a framework, not an imminent-decision document. It exists so a stranger can make the choice Rikki would make.</p>
+      <p class="who-luke"><b>Who Luke is:</b> friendly with everyone · a brilliant, athletic beast · a lover of food and learning.</p>
     </div>
     <div class="goals-grid">
       <div class="goal-col">
@@ -678,16 +679,17 @@ a.doc-row.d05:hover { background: #ece3e2; }
         </ul>
       </div>
     </div>
-    <div class="goals-slot">
-      <div class="gs-label">Emergency escalation wishes <span class="slot-note">— only Rikki can fill this in; a stranger-vet needs it at 2am</span></div>
-      <div class="gs-grid">
-        <div class="gs-item"><span>Respiratory crisis — oxygen &amp; attempt to stabilize?</span><span class="fill">▸</span></div>
-        <div class="gs-item"><span>Hospitalize overnight? Ceiling?</span><span class="fill">▸</span></div>
-        <div class="gs-item"><span>CPR / ventilation if he arrests?</span><span class="fill">▸</span></div>
-        <div class="gs-item"><span>Financial ceiling for a crisis?</span><span class="fill">▸</span></div>
-        <div class="gs-item"><span>If he can't be stabilized — comfort-first / humane euthanasia?</span><span class="fill">▸</span></div>
-        <div class="gs-item"><span>Who may consent if Rikki is unreachable while traveling?</span><span class="fill">▸</span></div>
+    <div class="goals-slot filled">
+      <div class="gs-label">Rikki's wishes for a crisis or the end <span class="slot-note filled-note">— her directive; please honor it</span></div>
+      <div class="directive">
+        <p class="d-lead"><b>Luke is to have a peaceful, dignified death.</b> His health and comfort come before resuscitation.</p>
+        <ul class="d-list">
+          <li><b>DNR — no CPR.</b></li>
+          <li><b>No hospitalization.</b></li>
+          <li>Keep him <b>well and comfortable</b> for as long as that is possible; when his time comes, let him go <b>peacefully</b> — do not attempt to resuscitate or prolong.</li>
+        </ul>
       </div>
+      <div class="gs-open">A few specifics Rikki may add when she's ready: whether, in a breathing crisis, to ease his distress with oxygen or light sedation for <em>comfort</em> (which is not resuscitation) while she reaches him; any financial ceiling; and who may authorize <em>comfort care</em> if she is briefly unreachable while traveling.</div>
     </div>
   </section>
 
@@ -956,6 +958,20 @@ a.doc-row.d05:hover { background: #ece3e2; }
 .gs-grid { display:flex; flex-direction:column; gap:11px; }
 .gs-item { display:flex; justify-content:space-between; align-items:baseline; gap:14px; font-size:14.5px; color:var(--ink-2); border-bottom:1px dotted var(--rule); padding-bottom:9px; }
 .gs-item .fill { color:#b7ac93; font-weight:800; flex:none; }
+
+/* Who Luke is + the affirmed end-of-life directive */
+.who-luke { font-size:14.5px; color:#e8f0dc; line-height:1.55; margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.14); }
+.who-luke b { color:#fff; }
+.goals-slot.filled { border-style:solid; border-color:#4a5d2b; background:#eef3e6; }
+.gs-label .filled-note { color:#4a5d2b; }
+.directive .d-lead { font-size:16.5px; color:var(--ink); line-height:1.55; margin-bottom:11px; }
+.directive .d-lead b { color:#33421f; }
+.d-list { list-style:none; display:flex; flex-direction:column; gap:8px; margin:0 0 11px; }
+.d-list li { font-size:15.5px; color:var(--ink-2); line-height:1.5; padding-left:24px; position:relative; }
+.d-list li::before { content:"✓"; position:absolute; left:0; top:-1px; color:#4a5d2b; font-weight:800; font-size:15px; }
+.d-list li b { color:#33421f; }
+.gs-open { font-size:13px; color:var(--ink-mute); font-style:italic; line-height:1.55; border-top:1px dotted var(--rule); padding-top:11px; }
+.gs-open em { font-style:normal; font-weight:600; color:var(--ink-2); }
 
 /* NUMBERS — consistent warn + colorblind-safe (value carries the signal, plus a HIGH word chip) */
 .stale-note { font-size:13px; color:#6b2a2a; background:#f6ece9; border-left:3px solid var(--burgundy); padding:9px 11px; margin-bottom:13px; line-height:1.5; }
