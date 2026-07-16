@@ -1,95 +1,98 @@
-/* ═══════════════════════════════════════════════════════════════════════
-   luke-nav.js — SINGLE SOURCE OF TRUTH for cross-document navigation.
-   The DOCS array below is the ONLY place the document list lives. Every
-   page's uniform sidebar (.lnav) gets its "All documents" switcher and its
-   prev/next links built from this array, so they can never drift out of
-   sync across the 11 self-contained HTML files.
-
-   Each page carries: <nav class="lnav" data-page="<id>"> ...
-     <div data-lnav-docs></div>       ← switcher injected here
-     <div data-lnav-updown></div>     ← prev/next injected here
-   Graceful degradation: if this file fails to load, the static "Packet home"
-   link + the per-page "On this page" anchors still work; only the lateral
-   switcher is empty (correct for a lone emailed/printed file).
-═══════════════════════════════════════════════════════════════════════ */
+/* ============================================================
+   Luke VonDog — shared cross-document navigation
+   Self-injecting: include <script src="luke-nav.js"></script>
+   near the end of <body> on any page and it renders one
+   identical top nav banner (home + every document as a button,
+   current highlighted) so the packet is consistently navigable.
+   Single source of truth = the DOCS array below.
+   ============================================================ */
 (function () {
-  "use strict";
-
-  // reading order = prev/next order. n = doc number shown in the switcher.
+  var HOME = "luke-practitioner-packet.html";
   var DOCS = [
-    { p: "practitioner-packet",      f: "luke-practitioner-packet.html",      label: "Packet home",              n: "",   c: "#2a4a52" },
-    { p: "at-a-glance",              f: "luke-at-a-glance.html",              label: "Luke at a Glance",         n: "1",  c: "#3a6068" },
-    { p: "data-visualization-suite", f: "luke-data-visualization-suite.html", label: "Data Visualization Suite", n: "2",  c: "#3f5224" },
-    { p: "system-map",               f: "luke-system-map.html",               label: "System Map",               n: "3",  c: "#4a2f4e" },
-    { p: "diet-medication-matrix",   f: "luke-diet-medication-matrix.html",   label: "Diet & Medication Matrix", n: "4",  c: "#7a5c18" },
-    { p: "verbatim-timeline",        f: "luke-verbatim-timeline.html",        label: "Verbatim Timeline",        n: "5",  c: "#6b2a2a" },
-    { p: "what-could-help",          f: "luke-what-could-help.html",          label: "What Could Help",          n: "6",  c: "#6e8e92" },
-    { p: "nutrition-consult",        f: "luke-nutrition-consult.html",        label: "Nutrition Consult",        n: "7",  c: "#9c4f2a" },
-    { p: "helping-thrive",           f: "luke-helping-thrive.html",           label: "Helping Luke Thrive",      n: "8",  c: "#2f5d4e" },
-    { p: "bozeman-local-care",       f: "luke-bozeman-travel-brief.html",     label: "Bozeman Local-Care",       n: "9",  c: "#3f5a72" },
-    { p: "pet-sitter-guide",         f: "luke-pet-sitter-guide.html",         label: "Pet-Sitter Guide",         n: "10", c: "#43457e" }
+    { f: "luke-at-a-glance.html",              n: "1",  label: "At a Glance" },
+    { f: "luke-data-visualization-suite.html", n: "2",  label: "Data Visualization" },
+    { f: "luke-system-map.html",               n: "3",  label: "System Map" },
+    { f: "luke-diet-medication-matrix.html",   n: "4",  label: "Diet & Meds" },
+    { f: "luke-verbatim-timeline.html",        n: "5",  label: "Verbatim Timeline" },
+    { f: "luke-what-could-help.html",          n: "6",  label: "What Could Help" },
+    { f: "luke-nutrition-consult.html",        n: "7",  label: "Nutrition Consult" },
+    { f: "luke-helping-thrive.html",           n: "8",  label: "Helping Thrive" },
+    { f: "luke-bozeman-travel-brief.html",     n: "9",  label: "Bozeman Care" },
+    { f: "luke-our-time.html",                 n: "10", label: "Our Time" }
   ];
 
-  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function run() {
+    if (document.querySelector(".lukenav")) return;
+    var here = (location.pathname.split("/").pop() || HOME);
+    if (here === "" || here === "index.html") here = HOME;
+    var atHome = (here === HOME);
 
-  function init() {
-    var nav = document.querySelector(".lnav");
-    if (!nav) return;
-    var here = nav.getAttribute("data-page");
-    var i = -1;
-    for (var k = 0; k < DOCS.length; k++) { if (DOCS[k].p === here) { i = k; break; } }
+    var css = ''
+      + '.lukenav{position:sticky;top:0;z-index:99999;display:flex;align-items:stretch;gap:0;'
+      + 'background:#26243b;color:#fff;padding:0;'
+      + "font-family:'Atkinson Hyperlegible',system-ui,-apple-system,sans-serif;"
+      + 'box-shadow:0 2px 10px rgba(20,18,40,.28);border-bottom:1px solid rgba(255,255,255,.08);}'
+      + '.lukenav *{box-sizing:border-box;}'
+      + '.lukenav a{text-decoration:none;}'
+      + '.lukenav-home{display:flex;flex-direction:column;justify-content:center;line-height:1.06;'
+      + 'color:#fff;flex:none;padding:9px 16px;border-right:1px solid rgba(255,255,255,.14);}'
+      + '.lukenav-home:hover{background:rgba(255,255,255,.06);}'
+      + '.lukenav-home b{font-size:15px;font-weight:700;letter-spacing:.01em;}'
+      + '.lukenav-home span{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#a6a1cf;margin-top:1px;}'
+      + '.lukenav-home.is-current b{color:#cfe0ff;}'
+      + '.lukenav-scroll{flex:1;min-width:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;'
+      + 'scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent;}'
+      + '.lukenav-scroll::-webkit-scrollbar{height:6px;}'
+      + '.lukenav-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px;}'
+      + '.lukenav-docs{display:flex;align-items:center;gap:6px;padding:8px 14px;width:max-content;height:100%;}'
+      + '.lukenav-pill{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;'
+      + 'font-size:12.5px;font-weight:700;color:#d9d6ef;background:rgba(255,255,255,.07);'
+      + 'border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:6px 13px;transition:background .12s,color .12s;}'
+      + '.lukenav-pill i{font-style:normal;font-size:10px;font-weight:800;opacity:.55;}'
+      + '.lukenav-pill:hover{background:rgba(255,255,255,.16);color:#fff;}'
+      + '.lukenav-pill.is-current{background:#fff;color:#26243b;border-color:#fff;}'
+      + '.lukenav-pill.is-current i{opacity:.5;}'
+      + '@media (max-width:640px){.lukenav-home span{display:none;}.lukenav-home b{font-size:14px;}}'
+      + '@media print{.lukenav{display:none !important;}}';
+    var style = document.createElement("style");
+    style.setAttribute("data-lukenav", "1");
+    style.textContent = css;
+    document.head.appendChild(style);
 
-    // (b) document switcher — all docs, current one marked
-    var box = nav.querySelector("[data-lnav-docs]");
-    if (box) {
-      box.innerHTML = DOCS.map(function (d, k) {
-        var cur = k === i ? " current" : "";
-        var aria = k === i ? ' aria-current="page"' : "";
-        return '<a class="lnav-doc' + cur + '" href="' + d.f + '"' + aria +
-          ' style="--doc-accent:' + d.c + '">' +
-          '<span class="dot" aria-hidden="true"></span>' +
-          '<span class="n" aria-hidden="true">' + d.n + '</span>' +
-          '<span class="lbl">' + esc(d.label) + '</span></a>';
-      }).join("");
+    var html = '<a class="lukenav-home' + (atHome ? ' is-current' : '') + '" href="' + HOME
+      + '"><b>Luke VonDog</b><span>Care Archive · Home</span></a>'
+      + '<div class="lukenav-scroll"><div class="lukenav-docs">';
+    for (var i = 0; i < DOCS.length; i++) {
+      var d = DOCS[i], cur = (d.f === here) ? " is-current" : "";
+      html += '<a class="lukenav-pill' + cur + '" href="' + d.f + '"'
+        + (cur ? ' aria-current="page"' : '') + '><i>' + d.n + '</i>' + d.label + '</a>';
     }
+    html += '</div></div>';
 
-    // (d) prev / next through the collection
-    var ud = nav.querySelector("[data-lnav-updown]");
-    if (ud && i > -1) {
-      var prev = DOCS[i - 1], next = DOCS[i + 1], html = "";
-      if (prev) html += '<a class="lnav-prev" href="' + prev.f + '"><span aria-hidden="true">←</span> ' + esc(prev.label) + "</a>";
-      if (next) html += '<a class="lnav-next" href="' + next.f + '">' + esc(next.label) + ' <span aria-hidden="true">→</span></a>';
-      ud.innerHTML = html;
-    }
+    var nav = document.createElement("nav");
+    nav.className = "lukenav";
+    nav.setAttribute("aria-label", "Care archive documents");
+    nav.innerHTML = html;
+    document.body.insertBefore(nav, document.body.firstChild);
 
-    // mobile hamburger
-    var toggle = nav.querySelector(".lnav-toggle");
-    if (toggle) {
-      toggle.addEventListener("click", function () {
-        var open = nav.classList.toggle("open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-    }
+    // scroll the current pill into view within the bar
+    var curPill = nav.querySelector(".lukenav-pill.is-current");
+    if (curPill) { try { curPill.scrollIntoView({ inline: "center", block: "nearest" }); } catch (e) {} }
 
-    // active in-page anchor (scroll-spy)
-    var secs = [].slice.call(nav.querySelectorAll('.lnav-sec[href^="#"]'));
-    if (secs.length && "IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            secs.forEach(function (a) {
-              a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id);
-            });
-          }
-        });
-      }, { rootMargin: "-45% 0px -50% 0px" });
-      secs.forEach(function (a) {
-        var t = document.getElementById(a.getAttribute("href").slice(1));
-        if (t) io.observe(t);
-      });
+    // De-duplicate: hide the page's own top "back to home" links (the banner replaces them)
+    var links = document.querySelectorAll('a[href="' + HOME + '"]');
+    for (var j = 0; j < links.length; j++) {
+      var a = links[j];
+      if (a.closest(".lukenav")) continue;
+      var t = (a.textContent || "").trim().toLowerCase();
+      if (t.charAt(0) === "←" || t.charAt(0) === "‹"   // arrow  or  ‹
+        || t.indexOf("packet home") >= 0 || t.indexOf("care archive") >= 0) {
+        a.style.display = "none";
+      }
     }
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else { run(); }
 })();

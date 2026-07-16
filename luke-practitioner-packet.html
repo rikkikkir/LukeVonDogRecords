@@ -21,6 +21,12 @@ body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible
 .title small{ display:block; font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
 .rule{ height:2px; background:var(--ink); margin:16px 0 20px; }
 .meta{ font-size:14px; color:var(--ink-2); max-width:80ch; } .meta b{ color:var(--ink); }
+/* readable identity facts */
+.idgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:0 34px; margin:2px 0 16px; }
+.idgrid > div{ display:flex; flex-direction:column; padding:10px 0; border-bottom:1px solid var(--rule); }
+.idk{ font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.idv{ font-size:16px; color:var(--ink); margin-top:3px; }
+.disc{ font-size:13px; color:var(--muted); font-style:italic; margin:0; }
 
 h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:36px 0 14px; padding-bottom:7px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:9px; }
 h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--sc,var(--indigo)); flex:none; }
@@ -43,20 +49,19 @@ h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var
 .lane .go a{ font-size:13px; font-weight:700; color:var(--ink); background:var(--shade); border:1px solid var(--line); border-radius:16px; padding:6px 12px; text-decoration:none; }
 .lane .go a:hover{ background:#fff; }
 
-/* docs */
-.docs{ display:grid; grid-template-columns:1fr; gap:2px; }
-a.doc{ display:flex; align-items:baseline; gap:12px; text-decoration:none; color:inherit; padding:11px 6px; border-bottom:1px solid var(--rule); }
-a.doc:hover{ background:var(--shade); }
-a.doc .dot{ width:10px; height:10px; border-radius:50%; background:var(--dc); flex:none; align-self:center; }
-a.doc .dn{ font-family:"Newsreader",serif; color:var(--dc); font-size:17px; width:1.6em; text-align:center; flex:none; }
-a.doc .dt{ font-weight:700; color:var(--ink); } a.doc .ds{ color:var(--muted); font-size:13px; }
-a.doc .ar{ margin-left:auto; color:var(--dc); }
+/* docs — clear pressable buttons */
+.docs{ display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:12px; }
+a.doc{ display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit; padding:16px 18px; background:var(--card); border:1.5px solid var(--line); border-left:5px solid var(--dc); border-radius:10px; box-shadow:0 1px 3px rgba(30,30,50,.05); transition:transform .1s ease, box-shadow .12s ease, border-color .12s ease; }
+a.doc:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(30,30,50,.13); border-color:var(--dc); }
+a.doc:active{ transform:translateY(0); box-shadow:0 1px 3px rgba(30,30,50,.08); }
+a.doc .dn{ font-family:"Newsreader",serif; color:#fff; background:var(--dc); font-size:16px; font-weight:600; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:none; }
+a.doc .dt{ display:block; font-weight:700; color:var(--ink); font-size:16px; } a.doc .ds{ display:block; color:var(--muted); font-size:13px; margin-top:1px; }
+a.doc .ar{ margin-left:auto; color:var(--dc); font-size:20px; font-weight:700; flex:none; }
 
-.contacts{ display:grid; grid-template-columns:1fr; gap:10px; }
-.contact{ font-size:15px; color:var(--ink-2); } .contact b{ color:var(--ink); } .contact a{ color:var(--indigo); font-weight:700; text-decoration:none; }
+.contacts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px 30px; }
+.contact{ font-size:15px; color:var(--ink-2); line-height:1.55; } .contact b{ display:block; color:var(--ink); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px; } .contact a{ color:var(--indigo); font-weight:700; text-decoration:none; } .contact a:hover{ text-decoration:underline; }
 .foot{ margin-top:34px; padding-top:14px; border-top:1px solid var(--rule); font-size:12px; color:var(--muted); }
 
-@media (min-width:680px){ .router{ grid-template-columns:repeat(3,1fr); } .docs{ grid-template-columns:1fr 1fr; column-gap:32px; } .contacts{ grid-template-columns:repeat(3,1fr); } }
 @media print{
   body{ background:#fff; padding:0; } .sheet{ box-shadow:none; border:none; border-radius:0; max-width:none; padding:0; }
   @page{ size:Letter; margin:.6in; }
@@ -68,15 +73,16 @@ a.doc .ar{ margin-left:auto; color:var(--dc); }
 <div class="sheet">
   <h1 class="title">Luke VonDog<small>Care Archive</small></h1>
   <div class="rule"></div>
-  <p class="meta"><b>Blue Weimaraner</b> · neutered male · 12 yr · 35.9 kg / 79.1 lb · microchip 941000016858399 · no known drug reactions · currently in Bozeman, MT through Sep 2026. Owner-compiled from Thornwood records — not a veterinary record or directive.</p>
-
-  <h2 style="--sc:var(--indigo)">Safety essentials</h2>
-  <div class="safety">
-    <div class="lead">Furosemide (Lasix) 300 mg/day is his ongoing CHF medication — continue as prescribed.</div>
-    <p>Presumptive cardiac disease and IRIS Stage 2 kidney disease are managed together; furosemide + carprofen are both nephrotoxic, so renal labs (creatinine 1.8, phosphorus 5.1, both Sep '25) are worth rechecking before changing renal or cardiac meds. Deep-chested breed — GDV vigilance.</p>
-    <div class="goals"><b>Goals of care (Rikki's directive):</b> a peaceful, dignified death — DNR, no CPR, no hospitalization, comfort over resuscitation. <b>Who Luke is:</b> friendly, a brilliant athletic beast, a lover of food and learning.</div>
+  <div class="idgrid">
+    <div><span class="idk">Breed</span><span class="idv">Blue Weimaraner</span></div>
+    <div><span class="idk">Sex</span><span class="idv">Neutered male</span></div>
+    <div><span class="idk">Age</span><span class="idv">12 years</span></div>
+    <div><span class="idk">Weight</span><span class="idv">35.9 kg / 79.1 lb · BCS 5/9</span></div>
+    <div><span class="idk">Microchip</span><span class="idv">941 000 016858399</span></div>
+    <div><span class="idk">Drug reactions</span><span class="idv">None known</span></div>
+    <div><span class="idk">Currently</span><span class="idv">Bozeman, MT · through Sep 2026</span></div>
   </div>
-
+  <p class="disc">Owner-compiled from Thornwood records — not a veterinary record or directive.</p>
 
   <h2 style="--sc:var(--green)">All documents</h2>
   <div class="docs">
@@ -94,9 +100,10 @@ a.doc .ar{ margin-left:auto; color:var(--dc); }
 
   <h2 style="--sc:var(--indigo)">Contacts</h2>
   <div class="contacts">
-    <div class="contact"><b>Owner</b> · Rikki Delaine<br>Bozeman, MT · <a href="tel:+16169707690">(616) 970-7690</a></div>
-    <div class="contact"><b>Local ER</b> · Foothills, Bozeman<br><a href="tel:+14065560604">(406) 556-0604</a></div>
-    <div class="contact"><b>Home clinic</b> · Thornwood, Ada MI<br><a href="tel:+16166761251">(616) 676-1251</a></div>
+    <div class="contact"><b>Owner</b>Rikki Delaine<br>Bozeman, MT · through Sep 2026<br><a href="tel:+16169707690">(616) 970-7690</a><br><a href="mailto:rikkidelaine84@gmail.com">rikkidelaine84@gmail.com</a></div>
+    <div class="contact"><b>Local emergency · Bozeman</b>Foothills Veterinary Hospital<br>707 Bridger Drive, Suite E<br>Bozeman, MT<br><a href="tel:+14065560604">(406) 556-0604</a> · <a href="https://fvhmt.com">fvhmt.com</a><br>Mon–Fri 8 am–6 pm</div>
+    <div class="contact"><b>Home clinic · Michigan</b>Thornwood Veterinary Clinic &amp; Kennel<br>1501 Buttrick Ave SE<br>Ada, MI 49301<br>Dr. K. Grusling &amp; Dr. K. Denney<br><a href="tel:+16166761251">(616) 676-1251</a></div>
+    <div class="contact"><b>After-hours · Michigan</b>Animal Emergency Clinic (AEC)<br>Grand Rapids, MI</div>
   </div>
 
   <div class="foot">Luke VonDog · owner-compiled care archive · as of July 2026 · every value carries its date.</div>
@@ -105,5 +112,6 @@ a.doc .ar{ margin-left:auto; color:var(--dc); }
 .sheet,.wrap,.shell,.page{ max-width:none !important; }
 .sheet,.wrap,.shell{ margin-left:0 !important; margin-right:0 !important; box-shadow:none !important; border-radius:0 !important; }
 </style>
+<script src="luke-nav.js"></script>
 </body>
 </html>
