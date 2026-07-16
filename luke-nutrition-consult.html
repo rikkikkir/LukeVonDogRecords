@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — Nutrition Consult Packet</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e6; --paper-2:#efe9da; --paper-card:#fffdf8;
+  --ink:#1a1916; --ink-2:#353029; --ink-mute:#3d3830;
+  --rule:#d8cfba; --rule-soft:#e7dec9;
+  --accent:#2a4a52; --accent-deep:#1d343a; --accent-soft:#6e8e92;
+  --burgundy:#6b2a2a; --ochre:#8a6a1e; --moss:#4a5d2b; --plum:#5c3b5e;
+  --pad:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;font-size:16px;}
+body{background:#2a2620;color:var(--ink);font-family:system-ui,-apple-system,sans-serif;line-height:1.75;letter-spacing:.02em;}
+em{font-style:italic;}
+.shell{max-width:1040px;margin:24px auto;background:var(--paper);box-shadow:0 8px 50px rgba(0,0,0,.5);}
+
+.top{background:#243b34;color:#e8f0ee;padding:26px var(--pad) 22px;}
+.home{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9ecbc6;text-decoration:none;margin-bottom:16px;}
+.home:hover{color:#fff;}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8bbbb6;margin-bottom:8px;}
+h1{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(30px,7vw,50px);line-height:1;letter-spacing:-.02em;color:#fff;}
+h1 b{font-weight:600;color:#9ecbc6;}
+.deck{font-size:clamp(15px,4vw,18px);color:#c8dada;line-height:1.65;margin-top:14px;max-width:62ch;}
+.disclaim{background:#1f332d;color:#cfe0dc;font-size:13px;line-height:1.6;padding:14px var(--pad);border-top:1px solid rgba(255,255,255,.08);}
+.disclaim b{color:#fff;}
+
+.wrap{padding:8px var(--pad) 40px;}
+section{padding:26px 0 6px;border-bottom:1px solid var(--rule-soft);}
+section:last-of-type{border-bottom:none;}
+h2{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(22px,5.4vw,30px);color:var(--accent);letter-spacing:-.01em;line-height:1.1;margin-bottom:6px;}
+h2 .n{color:var(--accent-soft);font-size:.7em;margin-right:8px;}
+.lead{font-size:17px;line-height:1.75;color:var(--ink-2);margin:8px 0 18px;max-width:70ch;}
+p{font-size:17px;line-height:1.8;color:var(--ink-2);margin-bottom:12px;max-width:72ch;}
+p b, li b, td b{color:var(--ink);font-weight:600;}
+h3{font-family:"Newsreader",serif;font-weight:600;font-size:20px;color:var(--ink);margin:18px 0 8px;}
+ul{list-style:none;margin:0 0 14px;}
+li{font-size:16px;line-height:1.7;color:var(--ink-2);padding-left:16px;position:relative;margin-bottom:8px;max-width:72ch;}
+li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--accent-soft);}
+
+/* the goal band */
+.goal-band{background:#eef3e6;border:1.5px solid #b9cfa0;border-left:5px solid var(--moss);border-radius:8px;padding:16px 18px;margin:16px 0;}
+.goal-band h3{color:#33421f;margin-top:0;}
+.goal-band p{color:#3a4a1f;margin-bottom:6px;}
+.who{font-size:14.5px;color:var(--ink-mute);font-style:italic;margin-top:8px;}
+
+/* snapshot grid */
+.snap{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin:8px 0 16px;}
+.snap-cell{background:var(--paper-card);padding:12px 14px;}
+.snap-k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:3px;}
+.snap-v{font-size:16px;color:var(--ink);}
+.snap-v b{font-weight:600;}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:8px 0 14px;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px;}
+th{background:var(--paper-2);text-align:left;padding:8px 10px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);border-bottom:1.5px solid var(--rule);}
+td{padding:8px 10px;border-bottom:1px solid var(--rule-soft);color:var(--ink-2);vertical-align:top;line-height:1.5;}
+tr.key td{background:#f6ece9;}
+.flag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;color:#fff;background:var(--burgundy);padding:1px 4px;border-radius:3px;vertical-align:1px;margin-left:4px;}
+.flag.gap{background:var(--ochre);}
+.flag.ok{background:var(--moss);}
+
+/* chips */
+.ev{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;vertical-align:1px;color:#fff;white-space:nowrap;}
+.ev.strong{background:var(--moss);} .ev.mod{background:var(--accent);} .ev.weak{background:var(--ochre);}
+
+/* callouts */
+.redlines{background:#f3e7e4;border:1.5px solid #d8b3ad;border-left:5px solid var(--burgundy);border-radius:8px;padding:16px 18px;margin:16px 0;}
+.redlines h3{color:var(--burgundy);margin-top:0;}
+.redlines li::before{background:var(--burgundy);}
+.redlines li{color:#4a2a28;}
+.vetbox{background:#eef4f2;border:1.5px solid #bcd4cf;border-radius:8px;padding:16px 18px;margin:14px 0;}
+.vetbox h3{color:var(--accent);margin-top:0;}
+.vetbox li::before{content:"?";background:none;color:var(--accent);font-size:15px;font-weight:800;top:0;width:auto;height:auto;}
+.vetbox li{padding-left:22px;}
+.keepbox{background:#faf4e6;border:1.5px solid #e2d3a8;border-radius:8px;padding:16px 18px;margin:14px 0;}
+.keepbox h3{color:var(--ochre);margin-top:0;}
+.keepbox li::before{content:"♥";background:none;color:#b0553f;font-size:12px;top:2px;width:auto;height:auto;}
+.keepbox li{padding-left:20px;}
+
+.note{font-size:14px;color:var(--ink-mute);font-style:italic;line-height:1.6;margin:6px 0 12px;}
+.src{font-size:12px;line-height:1.7;color:var(--ink-mute);}
+.foot{background:var(--paper-2);border-top:1px solid var(--rule);padding:16px var(--pad);font-size:12px;color:var(--ink-mute);text-align:center;line-height:1.6;}
+
+@media (min-width:720px){
+  :root{--pad:52px;}
+  .snap{grid-template-columns:1fr 1fr 1fr;}
+}
+
+@media print{
+  @page{size:Letter;margin:.55in;}
+  html,body{background:#fff!important;color:#000!important;}
+  .shell{max-width:none!important;box-shadow:none!important;margin:0;}
+  .top,.disclaim,.goal-band,.redlines,.vetbox,.keepbox,.ev,.flag,tr.key td,th{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  section,.goal-band,.redlines,.vetbox,.keepbox,.snap,table,tr,li{page-break-inside:avoid;}
+  h1,h2,h3{page-break-after:avoid;}
+  a{color:#000!important;text-decoration:none!important;}
+  .home{display:none!important;}
+  .tbl-wrap{overflow:visible!important;} table{min-width:0!important;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="top">
+    <a class="home" href="luke-practitioner-packet.html">← Packet home</a>
+    <div class="kicker">For a board-certified veterinary nutritionist (DACVN)</div>
+    <h1>Luke's <b>Nutrition Picture.</b></h1>
+    <p class="deck">Everything needed to build Luke a food plan — his full intake, the labs that shape it, the cardiac-and-renal constraints it has to respect, and the questions his owner most wants answered. Assembled so a nutritionist can see him whole.</p>
+  </div>
+
+  <div class="disclaim">
+    <b>Owner-compiled to brief a nutritionist — not a diet plan, and not medical advice.</b> Every value is from Luke's Thornwood records with its date; owner-derived figures are marked. The formulation itself is for the DACVN (working with his vet / cardiologist) to make. Compiled by Rikki Delaine (owner), as of July 2026 — please confirm current status before formulating.
+  </div>
+
+  <div class="wrap">
+
+    <!-- THE GOAL -->
+    <section>
+      <h2><span class="n">★</span>The goal</h2>
+      <div class="goal-band">
+        <h3>What Rikki is asking for</h3>
+        <p>A food plan that helps Luke <b>maintain what can be maintained, keeps his body fed, helps him feel healthy, and gives him everything he needs to thrive</b> — within what his heart and kidneys allow. The aim is <b>good days and quality of life</b>, not aggressive life-extension: Luke's stated goals of care are comfort and a peaceful trajectory (DNR, no hospitalization). Nutrition is the lever his owner most wants to pull for him now.</p>
+        <div class="who"><b>Who Luke is:</b> friendly with everyone · a brilliant, athletic beast · a lover of food and learning. His food motivation is very high — a genuine asset for compliance.</div>
+      </div>
+    </section>
+
+    <!-- SNAPSHOT -->
+    <section>
+      <h2><span class="n">1</span>Patient snapshot</h2>
+      <div class="snap">
+        <div class="snap-cell"><div class="snap-k">Patient</div><div class="snap-v"><b>Luke VonDog</b> · Blue Weimaraner · neutered male · 12 yr (DOB May 31, 2014)</div></div>
+        <div class="snap-cell"><div class="snap-k">Weight · body condition</div><div class="snap-v"><b>79.1 lb / 35.9 kg</b> · BCS 5/9 (ideal) · Mar 9, 2026</div></div>
+        <div class="snap-cell"><div class="snap-k">Current intake</div><div class="snap-v"><b>≈ 1,408 kcal/day</b> primary food + unlimited carrots + snacks + supplements</div></div>
+        <div class="snap-cell"><div class="snap-k">Cardiac</div><div class="snap-v">Presumptive CHF on furosemide <b>300 mg/day (≈ 8.4 mg/kg — ACVIM Stage D)</b>; no echo/biomarkers</div></div>
+        <div class="snap-cell"><div class="snap-k">Renal</div><div class="snap-v">IRIS <b>Stage 2 CKD</b>; phosphorus above target; no UA/UPC since 2023</div></div>
+        <div class="snap-cell"><div class="snap-k">Also relevant</div><div class="snap-v">Rising ALT (hepatic); OA (on carprofen NSAID); deep-chested → <b>GDV risk</b></div></div>
+      </div>
+      <p class="note">Dosing weight for calculations: <b>35.9 kg</b>. BCS 5/9 at an ideal weight is an asset worth protecting — muscle preservation matters (cardiac cachexia risk).</p>
+    </section>
+
+    <!-- CONFIRM THE PICTURE -->
+    <section>
+      <h2><span class="n">2</span>Before formulating — worth confirming</h2>
+      <p class="lead">Several load-bearing facts are soft. The owner is open to these (vet/specialist-led) so the plan is built on reality, not assumption:</p>
+      <ul>
+        <li><b>Whole-blood taurine level</b> <span class="ev mod">Moderate</span> — Weimaraner is a DCM-predisposed breed, the cardiac diagnosis is empiric, and taurine has <em>never</em> been measured. If low, taurine-responsive DCM can partly reverse. Cheap; test before assuming.</li>
+        <li><b>Fresh renal panel + phosphorus + urinalysis/UPC on a clean, hydrated sample</b> <span class="ev mod">Moderate</span> — to true up the IRIS stage before protein/phosphorus decisions (no UA since 2023; most chem is ~10 months old).</li>
+        <li><b>Echocardiogram / NT-proBNP</b> <span class="ev strong">Strong value</span> — confirm CHF and distinguish valve disease from DCM; changes dietary priorities (taurine/carnitine emphasis).</li>
+        <li><b>ALT work-up</b> — carprofen can injure the liver; understand the rising ALT before adding a liver-support nutraceutical that could mask it.</li>
+      </ul>
+    </section>
+
+    <!-- THE CONSTRAINTS -->
+    <section>
+      <h2><span class="n">3</span>The constraints the plan must respect</h2>
+      <p>The central problem is that <b>cardiac and renal diets pull in opposite directions</b>, and no single shelf diet fits — which is exactly why a custom, nutritionist-built plan is the right call.</p>
+      <div class="redlines">
+        <h3>Cardiac (Stage D) + renal (IRIS 2) — the tension</h3>
+        <ul>
+          <li><b>Protein:</b> ACVIM guidance is to <em>avoid low-protein renal diets unless severe renal failure is present</em>. Luke is Stage 2 (not severe), so the literature favors <b>moderate high-quality protein, not restriction</b> — protect his muscle.</li>
+          <li><b>Phosphorus:</b> his is <b>5.1 (Sep '25), above the IRIS Stage-2 target of ~2.7–4.6</b>. The literature's pivotal move is controlling phosphorus with an <b>intestinal binder</b> (titrated to serum phosphorus) rather than by crushing protein.</li>
+          <li><b>Sodium:</b> <b>moderate, not extreme</b> — over-restriction can activate RAAS and worsen renal perfusion at his diuretic dose. A hidden-sodium audit is the easy win (see the med vehicle + snacks below).</li>
+          <li><b>Omega-3 (EPA/DHA):</b> the literature's clearest win for all three organs (renal, cardiac, joint) and possibly NSAID-sparing. His intake is <b>~132 mg/day ≈ 6% of a cardiac target (~2,300 mg)</b> <span class="ev mod">Moderate</span> — a large, safe headroom.</li>
+          <li><b>Moisture:</b> keep it <b>high</b> — supports hydration on a diuretic.</li>
+          <li><b>GDV / meal pattern:</b> deep-chested breed → <b>small, frequent meals</b>, no vigorous activity around meals.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CURRENT INTAKE -->
+    <section>
+      <h2><span class="n">4</span>What Luke eats now — exactly</h2>
+
+      <h3>Primary food</h3>
+      <p><b>Steve's Real Food — Pork &amp; Shellfish Blocks</b>, raw · <b>4 patties/day (~1,408 kcal)</b>. <span class="note" style="display:inline;">Note for the DACVN: the literature flags a raw pork/shellfish diet as a poor fit for <em>this</em> dog — phosphorus &amp; protein unrestricted, uncontrolled/added sodium, and pathogen risk in a senior on chronic NSAID. A key consult question is whether to move to a <b>cooked, reformulated</b> diet that keeps the moisture he benefits from while fixing the rest.</span></p>
+
+      <h3>Carrots — his ritual (do not remove)</h3>
+      <p><b>Unlimited raw, peeled carrots throughout the day</b>, self-served from a "snack board." This is also his household <b>quality-of-life barometer</b> — a drop in carrot enthusiasm precedes decline. Relevant to formulate around: fiber, natural sugars, water, and potassium at an unmeasured daily volume.</p>
+
+      <h3>Snack board &amp; favorites</h3>
+      <p>Dairy (<b>yogurt, cottage cheese, cheese</b> — his favorites), plus bananas, Gala apples, tomatoes, frozen blueberries, softened ice cubes, peanut butter, sweet potatoes, rice, pancakes, and owner-made frozen treats. <span class="note" style="display:inline;">Owner already notes apples/bananas/sweet potato are sugary and worth limiting. Dairy &amp; peanut butter are hidden-sodium/phosphorus sources worth quantifying.</span></p>
+
+      <h3>Med delivery vehicle</h3>
+      <p>Furosemide is given in a <b>bread ball</b> (pill folded into bread), q12h. His food motivation makes med delivery reliable — but <b>bread is a sodium/refined-carb vehicle</b> worth accounting for, and worth optimizing to a low-sodium vehicle.</p>
+
+      <h3>Supplements (current)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Product</th><th>Daily dose</th><th>Key contents</th></tr></thead>
+          <tbody>
+            <tr><td><b>Wuffes Joint Chew</b></td><td>1 chew</td><td>Glucosamine HCl 1,250 mg · MSM 400 mg · Chondroitin 150 mg · HA 21 mg · salmon-oil omega-3 16.5 mg</td></tr>
+            <tr><td><b>Wuffes Advanced Multivitamin</b></td><td>2 chews</td><td>Vit A 2,230 IU · C 9.5 mg · D3 167 IU · E 76 IU · EPA 52 mg · DHA 64 mg (daily totals)</td></tr>
+            <tr><td><b>Cosequin DS</b></td><td>3 tabs</td><td>Glucosamine HCl 1,800 mg · Chondroitin 900 mg · MSM 750 mg</td></tr>
+            <tr class="key"><td><b>Omega-3 stack total</b></td><td>—</td><td><b>≈ 132 mg EPA+DHA/day</b> — about 6% of a cardiac-indicated dose (~2,300 mg). <span class="flag gap">GAP</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Watch supplement labels for hidden vitamin D (his D3 intake + any added), added phosphorus, and blind potassium/magnesium — all matter for his kidney.</p>
+    </section>
+
+    <!-- LABS -->
+    <section>
+      <h2><span class="n">5</span>Diet-relevant labs — with dates</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Marker</th><th>Value</th><th>Reference / target</th><th>Date · note</th></tr></thead>
+          <tbody>
+            <tr class="key"><td><b>Phosphorus</b></td><td>5.1 <span class="flag">HIGH vs target</span></td><td>IRIS Stg 2 target ~2.7–4.6</td><td>Sep '25 · the key dietary lever</td></tr>
+            <tr><td>Creatinine</td><td>1.8 <span class="flag">H</span></td><td>0.5–1.8 · IRIS Stg 2</td><td>Sep '25 · ↑ 1.0→1.2→1.8</td></tr>
+            <tr><td>BUN</td><td>35 <span class="flag">H</span></td><td>7–28</td><td>Mar '26 (only Mar '26 chem value)</td></tr>
+            <tr><td>SDMA</td><td>13</td><td>0–14 (near top)</td><td>Sep '25</td></tr>
+            <tr><td>ALT</td><td>128 <span class="flag">H</span></td><td>18–121</td><td>Sep '25 · ↑ 46→121→128 (hepatic)</td></tr>
+            <tr><td>Chloride</td><td>106 <span class="flag">L</span></td><td>109–122</td><td>Sep '25 · furosemide effect</td></tr>
+            <tr><td>Weight · BCS</td><td>79.1 lb / 35.9 kg · 5/9</td><td>ideal</td><td>Mar '26</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Not on record — worth obtaining for formulation</h3>
+      <ul>
+        <li><b>Taurine</b> <span class="flag gap">never measured</span> — DCM-prone breed; see §2.</li>
+        <li><b>Albumin, potassium, magnesium</b> <span class="flag gap">not in recent record</span> — potassium/magnesium especially matter (furosemide wastes them, CKD can retain them; supplement only to a measured level).</li>
+        <li><b>Urinalysis + UPC ratio</b> <span class="flag gap">none since Sep 2023</span> — proteinuria status unknown; affects protein strategy.</li>
+        <li><b>Full Mar '26 chemistry</b> — only BUN is available; the rest is ~10 months old.</li>
+      </ul>
+      <p class="note">Sep '25 sample had hemolysis 2+ / lipemia 1+; the lab noted creatinine may be partially artifact — a clean fasted redraw would help.</p>
+    </section>
+
+    <!-- QUESTIONS FOR THE NUTRITIONIST -->
+    <section>
+      <h2><span class="n">6</span>Questions for the nutritionist</h2>
+      <div class="vetbox">
+        <ul>
+          <li>Should Luke move off the raw pork/shellfish diet to a <b>cooked, custom formulation</b> — and can it keep the high moisture he benefits from?</li>
+          <li>How best to <b>control phosphorus</b> (which binder, titrated how) <em>without</em> over-restricting protein at his Stage 2?</li>
+          <li>What <b>protein level &amp; sources</b> best protect his muscle (cachexia risk) while respecting the kidney — low-phosphorus proteins like egg white / whey?</li>
+          <li>What <b>omega-3 (EPA+DHA) target dose</b> and source, given the ~94% gap, and can it help spare his carprofen?</li>
+          <li>What <b>sodium target</b> is right — and how do we account for the bread med-vehicle, dairy, and peanut butter?</li>
+          <li>Does he need <b>taurine / L-carnitine</b> (test first), and any renal-safe adjustments to his current supplement stack?</li>
+          <li>How do we keep his <b>unlimited carrots and dairy snacks</b> in the plan (they're QoL anchors) while accounting for their sugar, potassium, sodium, and phosphorus?</li>
+          <li>Meal <b>pattern &amp; calories</b> for a Stage-D heart + GDV-risk breed at ideal BCS — small frequent meals, and the right daily kcal to hold weight?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- QoL ANCHORS -->
+    <section>
+      <h2><span class="n">7</span>What to build around (quality-of-life anchors)</h2>
+      <p class="lead">Given the goal is thriving and good days, please try to formulate <em>around</em> these rather than removing them:</p>
+      <div class="keepbox">
+        <ul>
+          <li><b>Carrots</b> — unlimited, self-served, and his QoL barometer. Central to his day and his joy.</li>
+          <li><b>His food motivation</b> — very high; use it. It's why med compliance and diet transitions are realistic for him.</li>
+          <li><b>The snack ritual &amp; dairy</b> — sources of comfort and routine; quantify and moderate rather than eliminate where possible.</li>
+          <li><b>High moisture &amp; palatability</b> — keep meals appealing and hydrating; appetite itself is a QoL and cardiac signal for him.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section>
+      <h2><span class="n">§</span>Contacts &amp; sources</h2>
+      <p><b>Owner</b> Rikki Delaine · (616) 970-7690 · <b>Primary vet</b> Thornwood Veterinary, Ada MI · (616) 676-1251 · <b>Find a DACVN:</b> acvn.org · formulation tools: balance.it, petdiet.com (vet/DACVN-directed for Luke).</p>
+      <p class="src">Evidence base (see the "Helping Luke Thrive" companion for detail): ACVIM 2019 MMVD consensus (protein/sodium/omega-3); IRIS staging &amp; phosphorus targets (iris-kidney.com); ACVN CKD nutrition (Today's Veterinary Practice); Tufts HeartSmart; WSAVA raw-meat statement; Brown 1998 (omega-3 renal); Fritsch 2010 (fish-oil carprofen-sparing). Fuller clinical picture: <a href="luke-at-a-glance.html">Luke at a Glance</a> · <a href="luke-diet-medication-matrix.html">Diet &amp; Medication Matrix</a> · <a href="luke-helping-thrive.html">Helping Luke Thrive</a> · <a href="luke-verbatim-timeline.html">Verbatim Timeline</a>.</p>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    Luke VonDog · Nutrition Consult Packet · owner-compiled to brief a veterinary nutritionist · July 2026<br>
+    Not a diet plan or medical advice. Formulation is for the DACVN, working with Luke's vet and cardiologist.
+  </div>
+
+</div>
+</body>
+</html>
