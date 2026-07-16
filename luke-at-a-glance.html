@@ -4,894 +4,264 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Luke VonDog — At a Glance</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --paper: #f6f1e6; --paper-2: #efe9da; --paper-card: #fffdf8;
-  --ink: #1a1916; --ink-2: #353029; --ink-mute: #3d3830;
-  --rule: #d8cfba; --rule-soft: #e7dec9;
-  --accent: #2a4a52; --accent-soft: #6e8e92;
-  --burgundy: #6b2a2a; --ochre: #8a6a1e; --moss: #4a5d2b; --plum: #5c3b5e;
+:root{
+  --ink:#1c1c24; --ink-2:#3a3a44; --muted:#6a6a78;
+  --rule:#e4e4ea; --line:#d7d7e0; --shade:#f6f6f9; --bg:#ececef; --card:#ffffff;
+  --indigo:#3f3d6e; --blue:#5f7fb0; --green:#5f8a5a; --purple:#856ba3; --amber:#b5813f; --clay:#a45a44; --slate:#5a6b7a;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-em { font-style: normal; }
-html { -webkit-font-smoothing: antialiased; font-feature-settings: "kern"; }
-body {
-  background: #2a2620;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink);
-}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif; font-size:15px; line-height:1.55; }
 
-/* ── Screen wrapper ── */
-.pages { max-width: 1140px; margin: 28px auto; display: flex; flex-direction: column; gap: 24px; }
+.topbar{ max-width:1000px; margin:0 auto; padding:14px 16px 0; display:flex; gap:14px; align-items:center; }
+.topbar a{ font-size:13px; font-weight:700; color:var(--indigo); text-decoration:none; }
+.topbar .spacer{ flex:1; }
+.topbar .doc{ font-size:12px; color:var(--muted); }
 
-/* ── Page ── */
-.page {
-  background: var(--paper);
-  box-shadow: 0 8px 50px rgba(0,0,0,.5);
-  overflow: hidden;
-}
+.sheet{ max-width:1000px; margin:14px auto 40px; background:var(--card); border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 18px rgba(30,30,50,.08); padding:44px clamp(24px,5vw,56px) 48px; }
+.title{ font-family:"Newsreader",serif; font-weight:500; font-size:clamp(30px,5vw,46px); letter-spacing:-.01em; }
+.title small{ display:block; font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+.rule{ height:2px; background:var(--ink); margin:16px 0 22px; }
+.meta{ display:flex; flex-wrap:wrap; gap:4px 20px; font-size:14px; color:var(--ink-2); }
+.meta b{ color:var(--ink); font-weight:700; } .meta .as{ margin-left:auto; color:var(--muted); }
 
-/* ── Page header ── */
-.page-head {
-  background: #1d343a;
-  color: #e8f0ee;
-  padding: 18px 28px 16px;
-  display: flex; justify-content: space-between; align-items: flex-end; gap: 20px;
-}
-.ph-left .doc-kicker {
-  font-family: system-ui, -apple-system, sans-serif; font-size: 9.5px;
-  letter-spacing: .18em; text-transform: uppercase; color: #9ecbc6; margin-bottom: 6px;
-}
-.ph-left .doc-title {
-  font-family: "Newsreader", serif; font-size: 28px; font-weight: 400;
-  letter-spacing: -.015em; color: #fff; line-height: 1;
-}
-.ph-left .doc-title em { font-style: normal; font-weight: 600; color: #9ecbc6; }
-.ph-right { text-align: right; }
-.ph-right .field { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; letter-spacing: .06em; color: #ccdbd9; line-height: 1.8; }
-.ph-right .field b { color: #fff; }
+h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:36px 0 12px; padding-bottom:7px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:9px; }
+h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--sc,var(--indigo)); flex:none; }
+h3{ font-family:"Newsreader",serif; font-size:18px; font-weight:600; color:var(--ink); }
 
-/* ── Critical strip ── */
-.critical-strip {
-  background: var(--burgundy); color: #fff;
-  padding: 9px 28px;
-  display: flex; flex-wrap: wrap; gap: 6px 28px;
-  font-family: system-ui, -apple-system, sans-serif; font-size: 14.5px; letter-spacing: 0; text-transform: none;
-}
-.critical-strip .ci::before { content: "! "; font-weight: 700; opacity: .8; }
+.grid2{ display:grid; grid-template-columns:1fr; gap:26px; }
+@media (min-width:760px){ .grid2{ grid-template-columns:1fr 1fr; } }
 
-/* ── Page body ── */
-.page-body { padding: 32px 36px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.page-body.single { grid-template-columns: 1fr; }
+table{ width:100%; border-collapse:collapse; font-size:14px; }
+th{ text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:6px 9px; border-bottom:1px solid var(--line); }
+td{ padding:9px 9px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-2); }
+tbody tr:nth-child(even){ background:var(--shade); }
+td b,.drug{ color:var(--ink); font-weight:700; }
+.sub{ color:var(--muted); font-size:12.5px; }
+.num{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+.hi{ color:var(--clay); font-weight:700; } .lo{ color:var(--blue); font-weight:700; }
+.dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+.tag{ display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:1px 6px; }
+.idtab td:first-child{ color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; width:38%; white-space:nowrap; }
 
-/* ── Section heads ── */
-.sec-label {
-  font-family: "Newsreader", serif; font-size: 22px; font-weight: 500;
-  letter-spacing: -.01em; color: var(--accent);
-  margin-bottom: 16px; padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent);
-}
-.sec-label.burg { color: var(--burgundy); border-color: var(--burgundy); }
-.sec-label.ochre { color: var(--ochre); border-color: var(--ochre); }
-.sec-label.moss { color: var(--moss); border-color: var(--moss); }
-.sec-label.plum { color: var(--plum); border-color: var(--plum); }
+/* diagnoses */
+.dx{ list-style:none; }
+.dx li{ padding:14px 0; border-bottom:1px solid var(--rule); }
+.dx li:last-child{ border-bottom:none; }
+.dx .dxh{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
+.dx .dxn{ color:var(--ink); font-weight:700; font-size:15px; }
+.dx .dxd{ font-size:14px; color:var(--ink-2); margin-top:5px; max-width:78ch; }
 
-/* ── Identity grid ── */
-.identity-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.identity-table td { padding: 5px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
-.identity-table td:first-child { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); padding-right: 16px; white-space: nowrap; width: 36%; }
-.identity-table td:last-child { color: var(--ink-2); }
-.identity-table td b { color: var(--ink); font-weight: 600; }
+/* status pills */
+.status{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:12px; white-space:nowrap; }
+.st-watch{ background:#f6ece9; color:var(--clay); } .st-mon{ background:#eef1f6; color:var(--slate); } .st-man{ background:#eef3ee; color:var(--green); } .st-ok{ background:#f2f2f5; color:var(--muted); }
 
-/* ── Diagnoses ── */
-.dx-list { display: flex; flex-direction: column; gap: 8px; }
-.dx-item { display: grid; grid-template-columns: 8px 1fr; gap: 10px; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--rule-soft); }
-.dx-item:last-child { border-bottom: none; }
-.dx-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; flex: none; }
-.dx-dot.burg { background: var(--burgundy); }
-.dx-dot.accent { background: var(--accent); }
-.dx-dot.ochre { background: var(--ochre); }
-.dx-dot.moss { background: var(--moss); }
-.dx-dot.mute { background: var(--rule); }
-.dx-name { font-weight: 600; color: var(--ink); font-size: 16px; line-height: 1.2; }
-.dx-detail { font-size: 14px; color: var(--ink-2); margin-top: 4px; line-height: 1.55; }
-.dx-tag { display: inline-block; font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border: 1px solid; margin-top: 3px; }
-.dx-tag.empiric { color: var(--ochre); border-color: var(--ochre); }
-.dx-tag.confirmed { color: var(--moss); border-color: var(--moss); }
-.dx-tag.stage { color: var(--accent); border-color: var(--accent); }
-.dx-tag.monitor { color: var(--ink-mute); border-color: var(--rule); }
+/* labs */
+.labnote,.note{ font-size:13px; color:var(--muted); margin-top:10px; max-width:82ch; } .note b{ color:var(--ink-2); }
+.trend .up{ color:var(--clay); font-weight:700; } .trend .dn{ color:var(--green); font-weight:700; }
 
-/* ── Vitals ── */
-.vitals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-.vital { background: var(--paper-card); padding: 12px 14px; }
-.vital .vk { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 4px; }
-.vital .vv { font-family: "Newsreader", serif; font-size: 26px; font-weight: 500; color: var(--ink); line-height: 1; }
-.vital .vv small { font-size: .4em; color: var(--ink-mute); font-family: system-ui, -apple-system, sans-serif; }
-.vital .vs { font-size: 13px; color: var(--ink-2); margin-top: 3px; }
+/* open items */
+.oi{ list-style:none; }
+.oi li{ display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--rule); font-size:14px; }
+.oi li:last-child{ border-bottom:none; }
+.oi .n{ font-family:"Newsreader",serif; color:var(--indigo); font-weight:600; width:1.6em; flex:none; }
+.oi .pr{ margin-left:auto; flex:none; }
+.oi b{ color:var(--ink); }
 
-/* ── Med table ── */
-.med-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.med-table thead th {
-  font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--ink-2); text-align: left; padding: 5px 8px; border-bottom: 1.5px solid var(--ink-2); white-space: nowrap;
-}
-.med-table tbody td { padding: 7px 8px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); line-height: 1.35; }
-.med-table .drug-name { font-weight: 600; color: var(--ink); }
-.med-table .drug-brand { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; color: var(--ink-2); display: block; margin-top: 1px; }
-.med-table .dose-val { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; color: var(--ink); white-space: nowrap; }
-.med-table .warn { color: var(--burgundy); font-weight: 600; }
-.med-table tr.must-not-stop td { background: #fdf5f3; }
-.med-table tr.must-not-stop .drug-name::after { content: " ★"; color: var(--burgundy); }
+.foot{ margin-top:36px; padding-top:14px; border-top:1px solid var(--rule); font-size:12px; color:var(--muted); }
+a.link{ color:var(--indigo); font-weight:700; }
 
-/* ── Lab panel ── */
-.lab-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-.lab-cell { background: var(--paper-card); padding: 10px 12px; }
-.lab-cell.high { background: #fdf3f2; }
-.lab-cell.low { background: #fdf8ef; }
-.lab-cell.warn { background: #fdf0ec; border-left: 3px solid var(--burgundy); }
-.lab-key { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 3px; }
-.lab-val { font-family: "Newsreader", serif; font-size: 28px; font-weight: 500; line-height: 1; color: var(--ink); }
-.lab-val small { font-size: .38em; color: var(--ink-mute); font-family: system-ui, -apple-system, sans-serif; }
-.lab-val .flag { font-size: .38em; font-family: system-ui, -apple-system, sans-serif; letter-spacing: .06em; }
-.flag-h { color: var(--burgundy); }
-.flag-l { color: var(--ochre); }
-.lab-ref { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
-.lab-trend { font-size: 13px; color: var(--ink-2); margin-top: 3px; }
-.lab-trend .arr { font-size: 12px; }
-.arr-up { color: var(--burgundy); }
-.arr-dn { color: var(--moss); }
-.arr-st { color: var(--ink-mute); }
-
-/* ── System status ── */
-.sys-grid { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-.sys-row { background: var(--paper-card); display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center; padding: 9px 14px; }
-.sys-name { font-weight: 600; font-size: 15px; color: var(--ink); }
-.sys-detail { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
-.sys-badge { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border: 1px solid; white-space: nowrap; }
-.sys-badge.managed { color: var(--moss); border-color: var(--moss); background: #f4f7f0; }
-.sys-badge.monitor { color: var(--ochre); border-color: var(--ochre); background: #fdf8ef; }
-.sys-badge.watch { color: var(--burgundy); border-color: var(--burgundy); background: #fdf3f2; }
-.sys-badge.stable { color: var(--accent); border-color: var(--accent); background: #f0f4f5; }
-
-/* ── Open items ── */
-.open-list { display: flex; flex-direction: column; gap: 6px; }
-.open-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 6px; align-items: start; background: var(--paper-card); border: 1px solid var(--rule); padding: 8px 10px; }
-.open-num { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; color: var(--accent); padding-top: 2px; }
-.open-q { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
-.open-q b { color: var(--ink); font-weight: 600; }
-.open-priority { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 2px 6px; border: 1px solid; white-space: nowrap; }
-.priority-h { color: var(--burgundy); border-color: var(--burgundy); }
-.priority-m { color: var(--ochre); border-color: var(--ochre); }
-.priority-l { color: var(--ink-mute); border-color: var(--rule); }
-
-/* ── QoL indicators ── */
-.qol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-.qol-item { background: var(--paper-card); padding: 10px 12px; }
-.qol-label { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 4px; }
-.qol-status { font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
-.qol-status b { color: var(--moss); }
-.qol-status .watch { color: var(--burgundy); }
-
-/* ── Contact strip ── */
-.contact-strip { background: var(--paper-2); border-top: 1px solid var(--rule); padding: 12px 28px; display: flex; gap: 32px; flex-wrap: wrap; }
-.contact-item .ck { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 3px; }
-.contact-item .cv { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
-.contact-item .cv b { color: var(--ink); }
-
-/* ── Page footer ── */
-.page-footer { border-top: 1px solid var(--rule); padding: 8px 28px; display: flex; justify-content: space-between; align-items: center; font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); }
-.page-footer .pg { color: var(--accent); }
-
-/* ── Full-span ── */
-.full { grid-column: 1 / -1; }
-.divider { height: 1px; background: var(--rule); margin: 6px 0; grid-column: 1 / -1; }
-
-/* ── Print ── */
-@media print {
-  @page { size: Letter; margin: 0.55in; }
-  html, body { background: #fff !important; color: #000 !important; padding-left: 0 !important; }
-  .doc-sidenav { display: none !important; }
-  .pages { margin: 0; gap: 0; max-width: none; }
-  .page { box-shadow: none; page-break-after: always; }
-  .page:last-child { page-break-after: avoid; }
-  /* Keep the semantic colored bands (red = "do not stop") on paper even when the
-     browser's "background graphics" toggle is off. */
-  .page-head, .critical-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  /* Don't fracture atomic blocks across sheets. */
-  .dx-item, .vital, .lab-cell, .sys-row, .open-item, .qol-item, .contact-item, tr { page-break-inside: avoid; }
-  .sec-label { page-break-after: avoid; }
-  a { color: #000 !important; }
+@media print{
+  body{ background:#fff; } .topbar{ display:none; }
+  .sheet{ box-shadow:none; border:none; border-radius:0; max-width:none; margin:0; padding:0; }
+  @page{ size:Letter; margin:.55in; }
+  tbody tr:nth-child(even){ background:#f6f6f9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .status,.dot,.tag{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .dx li,.oi li,tr{ page-break-inside:avoid; }
 }
 </style>
 </head>
-<style>
-.doc-sidenav {
-  position: fixed; left: 0; top: 0; bottom: 0; width: 160px;
-  background: #1d343a; display: flex; flex-direction: column;
-  z-index: 500; overflow-y: auto;
-  border-right: 1px solid rgba(255,255,255,.07);
-}
-.dsn-home {
-  display: flex; align-items: center; gap: 8px;
-  padding: 14px 18px;
-  font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 700;
-  color: #fff; text-decoration: none;
-  background: oklch(38% 0.06 185);
-  border-bottom: 2px solid oklch(48% 0.08 185);
-  letter-spacing: .02em;
-  text-transform: uppercase;
-}
-.dsn-home:hover { background: oklch(44% 0.07 185); color: #fff; }
-.dsn-doc {
-  padding: 12px 18px 10px;
-  font-family: "Newsreader", serif; font-size: 16px; font-weight: 500;
-  color: rgba(255,255,255,.9); line-height: 1.3;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-.dsn-group {
-  padding: 14px 18px 5px;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.6);
-}
-.doc-sidenav a.dsn-link {
-  display: block; padding: 6px 18px;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 14px;
-  color: rgba(255,255,255,.75); text-decoration: none; line-height: 1.4;
-  transition: color .12s;
-}
-.doc-sidenav a.dsn-link:hover { color: #fff; }
-.doc-sidenav a.dsn-link.active { background: rgba(255,255,255,.14); color: #fff; font-weight: 600; border-radius: 4px; }
-/* Desktop: offset content so the fixed 160px sidebar sits BESIDE it, never overlapping
-   (fixes the 960–1220px overlap). Mobile (≤959px block below) demotes the sidebar to a
-   top bar, so there is no 960px nav dead-zone. */
-@media (min-width: 960px) { body { padding-left: 160px; } }
-</style>
 <body>
+<div class="topbar"><a href="luke-practitioner-packet.html">← Care archive</a><span class="spacer"></span><span class="doc">Luke at a Glance · vet record</span></div>
+<div class="sheet">
 
-<nav class="doc-sidenav">
-  <a class="dsn-home" href="luke-practitioner-packet.html">← Packet home</a>
-  <div class="dsn-doc">Luke at a Glance</div>
-  <div class="dsn-group">Pages</div>
-  <a class="dsn-link" href="#page1">Page 1 — Identity &amp; Medications</a>
-  <a class="dsn-link" href="#page2">Page 2 — Labs &amp; Systems</a>
-  <div class="dsn-group">Page 1</div>
-  <a class="dsn-link" href="#page1">Patient identity</a>
-  <a class="dsn-link" href="#page1">Active diagnoses</a>
-  <a class="dsn-link" href="#page1">Current medications</a>
-  <div class="dsn-group">Page 2</div>
-  <a class="dsn-link" href="#page2">Lab snapshot</a>
-  <a class="dsn-link" href="#page2">System status</a>
-  <a class="dsn-link" href="#page2">Open items</a>
-  <a class="dsn-link" href="#page2">QoL indicators</a>
-</nav>
-
-<script>
-(function() {
-  function init() {
-    const links = document.querySelectorAll('.doc-sidenav a.dsn-link[href^="#"]');
-    if (!links.length) return;
-    const ids = [...new Set([...links].map(a => a.getAttribute('href').slice(1)))];
-    function update() {
-      let current = ids[0];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 120) current = id;
-      }
-      links.forEach(a => a.classList.remove('active'));
-      document.querySelectorAll(`.doc-sidenav a.dsn-link[href="#${current}"]`).forEach(a => a.classList.add('active'));
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
-</script>
-
-<div class="pages" id="page1">
-
-<!-- ══════════════════════════════════════════════════════
-     PAGE 1: Identity · Diagnoses · Medications
-═══════════════════════════════════════════════════════════ -->
-<div class="page">
-
-  <div class="page-head">
-    <div class="ph-left">
-      <div class="doc-kicker">Practitioner Brief · Page 1 of 2</div>
-      <div class="doc-title">Luke <em>at a Glance</em></div>
-    </div>
-    <div class="ph-right">
-      <div class="field"><b>Owner</b> Rikki Delaine</div>
-      <div class="field"><b>Primary Vet</b> Thornwood · Dr. Denney / Dr. G · (616) 676-1251<br><a href="https://www.thornwoodvet.com" style="color:#9ecbc6;">thornwoodvet.com</a></div>
-      <div class="field"><b>Emergency</b> Animal Emergency Clinic, Grand Rapids</div>
-      <div class="field"><b>Compiled</b> June 2026</div>
-    </div>
+  <h1 class="title">Luke VonDog<small>At a Glance · Clinical Brief</small></h1>
+  <div class="rule"></div>
+  <div class="meta">
+    <span><b>Blue Weimaraner</b> · neutered male</span>
+    <span>DOB <b>May 31, 2014</b> (12 yr)</span>
+    <span><b>79.1 lb / 35.9 kg</b> · BCS 5/9 (Mar '26)</span>
+    <span>Microchip <b>941000016858399</b></span>
+    <span>Thornwood <b>#4677</b> · Client #8077</span>
+    <span class="as">As of July 2026</span>
   </div>
 
-  <div class="critical-strip">
-    <span class="ci">Lasix 300 mg/day — do not stop; respiratory event risk</span>
-    <span class="ci">NSAID (carprofen) + IRIS Stage 2 CKD — ongoing renal tension</span>
-    <span class="ci">No cardiac biomarkers drawn (NT-proBNP, troponin) — cardiac diagnosis is presumptive</span>
-    <span class="ci">Bozeman MT travel Jul–Aug 2026 · ~4,820 ft altitude</span>
-  </div>
-
-  <div class="page-body">
-
-    <!-- Identity -->
+  <div class="grid2">
     <div>
-      <div class="sec-label">Patient Identity</div>
-      <table class="identity-table">
-        <tr><td>Full name</td><td><b>Luke VonDog</b> (also filed as "Luke VonDog")</td></tr>
-        <tr><td>Breed</td><td>Blue Weimaraner · neutered male</td></tr>
-        <tr><td>DOB</td><td><b>May 31, 2014</b> · turned 12 in 2026</td></tr>
-        <tr><td>Adopted</td><td>Great Lakes Weim. Rescue · ~Dec 2015, age ~18 mo</td></tr>
-        <tr><td>Weight</td><td><b>79.1 lb / 35.9 kg</b> · Mar 9, 2026 · BCS 5/9 ideal</td></tr>
-        <tr><td>Microchip</td><td><b>941000016858399</b></td></tr>
-        <tr><td>Clinic ID</td><td>Thornwood #4677 · Client #8077</td></tr>
+      <h2 style="--sc:var(--indigo)">Patient identity</h2>
+      <table class="idtab"><tbody>
+        <tr><td>Full name</td><td><b>Luke VonDog</b></td></tr>
+        <tr><td>Adopted</td><td>Great Lakes Weimaraner Rescue · ~Dec 2015, age ~18 mo</td></tr>
         <tr><td>Last visit</td><td>March 9, 2026 · annual physical + vaccines</td></tr>
         <tr><td>Next due</td><td>Bordetella Sep 2026 · HW/Lyme test Sep 2026 · Fecal Aug 2026</td></tr>
-        <tr><td>Home</td><td>Ada, Michigan · upcoming Bozeman MT Jul–Aug 2026</td></tr>
-      </table>
+        <tr><td>Location</td><td>Home: Ada, Michigan · currently in Bozeman, MT through Sep 2026</td></tr>
+        <tr><td>Primary diet</td><td>Steve's Real Food Pork &amp; Shellfish Blocks · raw · 4 patties/day (~1,408 kcal) · unlimited raw peeled carrots</td></tr>
+      </tbody></table>
     </div>
-
-    <!-- Vitals + Diagnoses -->
     <div>
-      <div class="sec-label">Current Vitals</div>
-      <div class="vitals-grid" style="margin-bottom:18px;">
-        <div class="vital"><div class="vk">Weight</div><div class="vv">79.1<small>lb</small></div><div class="vs">Mar 9 '26 · BCS 5/9</div></div>
-        <div class="vital"><div class="vk">Furosemide</div><div class="vv">300<small>mg/d</small></div><div class="vs">~8.4 mg/kg/day</div></div>
-        <div class="vital"><div class="vk">Creatinine</div><div class="vv">1.8<small>H</small></div><div class="vs">Sep '25 · IRIS Stg 2</div></div>
-        <div class="vital" style="grid-column:1/2;"><div class="vk">BUN</div><div class="vv">35<small>H</small></div><div class="vs">Mar '26 · ref 7–28</div></div>
-        <div class="vital" style="grid-column:2/3;"><div class="vk">ALT</div><div class="vv">128<small>H</small></div><div class="vs">Sep '25 · ref 18–121</div></div>
-        <div class="vital"><div class="vk">Phosphorus</div><div class="vv">5.1</div><div class="vs">Sep '25 · IRIS target &lt;4.6</div></div>
-      </div>
-
-      <div class="sec-label burg">Active Diagnoses</div>
-      <div class="dx-list">
-        <div class="dx-item">
-          <div class="dx-dot burg"></div>
-          <div>
-            <div class="dx-name">Presumptive cardiac disease, Lasix-responsive</div>
-            <div class="dx-detail">300 mg/day furosemide. No echo performed — echocardiography not accessible due to cost. Dose ≈ 8.4 mg/kg/day — at ACVIM Stage D threshold without adjunctive cardiac meds (no pimobendan, no ACE-I, no spironolactone). NT-proBNP, troponin, taurine not measured.</div>
-            <span class="dx-tag empiric">Empiric diagnosis</span>
-          </div>
-        </div>
-        <div class="dx-item">
-          <div class="dx-dot accent"></div>
-          <div>
-            <div class="dx-name">Chronic kidney disease, IRIS Stage 2</div>
-            <div class="dx-detail">Creatinine 1.0→1.2→1.8 (Sep '24–Sep '25). BUN 19→31→43→35. Phosphorus 5.1 (above IRIS target of &lt;4.6). No urinalysis since Sep 2023; UPC ratio unknown. Furosemide + carprofen both nephrotoxic.</div>
-            <span class="dx-tag stage">IRIS Stage 2</span>
-          </div>
-        </div>
-        <div class="dx-item">
-          <div class="dx-dot moss"></div>
-          <div>
-            <div class="dx-name">Chronic hindlimb osteoarthritis (suspected)</div>
-            <div class="dx-detail">Multi-modal protocol: carprofen 225 mg/day + amantadine 100 mg/day + Librela 20 mg SC as needed. Librela response documented as good. <b>Right rear confirmed</b> (owner clarification Jun 2026; Mar '26 clinic note was a documentation error).</div>
-            <span class="dx-tag confirmed">Managed · Librela response good</span>
-          </div>
-        </div>
-        <div class="dx-item">
-          <div class="dx-dot ochre"></div>
-          <div>
-            <div class="dx-name">Mild hepatocellular changes</div>
-            <div class="dx-detail">ALT 46→121→128. Bilirubin spiked to 1.4 (Mar '25), resolved to 0.1 (Sep '25). Carprofen is a potential contributor. Imaging deferred by team in favor of QoL focus.</div>
-            <span class="dx-tag monitor">Monitor · ALT trending up</span>
-          </div>
-        </div>
-        <div class="dx-item">
-          <div class="dx-dot mute"></div>
-          <div>
-            <div class="dx-name">Benign cutaneous + GDV risk</div>
-            <div class="dx-detail">2× FNA-confirmed lipomas (R axilla, R flank). ~2 mm dermal mass R lateral cheek (stable, monitor, aspirate if changes). Simethicone 250 mg AM for GDV vigilance — Weimaraner breed risk; Sam (pack-mate) died of GDV Feb 2023.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Medications full-span -->
-    <div class="full">
-      <div class="sec-label burg" style="margin-top:4px;">Current Medications <span style="font-weight:400;color:var(--ink-mute);letter-spacing:0;text-transform:none;font-family:'Source Serif 4',serif;font-size:11px;"> · ★ = do not stop without specialist guidance</span></div>
-      <table class="med-table">
-        <thead>
-          <tr>
-            <th>Drug</th><th>Dose</th><th>Frequency</th><th>Route</th><th>Purpose</th><th>Critical note</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="must-not-stop">
-            <td><span class="drug-name">Furosemide</span><span class="drug-brand">Lasix</span></td>
-            <td class="dose-val">50 mg × 3 AM<br>50 mg × 3 PM<br><b>= 300 mg/day</b></td>
-            <td>q12h</td><td>PO</td>
-            <td>Loop diuretic · CHF management</td>
-            <td class="warn">DO NOT STOP. High risk of life-threatening respiratory event (Dr. Denney). Pill folded in bread ball — do not change delivery without owner consult.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Carprofen</span><span class="drug-brand">Rimadyl · 75 mg tabs</span></td>
-            <td class="dose-val">3 tabs = 225 mg/day</td>
-            <td>q24h</td><td>PO</td>
-            <td>NSAID · OA pain control</td>
-            <td>Renal + hepatic load. Dose reduction discussed Sep '25. Do not add other NSAIDs.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Bedinvetmab</span><span class="drug-brand">Librela · 20 mg</span></td>
-            <td class="dose-val">20 mg</td>
-            <td>As needed SC</td><td>SC</td>
-            <td>Anti-NGF mAb · OA pain</td>
-            <td>"Working well" (Mar '26 visit). Good response documented.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Amantadine</span><span class="drug-brand"></span></td>
-            <td class="dose-val">100 mg</td>
-            <td>q24h</td><td>PO</td>
-            <td>NMDA antagonist · adjunctive pain</td>
-            <td>Added May '25 during acute respiratory/pain event.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Lokivetmab</span><span class="drug-brand">Cytopoint · 80 mg</span></td>
-            <td class="dose-val">80 mg most recent</td>
-            <td>Every few mo</td><td>SC</td>
-            <td>Anti-IL-31 mAb · pruritus/atopy</td>
-            <td>Last given Mar 9, 2026. No documented interactions.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Simparica Trio</span><span class="drug-brand"></span></td>
-            <td class="dose-val">Label dose</td>
-            <td>Monthly</td><td>PO</td>
-            <td>HW + flea/tick + roundworm prevention</td>
-            <td>Sarolaner (isoxazoline) — rare neurologic AEs; none observed in Luke.</td>
-          </tr>
-          <tr>
-            <td><span class="drug-name">Simethicone</span><span class="drug-brand">Gas-X · 125 mg × 2</span></td>
-            <td class="dose-val">250 mg AM</td>
-            <td>q24h</td><td>PO</td>
-            <td>Gas · GDV vigilance</td>
-            <td>Weimaraner breed-level GDV risk; pack-mate Sam died of GDV Feb 2023.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="margin-top:24px;">
-        <div class="sec-label" style="font-size:18px;margin-top:0;">Supplements</div>
-        <table class="med-table">
-          <thead>
-            <tr>
-              <th>Product</th><th>Daily dose</th><th>Key contents</th><th>Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="drug-name">Wuffes Joint Chew</span></td>
-              <td class="dose-val">1 chew</td>
-              <td style="color:var(--ink-2);font-size:13px;">Glucosamine HCl 1,250 mg · MSM 400 mg · Chondroitin 150 mg · HA 21 mg · Salmon oil omega-3 16.5 mg</td>
-              <td style="font-size:13px;color:var(--ink-2);">Joint support</td>
-            </tr>
-            <tr>
-              <td><span class="drug-name">Wuffes Advanced Multivitamin</span></td>
-              <td class="dose-val">2 chews</td>
-              <td style="color:var(--ink-2);font-size:13px;">Vitamin A 2,230 IU · C 9.5 mg · D3 167 IU · E 76 IU · EPA 52 mg · DHA 64 mg (daily totals)</td>
-              <td style="font-size:13px;color:var(--ink-2);">Multivitamin</td>
-            </tr>
-            <tr>
-              <td><span class="drug-name">Cosequin DS</span></td>
-              <td class="dose-val">3 tabs</td>
-              <td style="color:var(--ink-2);font-size:13px;">Glucosamine HCl 1,800 mg · Chondroitin 900 mg · MSM 750 mg (daily totals)</td>
-              <td style="font-size:13px;color:var(--ink-2);">Joint support</td>
-            </tr>
-            <tr style="background:var(--paper-2);">
-              <td><span class="drug-name" style="color:var(--ochre);">Stack total (omega-3)</span></td>
-              <td class="dose-val" style="color:var(--ochre);">~132 mg/day</td>
-              <td style="font-size:13px;"><span style="color:var(--burgundy);font-weight:600;">EPA+DHA combined ≈ 132 mg/day — 6% of cardiac-indicated dose (~2,300 mg/day)</span></td>
-              <td style="font-size:13px;color:var(--burgundy);font-weight:600;">Critical gap — see Open Item 06</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div><!-- /page-body -->
-
-  <div class="page-footer">
-    <span>Luke VonDog · Practitioner Brief · Compiled June 2026</span>
-    <span class="pg">Page 1 of 2 → continued</span>
-  </div>
-</div><!-- /page 1 -->
-
-
-<!-- ══════════════════════════════════════════════════════
-     PAGE 2: Labs · Systems · Open Items · QoL · Contacts
-═══════════════════════════════════════════════════════════ -->
-<div class="page" id="page2">
-
-  <div class="page-head">
-    <div class="ph-left">
-      <div class="doc-kicker">Practitioner Brief · Page 2 of 2</div>
-      <div class="doc-title">Luke <em>at a Glance</em></div>
-    </div>
-    <div class="ph-right">
-      <div class="field"><b>Owner</b> Rikki Delaine</div>
-      <div class="field"><b>Thornwood</b> (616) 676-1251 · Dr. Denney / Dr. G</div>
-      <div class="field"><b>Primary diet</b> Steve's Real Food Pork &amp; Shellfish Blocks · raw · <b>4 patties/day</b> (~1,408 kcal)</div>
-      <div class="field"><b>Food motivation</b> Very high (prednisone history) — reliable for med delivery</div>
+      <h2 style="--sc:var(--clay)">Current vitals</h2>
+      <table><tbody>
+        <tr><td>Weight</td><td class="num"><b>79.1 lb / 35.9 kg</b></td><td class="num sub">Mar '26 · BCS 5/9</td></tr>
+        <tr><td>Furosemide</td><td class="num"><b>300 mg/day</b></td><td class="num sub">≈ 8.4 mg/kg/day</td></tr>
+        <tr><td>Creatinine</td><td class="num hi">1.8</td><td class="num sub">Sep '25 · IRIS Stg 2</td></tr>
+        <tr><td>BUN</td><td class="num hi">35</td><td class="num sub">Mar '26 · ref 7–28</td></tr>
+        <tr><td>Phosphorus</td><td class="num hi">5.1</td><td class="num sub">Sep '25 · target &lt;4.6</td></tr>
+        <tr><td>ALT</td><td class="num hi">128</td><td class="num sub">Sep '25 · ref 18–121</td></tr>
+      </tbody></table>
     </div>
   </div>
 
-  <div class="page-body">
+  <!-- DIAGNOSES -->
+  <h2 style="--sc:var(--purple)">Active diagnoses</h2>
+  <ul class="dx">
+    <li>
+      <div class="dxh"><span class="dot" style="background:var(--clay)"></span><span class="dxn">Presumptive cardiac disease, Lasix-responsive</span> <span class="tag">Empiric</span></div>
+      <div class="dxd">300 mg/day furosemide. No echocardiogram performed (not accessible due to cost). Dose ≈ 8.4 mg/kg/day — at ACVIM Stage D threshold, without adjunctive cardiac meds (no pimobendan, ACE-I, or spironolactone). NT-proBNP, troponin, and taurine not measured.</div>
+    </li>
+    <li>
+      <div class="dxh"><span class="dot" style="background:var(--blue)"></span><span class="dxn">Chronic kidney disease, IRIS Stage 2</span> <span class="tag">IRIS 2</span></div>
+      <div class="dxd">Creatinine 1.0 → 1.2 → 1.8 (Sep '24 – Sep '25). BUN 19 → 31 → 43 → 35. Phosphorus 5.1 (above IRIS target &lt;4.6). No urinalysis since Sep 2023; UPC ratio unknown. Furosemide + carprofen both nephrotoxic.</div>
+    </li>
+    <li>
+      <div class="dxh"><span class="dot" style="background:var(--green)"></span><span class="dxn">Chronic hindlimb osteoarthritis</span> <span class="tag">Managed</span></div>
+      <div class="dxd">Multi-modal: carprofen 225 mg/day + amantadine 100 mg/day + Librela 20 mg SC as needed. Librela response good. Right rear confirmed (owner clarification Jun 2026; the Mar '26 clinic note recording left rear was a documentation error, per owner).</div>
+    </li>
+    <li>
+      <div class="dxh"><span class="dot" style="background:var(--amber)"></span><span class="dxn">Mild hepatocellular changes</span> <span class="tag">Monitor</span></div>
+      <div class="dxd">ALT 46 → 121 → 128. Bilirubin spiked to 1.4 (Mar '25), resolved to 0.1 (Sep '25). Carprofen a possible contributor. Imaging deferred by the team in favor of quality-of-life focus.</div>
+    </li>
+    <li>
+      <div class="dxh"><span class="dot" style="background:var(--slate)"></span><span class="dxn">Benign cutaneous masses; GDV-risk breed</span></div>
+      <div class="dxd">2× FNA-confirmed lipomas (R axilla, R flank). ~2 mm dermal mass, R lateral cheek (stable; monitor, aspirate if changes). Simethicone 250 mg AM for bloat vigilance — deep-chested breed; pack-mate Sam died of GDV Feb 2023.</div>
+    </li>
+  </ul>
 
-    <!-- Lab snapshot -->
-    <div class="full">
-      <div class="sec-label">Laboratory Snapshot — Most Recent Values with Trend</div>
-      <div class="lab-grid" style="grid-template-columns:repeat(6,1fr);">
-        <div class="lab-cell warn">
-          <div class="lab-key">Creatinine</div>
-          <div class="lab-val">1.8<small>mg/dL</small> <span class="flag flag-h">H</span></div>
-          <div class="lab-ref">Ref 0.5–1.8 · IRIS Stg 2</div>
-          <div class="lab-trend"><span class="arr arr-up">↑</span> 1.0→1.2→1.8 (1 yr)</div>
-        </div>
-        <div class="lab-cell high">
-          <div class="lab-key">BUN</div>
-          <div class="lab-val">35<small>mg/dL</small> <span class="flag flag-h">H</span></div>
-          <div class="lab-ref">Ref 7–28</div>
-          <div class="lab-trend"><span class="arr arr-dn">↓</span> from 43 (Sep '25)</div>
-        </div>
-        <div class="lab-cell">
-          <div class="lab-key">SDMA</div>
-          <div class="lab-val">13<small>µg/dL</small></div>
-          <div class="lab-ref">Ref 0–14 · near top</div>
-          <div class="lab-trend"><span class="arr arr-up">↑</span> from 11 (Sep '24)</div>
-        </div>
-        <div class="lab-cell high">
-          <div class="lab-key">Phosphorus</div>
-          <div class="lab-val">5.1<small>mg/dL</small></div>
-          <div class="lab-ref">Lab ref 2.5–6.1</div>
-          <div class="lab-trend"><span class="arr arr-up" style="color:var(--ochre);">⚠</span> IRIS target &lt;4.6</div>
-        </div>
-        <div class="lab-cell high">
-          <div class="lab-key">ALT</div>
-          <div class="lab-val">128<small>U/L</small> <span class="flag flag-h">H</span></div>
-          <div class="lab-ref">Ref 18–121</div>
-          <div class="lab-trend"><span class="arr arr-up">↑</span> 46→121→128</div>
-        </div>
-        <div class="lab-cell">
-          <div class="lab-key">T4</div>
-          <div class="lab-val">1.7<small>µg/dL</small></div>
-          <div class="lab-ref">Ref 1.0–4.0</div>
-          <div class="lab-trend"><span class="arr arr-st">→</span> Low-normal; euthyroid</div>
-        </div>
-        <div class="lab-cell">
-          <div class="lab-key">Hematocrit</div>
-          <div class="lab-val">53.2<small>%</small></div>
-          <div class="lab-ref">Ref 41–60%</div>
-          <div class="lab-trend"><span class="arr arr-dn" style="color:var(--moss);">↑</span> Resolved from 32.0 L (2023)</div>
-        </div>
-        <div class="lab-cell high">
-          <div class="lab-key">Platelets</div>
-          <div class="lab-val">481<small>K/µL</small> <span class="flag flag-h">H</span></div>
-          <div class="lab-ref">Ref ≤412</div>
-          <div class="lab-trend"><span class="arr arr-st">—</span> Sep '25 only</div>
-        </div>
-        <div class="lab-cell low">
-          <div class="lab-key">Chloride</div>
-          <div class="lab-val">106<small>mEq/L</small> <span class="flag flag-l">L</span></div>
-          <div class="lab-ref">Ref 109–122</div>
-          <div class="lab-trend">Furosemide effect</div>
-        </div>
-        <div class="lab-cell">
-          <div class="lab-key">Lipase</div>
-          <div class="lab-val">110<small>U/L</small></div>
-          <div class="lab-ref">Ref 0–250</div>
-          <div class="lab-trend"><span class="arr arr-dn" style="color:var(--moss);">↓</span> from 1,382 H (Mar '25)</div>
-        </div>
-        <div class="lab-cell">
-          <div class="lab-key">Bilirubin</div>
-          <div class="lab-val">0.1<small>mg/dL</small></div>
-          <div class="lab-ref">Ref 0.0–0.3</div>
-          <div class="lab-trend"><span class="arr arr-dn" style="color:var(--moss);">↓</span> from 1.4 H (Mar '25)</div>
-        </div>
-        <div class="lab-cell" style="background:#fdf0e8;border-left:3px solid var(--ochre);">
-          <div class="lab-key" style="color:var(--ochre);">Urinalysis</div>
-          <div class="lab-val" style="font-size:16px;color:var(--ochre);">MISSING</div>
-          <div class="lab-ref">Last: Sep 2023</div>
-          <div class="lab-trend" style="color:var(--ochre);">UPC ratio unknown — high priority</div>
-        </div>
-      </div>
-      <div style="font-size:13px;color:var(--ink-2);margin-top:7px;font-family:'Source Serif 4',serif;">
-        Sep '25 sample: hemolysis 2+, lipemia 1+. IDEXX note: creatinine elevation may be partially artifact. Full chemistry from Mar 9, 2026 panel not available in records (only BUN 35 reported).
-      </div>
-    </div>
+  <!-- MEDICATIONS -->
+  <h2 style="--sc:var(--indigo)">Current medications</h2>
+  <table>
+    <thead><tr><th>Drug</th><th>Dose</th><th>Freq</th><th>Route</th><th>Purpose &amp; notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="drug">Furosemide</span> <span class="sub">(Lasix)</span></td>
+        <td class="num">300 mg/day<div class="sub">50 mg × 3 AM · 50 mg × 3 PM</div></td>
+        <td>q12h</td><td>PO</td>
+        <td>Loop diuretic — CHF management. <b>Ongoing; do not discontinue without veterinary guidance</b> (Dr. Denney: respiratory-event risk).</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Carprofen</span> <span class="sub">(Rimadyl · 75 mg)</span></td>
+        <td class="num">225 mg/day<div class="sub">3 tabs</div></td>
+        <td>q24h</td><td>PO</td>
+        <td>NSAID — osteoarthritis. Renal + hepatic load; dose reduction discussed Sep '25. No additional NSAIDs.</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Bedinvetmab</span> <span class="sub">(Librela · 20 mg)</span></td>
+        <td class="num">20 mg</td><td>as needed</td><td>SC</td>
+        <td>Anti-NGF mAb — OA pain. Working well (Mar '26).</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Amantadine</span></td>
+        <td class="num">100 mg</td><td>q24h</td><td>PO</td>
+        <td>NMDA antagonist — adjunctive pain. Added May '25.</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Lokivetmab</span> <span class="sub">(Cytopoint · 80 mg)</span></td>
+        <td class="num">80 mg</td><td>every few mo</td><td>SC</td>
+        <td>Anti-IL-31 mAb — pruritus / atopy. Last Mar 9, 2026.</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Simparica Trio</span></td>
+        <td class="num">label dose</td><td>monthly</td><td>PO</td>
+        <td>Heartworm + flea/tick + roundworm (sarolaner).</td>
+      </tr>
+      <tr>
+        <td><span class="drug">Simethicone</span> <span class="sub">(Gas-X 125 mg × 2)</span></td>
+        <td class="num">250 mg</td><td>AM</td><td>PO</td>
+        <td>Gas / GDV vigilance.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note"><b>All pills are given in goat cheese</b> (since 2024). Supplements: Wuffes Joint Chew (glucosamine 1,250 · MSM 400 · chondroitin 150 · HA 21 · salmon omega-3 16.5 mg), Wuffes Multivitamin (A 2,230 IU · C 9.5 · D3 167 IU · E 76 IU · EPA 52 · DHA 64 mg), Cosequin DS (glucosamine 1,800 · chondroitin 900 · MSM 750 mg). Omega-3 stack total ≈ <b>132 mg EPA+DHA/day</b> — about 6% of a cardiac-indicated dose (~2,300 mg).</p>
 
-    <div class="divider"></div>
+  <!-- LABS -->
+  <h2 style="--sc:var(--blue)">Laboratory snapshot — with trend &amp; date</h2>
+  <table>
+    <thead><tr><th>Test</th><th>Value</th><th>Reference</th><th>Trend</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr><td>Creatinine</td><td class="num hi">1.8 mg/dL</td><td class="num">0.5–1.8</td><td class="trend"><span class="up">↑</span> 1.0→1.2→1.8</td><td class="num">Sep '25</td></tr>
+      <tr><td>BUN</td><td class="num hi">35 mg/dL</td><td class="num">7–28</td><td class="trend"><span class="dn">↓</span> from 43</td><td class="num">Mar '26</td></tr>
+      <tr><td>SDMA</td><td class="num">13 µg/dL</td><td class="num">0–14</td><td class="trend"><span class="up">↑</span> from 11</td><td class="num">Sep '25</td></tr>
+      <tr><td>Phosphorus</td><td class="num hi">5.1 mg/dL</td><td class="num">2.5–6.1 (IRIS &lt;4.6)</td><td class="trend">above target</td><td class="num">Sep '25</td></tr>
+      <tr><td>ALT</td><td class="num hi">128 U/L</td><td class="num">18–121</td><td class="trend"><span class="up">↑</span> 46→121→128</td><td class="num">Sep '25</td></tr>
+      <tr><td>T4</td><td class="num">1.7 µg/dL</td><td class="num">1.0–4.0</td><td class="trend">low-normal; euthyroid</td><td class="num">Sep '25</td></tr>
+      <tr><td>Hematocrit</td><td class="num">53.2 %</td><td class="num">41–60</td><td class="trend"><span class="dn">resolved</span> from 32.0 L</td><td class="num">Sep '25</td></tr>
+      <tr><td>Platelets</td><td class="num hi">481 K/µL</td><td class="num">≤412</td><td class="trend">single value</td><td class="num">Sep '25</td></tr>
+      <tr><td>Chloride</td><td class="num lo">106 mEq/L</td><td class="num">109–122</td><td class="trend">furosemide effect</td><td class="num">Sep '25</td></tr>
+      <tr><td>Lipase</td><td class="num">110 U/L</td><td class="num">0–250</td><td class="trend"><span class="dn">↓</span> from 1,382</td><td class="num">Sep '25</td></tr>
+      <tr><td>Bilirubin</td><td class="num">0.1 mg/dL</td><td class="num">0.0–0.3</td><td class="trend"><span class="dn">↓</span> from 1.4</td><td class="num">Sep '25</td></tr>
+      <tr><td>Urinalysis / UPC</td><td class="num hi">missing</td><td class="num">—</td><td class="trend">last Sep 2023</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Sep '25 sample: hemolysis 2+, lipemia 1+ (creatinine may be partly artifact). The Mar 9, 2026 panel reported BUN only. Ten years of these markers are charted in the <a class="link" href="luke-data-visualization-suite.html">Data Visualization Suite</a>.</p>
 
-    <!-- System status -->
-    <div>
-      <div class="sec-label">System Status</div>
-      <div class="sys-grid">
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--burgundy);">❤ Cardiac</div>
-          <div class="sys-detail">300 mg/day furosemide · no echo · no pimobendan/ACE-I/spironolactone · dose at ACVIM Stage D threshold · no cardio-specific biomarkers drawn</div>
-          <div class="sys-badge watch">High priority</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--accent);">⬡ Renal</div>
-          <div class="sys-detail">IRIS Stage 2 · creatinine 1.8 · BUN volatile (35–43) · phosphorus above target · urinalysis and UPC ratio overdue · furosemide + carprofen both nephrotoxic</div>
-          <div class="sys-badge monitor">Monitor</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--ochre);">◎ Hepatic</div>
-          <div class="sys-detail">ALT trending up (46→128) · bilirubin spike resolved · carprofen likely contributor · bile acid panel not performed · imaging deferred for QoL</div>
-          <div class="sys-badge monitor">Monitor</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--moss);">⊕ Musculoskeletal</div>
-          <div class="sys-detail">Hindlimb OA · right rear · Librela response good · carprofen + amantadine on board · no radiographs on file</div>
-          <div class="sys-badge managed">Managed</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--ink-mute);">◻ Dermatologic</div>
-          <div class="sys-detail">Cytopoint managing pruritus · 2× lipomas confirmed benign · R cheek mass ~2 mm stable since ~Sep '25 — monitor, aspirate if changes</div>
-          <div class="sys-badge stable">Stable</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--ink-mute);">◻ GI / GDV</div>
-          <div class="sys-detail">High-risk Weimaraner breed · simethicone AM daily · warm soup feeding architecture · pack-mate Sam died of GDV Feb 2023. Lipase normalized. No active GI signs.</div>
-          <div class="sys-badge stable">Vigilance maintained</div>
-        </div>
-        <div class="sys-row">
-          <div class="sys-name" style="color:var(--ink-mute);">◻ Neurologic</div>
-          <div class="sys-detail">Normal neuro exam Mar '26 · no ataxia/seizures/CCD documented · hindlimb signs may have neurogenic component — not formally evaluated</div>
-          <div class="sys-badge stable">Normal exam</div>
-        </div>
-      </div>
-    </div>
+  <!-- SYSTEM STATUS -->
+  <h2 style="--sc:var(--slate)">System status</h2>
+  <table>
+    <thead><tr><th>System</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cardiac</b></td><td><span class="status st-watch">High priority</span></td><td>300 mg/day furosemide · no echo · no pimobendan / ACE-I / spironolactone · dose at ACVIM Stage D · no cardio-specific biomarkers drawn.</td></tr>
+      <tr><td><b>Renal</b></td><td><span class="status st-mon">Monitor</span></td><td>IRIS Stage 2 · creatinine 1.8 · BUN volatile (35–43) · phosphorus above target · UA/UPC overdue · furosemide + carprofen both nephrotoxic.</td></tr>
+      <tr><td><b>Hepatic</b></td><td><span class="status st-mon">Monitor</span></td><td>ALT trending up (46 → 128) · bilirubin spike resolved · carprofen likely contributor · bile-acid panel not performed.</td></tr>
+      <tr><td><b>Musculoskeletal</b></td><td><span class="status st-man">Managed</span></td><td>Hindlimb OA · right rear · Librela response good · carprofen + amantadine on board · no radiographs on file.</td></tr>
+      <tr><td><b>Dermatologic</b></td><td><span class="status st-ok">Stable</span></td><td>Cytopoint managing pruritus · 2× lipomas confirmed benign · R cheek mass ~2 mm stable.</td></tr>
+      <tr><td><b>GI / GDV</b></td><td><span class="status st-ok">Vigilance</span></td><td>Deep-chested breed · simethicone AM · warm-soup feeding · pack-mate died of GDV Feb 2023 · no active GI signs.</td></tr>
+      <tr><td><b>Neurologic</b></td><td><span class="status st-ok">Normal</span></td><td>Normal neuro exam Mar '26 · no ataxia / seizures / cognitive signs · hindlimb signs may have a neurogenic component (not formally evaluated).</td></tr>
+    </tbody>
+  </table>
 
-    <!-- Open items + QoL -->
-    <div>
-      <div class="sec-label burg">Priority Clinical Questions</div>
-      <div class="open-list">
-        <div class="open-item">
-          <div class="open-num">01</div>
-          <div class="open-q"><b>Urinalysis + UPC ratio.</b> No urine sample collected Sep '25. Last UA Sep 2023 (1+ protein, cloudy). Proteinuria status unknown.</div>
-          <div class="open-priority priority-h">Urgent</div>
-        </div>
-        <div class="open-item">
-          <div class="open-num">02</div>
-          <div class="open-q"><b>NT-proBNP + Cardiac Troponin I.</b> Cardiac diagnosis is purely empirical — echocardiography is not accessible due to cost. NT-proBNP and troponin can be drawn at a routine blood panel at Thornwood. Neither has been measured. Would quantify cardiac wall stress and guide whether adjunctive medications (pimobendan, ACE-I) are indicated without imaging.</div>
-          <div class="open-priority priority-h">High</div>
-        </div>
-        <div class="open-item">
-          <div class="open-num">03</div>
-          <div class="open-q"><b>Carprofen dose review.</b> Dr. Denney named possible reduction in Sep '25. NSAID + Stage 2 CKD + ALT trending up. Librela + amantadine may allow dose reduction.</div>
-          <div class="open-priority priority-h">High</div>
-        </div>
-        <div class="open-item">
-          <div class="open-num">04</div>
-          <div class="open-q"><b>Bozeman / altitude clearance.</b> Travel Jul–Aug 2026 to ~4,820 ft. Altitude increases cardiac workload. Wildfire smoke Jul–Aug. Bozeman vet: <b>Foothills Veterinary Hospital</b> · (406) 556-0604 · fvhmt.com.</div>
-          <div class="open-priority priority-m">Medium</div>
-        </div>
-        <div class="open-item">
-          <div class="open-num">05</div>
-          <div class="open-q"><b>Whole-blood taurine.</b> Diet history includes long grain-free and novel-protein periods overlapping FDA DCM investigation window. Single measurement warranted.</div>
-          <div class="open-priority priority-m">Medium</div>
-        </div>
-        <div class="open-item">
-          <div class="open-num">06</div>
-          <div class="open-q"><b>Omega-3 supplementation.</b> Current intake ≈ 132 mg EPA+DHA/day. Cardiac-indicated dose ≈ 2,300 mg/day. Gap is 94%. Needs formal recommendation.</div>
-          <div class="open-priority priority-m">Medium</div>
-        </div>
-      </div>
+  <!-- OPEN ITEMS -->
+  <h2 style="--sc:var(--amber)">Open clinical questions</h2>
+  <ul class="oi">
+    <li><span class="n">01</span><span><b>Urinalysis + UPC ratio.</b> No urine collected Sep '25; last UA Sep 2023 (1+ protein, cloudy). Proteinuria status unknown.</span><span class="pr"><span class="status st-watch">Urgent</span></span></li>
+    <li><span class="n">02</span><span><b>NT-proBNP + Cardiac Troponin I.</b> Cardiac diagnosis is empiric (echo not accessible). Both can be drawn at a routine panel; would quantify cardiac wall stress and guide adjunctive meds.</span><span class="pr"><span class="status st-mon">High</span></span></li>
+    <li><span class="n">03</span><span><b>Carprofen dose review.</b> Possible reduction named Sep '25. NSAID + Stage 2 CKD + rising ALT; Librela + amantadine may allow a lower dose.</span><span class="pr"><span class="status st-mon">High</span></span></li>
+    <li><span class="n">04</span><span><b>Altitude (currently in Bozeman, ~4,820 ft).</b> Altitude and wildfire smoke increase cardiac workload. Local ER: Foothills Veterinary Hospital · (406) 556-0604.</span><span class="pr"><span class="status st-ok">Medium</span></span></li>
+    <li><span class="n">05</span><span><b>Whole-blood taurine.</b> Diet history includes grain-free / novel-protein periods overlapping the FDA DCM window; a single measurement is warranted.</span><span class="pr"><span class="status st-ok">Medium</span></span></li>
+    <li><span class="n">06</span><span><b>Omega-3 supplementation.</b> Current ≈ 132 mg EPA+DHA/day vs. a cardiac-indicated ~2,300 mg — a ~94% gap.</span><span class="pr"><span class="status st-ok">Medium</span></span></li>
+  </ul>
 
-      <div style="margin-top:16px;">
-        <div class="sec-label">Quality-of-Life Indicators (owner-observed)</div>
-        <div class="qol-grid">
-          <div class="qol-item">
-            <div class="qol-label">Carrot requests</div>
-            <div class="qol-status"><b>Active daily signal.</b> Number of whole carrots Luke requests per day is the household's primary QoL metric. A drop in carrot count precedes clinical decline by hours to days.</div>
-          </div>
-          <div class="qol-item">
-            <div class="qol-label">Food acceptance</div>
-            <div class="qol-status"><b>Strong.</b> Luke is highly food-motivated (prednisone history). Refused beef trial Nov '25 — notable signal in a dog who loves food. Currently accepting Pork &amp; Shellfish Blocks.</div>
-          </div>
-          <div class="qol-item">
-            <div class="qol-label">Sleep + routine</div>
-            <div class="qol-status"><b>Maintained.</b> Sleeps adjacent to owner. Participates in midnight potty walk → carrot ritual. Non-24-hour household schedule; Luke follows Rikki's rhythms.</div>
-          </div>
-          <div class="qol-item">
-            <div class="qol-label">Resting resp. rate</div>
-            <div class="qol-status"><span class="watch">Not formally tracked at home.</span> Recommend establishing baseline. &gt;30 breaths/min while fully asleep = early decompensation signal. Owner is capable and motivated to monitor.</div>
-          </div>
-        </div>
-      </div>
+  <!-- QOL -->
+  <h2 style="--sc:var(--green)">Quality-of-life indicators (owner-observed)</h2>
+  <table><tbody>
+    <tr><td style="width:26%"><b>Carrot enthusiasm</b></td><td>The household's primary QoL barometer — appetite for his unlimited raw carrots, tracked as interest, not a count. A drop precedes clinical decline by hours to days.</td></tr>
+    <tr><td><b>Food acceptance</b></td><td>Strong; highly food-motivated. Refused a beef trial Nov '25 (a notable signal). Currently accepting his Pork &amp; Shellfish Blocks.</td></tr>
+    <tr><td><b>Sleep &amp; routine</b></td><td>Maintained. Sleeps beside owner; midnight potty → carrot ritual. Follows a non-24-hour household schedule.</td></tr>
+    <tr><td><b>Resting respiratory rate</b></td><td>Not yet formally tracked at home; baseline being established. &gt;30 breaths/min while fully asleep = early decompensation signal.</td></tr>
+  </tbody></table>
 
-    </div><!-- /right col -->
+  <!-- CONTACTS -->
+  <h2 style="--sc:var(--indigo)">Care team</h2>
+  <table><tbody>
+    <tr><td style="width:26%"><b>Owner</b></td><td>Rikki Delaine · currently Bozeman, MT · <a class="link" href="tel:+16169707690">(616) 970-7690</a></td></tr>
+    <tr><td><b>Home clinic &amp; records</b></td><td>Thornwood Veterinary Clinic · 1501 Buttrick Ave SE, Ada, MI · Dr. Kaitlyn Denney / Dr. G · <a class="link" href="tel:+16166761251">(616) 676-1251</a> · thornwoodvet.com</td></tr>
+    <tr><td><b>Local (Bozeman)</b></td><td>Foothills Veterinary Hospital · 707 Bridger Drive, Suite E, Bozeman, MT · <a class="link" href="tel:+14065560604">(406) 556-0604</a> · fvhmt.com</td></tr>
+  </tbody></table>
 
-  </div><!-- /page-body -->
+  <div class="foot">Luke VonDog · At a Glance · owner-compiled from Thornwood Veterinary records · every value carries its date · a snapshot, not necessarily current. Full unedited record: <a class="link" href="luke-verbatim-timeline.html">Verbatim Timeline</a>.</div>
 
-  <div class="contact-strip">
-    <div class="contact-item">
-      <div class="ck">Primary Clinic</div>
-      <div class="cv"><b>Thornwood Veterinary Clinic &amp; Kennel</b><br>1501 Buttrick Ave SE, Ada, MI 49301<br>(616) 676-1251 · Dr. Kaitlyn Denney · Dr. G<br><a href="https://www.thornwoodvet.com">thornwoodvet.com</a></div>
-    </div>
-    <div class="contact-item">
-      <div class="ck">Emergency (Michigan)</div>
-      <div class="cv"><b>Animal Emergency Clinic</b><br>Grand Rapids, MI</div>
-    </div>
-    <div class="contact-item">
-      <div class="ck">Emergency (Montana)</div>
-      <div class="cv"><b>Foothills Veterinary Hospital</b><br>707 Bridger Drive, Suite E<br>Bozeman, MT 59715<br>(406) 556-0604 · fvhmt.com<br>Mon–Fri 8am–6pm · emergency services available</div>
-    </div>
-    <div class="contact-item">
-      <div class="ck">Full reference</div>
-      <div class="cv"><b>Data Visualization Suite</b><br>Luke System Map · Verbatim Timeline</div>
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <span>Luke VonDog · Practitioner Brief · Compiled June 2026 · Data through Mar 9, 2026</span>
-    <span class="pg">Page 2 of 2</span>
-  </div>
-
-</div><!-- /page 2 -->
-
-</div><!-- /pages -->
-
-<style>
-/* ═══ MOBILE ≤ 959px — sticky top bar + single-column layout ═════════════════ */
-@media (max-width: 959px) {
-
-  /* Sidebar → compact sticky top bar */
-  .doc-sidenav {
-    display: flex;
-    position: sticky;
-    top: 0;
-    left: auto;
-    bottom: auto;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    align-items: center;
-    overflow: hidden;
-    z-index: 500;
-    border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,.12);
-  }
-  .dsn-home { flex-shrink: 0; padding: 12px 14px; font-size: 12px; border-bottom: none; }
-  .dsn-doc  { flex: 1; font-size: 14px; padding: 0 14px; border-bottom: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dsn-group, .doc-sidenav a.dsn-link { display: none; }
-
-  /* Base */
-  body   { background: #2a2620; }
-  .pages { margin: 0; gap: 0; }
-  .page  { box-shadow: none; }
-
-  /* Page header: stack */
-  .page-head { flex-direction: column; align-items: flex-start; padding: 16px 20px 14px; gap: 10px; }
-  .ph-left .doc-title { font-size: 22px; }
-  .ph-right { text-align: left; }
-  .ph-right .field { font-size: 13px; }
-
-  /* Critical strip */
-  .critical-strip { padding: 10px 20px; flex-direction: column; gap: 8px; font-size: 14px; }
-
-  /* Page body: single column */
-  .page-body { padding: 20px 20px 28px; grid-template-columns: 1fr; gap: 20px; }
-
-  /* Section labels */
-  .sec-label { font-size: 18px; }
-
-  /* Identity table */
-  .identity-table td:first-child { white-space: normal; width: 38%; font-size: 11px; }
-  .identity-table td { font-size: 14px; padding: 6px 0; }
-
-  /* Vitals: 2 col */
-  .vitals-grid { grid-template-columns: 1fr 1fr; }
-  .vital .vv { font-size: 22px; }
-  .vital .vs { font-size: 12px; }
-
-  /* Labs: 2 col */
-  .lab-grid { grid-template-columns: 1fr 1fr; }
-  .lab-val { font-size: 22px; }
-  .lab-ref, .lab-trend { font-size: 12px; }
-
-  /* System status */
-  .sys-row { grid-template-columns: 1fr auto; gap: 4px; padding: 8px 12px; }
-  .sys-detail { grid-column: 1 / -1; font-size: 13px; }
-  .sys-name { font-size: 14px; }
-
-  /* Open items */
-  .open-item { grid-template-columns: 20px 1fr; }
-  .open-priority { margin-top: 6px; white-space: normal; }
-
-  /* QoL: single col */
-  .qol-grid { grid-template-columns: 1fr; }
-  .qol-status { font-size: 14px; }
-
-  /* Diagnoses */
-  .dx-name { font-size: 15px; }
-  .dx-detail { font-size: 13px; }
-
-  /* Medications table: shrink to fit */
-  .med-table { font-size: 12px; }
-  .med-table thead th { font-size: 10px; padding: 4px 6px; white-space: normal; }
-  .med-table tbody td { padding: 5px 6px; }
-  .med-table .dose-val { white-space: normal; font-size: 12px; }
-
-  /* Contact strip */
-  .contact-strip { padding: 14px 20px; gap: 16px; }
-  .contact-item .cv { font-size: 13px; }
-
-  /* Page footer */
-  .page-footer { padding: 8px 20px; flex-direction: column; align-items: flex-start; font-size: 10px; gap: 4px; }
-}
-</style>
-<style>
-/* ═══ DYSLEXIA-FRIENDLY TYPOGRAPHY ══════════════════════════
-   Consistent across all packet pages. Increases body line-
-   height, letter + word spacing, and bumps up any text that
-   was below 15px to ensure comfortable reading on all screens.
-════════════════════════════════════════════════════════════ */
-body {
-  line-height: 1.75;
-  letter-spacing: 0.02em;
-  word-spacing: 0.04em;
-}
-
-/* Universal paragraph and list baseline */
-p  { font-size: 17px; line-height: 1.8; }
-li { font-size: 16px; line-height: 1.8; }
-
-/* ── Luke at a Glance ── */
-.body p            { font-size: 17px !important; line-height: 1.8 !important; }
-.body p.lede       { font-size: 19px !important; }
-.body ul li        { font-size: 16px !important; line-height: 1.8 !important; }
-.allcaps           { font-size: 14px !important; line-height: 1.75 !important; }
-.verbatim p        { font-size: 16px !important; line-height: 1.85 !important; }
-.dx-detail         { font-size: 16px; line-height: 1.8; }
-.open-q            { font-size: 15px; line-height: 1.75; }
-.qol-status        { font-size: 15px; line-height: 1.75; }
-.contact-item .cv  { font-size: 15px; line-height: 1.75; }
-.identity-table td { font-size: 15px; line-height: 1.7; }
-.med-table tbody td { font-size: 14px; line-height: 1.7; }
-
-/* ── Data Visualization Suite ── */
-.cover p           { font-size: 18px; line-height: 1.8; }
-.blk p             { font-size: 17px; line-height: 1.8; }
-.blk ul li         { font-size: 16px; line-height: 1.8; }
-.adj-col ul li     { font-size: 15px; line-height: 1.75; }
-.open-callout p    { font-size: 16px; line-height: 1.8; }
-
-/* ── System Map ── */
-.node p            { font-size: 17px; line-height: 1.8; }
-.tension-item p    { font-size: 17px; line-height: 1.8; }
-.conflict-card p   { font-size: 17px; line-height: 1.8; }
-.conflict-card .cc-resolution { font-size: 15px; line-height: 1.75; }
-.wwnw-block ul li  { font-size: 16px; line-height: 1.8; }
-.prose p           { font-size: 17px; line-height: 1.8; }
-.m-card ul li      { font-size: 16px; line-height: 1.75; }
-.eol-cell ul li    { font-size: 15px; line-height: 1.75; }
-.sys-detail        { font-size: 15px; line-height: 1.75; }
-
-/* ── Diet & Medication Matrix ── */
-.food-col li       { font-size: 15px; line-height: 1.75; }
-
-/* ── What Could Help ── */
-.cb-section p      { font-size: 16px; line-height: 1.8; }
-.cb-section li     { font-size: 16px; line-height: 1.8; }
-.section-head .sh-deck { font-size: 17px; line-height: 1.8; }
-
-/* ── Verbatim Timeline ── */
-.feature p         { font-size: 17px !important; line-height: 1.85 !important; }
-.ldg-foot          { font-size: 15px; line-height: 1.75; }
-.dek               { font-size: 18px; line-height: 1.8; }
-
-/* Cover / shared deck text across pages */
-.cover .deck       { font-size: 18px; line-height: 1.8; }
-.cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
-</style>
+</div>
 </body>
 </html>
