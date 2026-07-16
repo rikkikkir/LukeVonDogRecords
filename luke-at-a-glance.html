@@ -50,11 +50,15 @@ td b,.drug{ color:var(--ink); font-weight:700; }
 
 /* diagnoses */
 .dx{ list-style:none; }
-.dx li{ padding:14px 0; border-bottom:1px solid var(--rule); }
+.dx li{ padding:20px 0 22px; border-bottom:1px solid var(--rule); }
 .dx li:last-child{ border-bottom:none; }
 .dx .dxh{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
-.dx .dxn{ color:var(--ink); font-weight:700; font-size:15px; }
-.dx .dxd{ font-size:14px; color:var(--ink-2); margin-top:5px; max-width:78ch; }
+.dx .dxn{ color:var(--ink); font-weight:700; font-size:15.5px; }
+.dx .dxd{ list-style:none; margin-top:10px; }
+.dx .dxd li{ padding:0 0 0 17px; border:none; position:relative; margin-bottom:6px; font-size:14px; color:var(--ink-2); line-height:1.5; max-width:82ch; }
+.dx .dxd li:last-child{ margin-bottom:0; }
+.dx .dxd li::before{ content:""; position:absolute; left:2px; top:9px; width:5px; height:5px; border-radius:50%; background:var(--muted); }
+.dx .dxd li b{ color:var(--ink); }
 
 /* status pills */
 .status{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:12px; white-space:nowrap; }
@@ -130,23 +134,45 @@ a.link{ color:var(--indigo); font-weight:700; }
   <ul class="dx">
     <li>
       <div class="dxh"><span class="dot" style="background:var(--clay)"></span><span class="dxn">Presumptive cardiac disease, Lasix-responsive</span> <span class="tag">Empiric</span></div>
-      <div class="dxd">300 mg/day furosemide. No echocardiogram performed (not accessible due to cost). Dose ≈ 8.4 mg/kg/day — at ACVIM Stage D threshold, without adjunctive cardiac meds (no pimobendan, ACE-I, or spironolactone). NT-proBNP, troponin, and taurine not measured.</div>
+      <ul class="dxd">
+        <li><b>300 mg/day furosemide</b> · ≈ 8.4 mg/kg/day — at ACVIM Stage D threshold</li>
+        <li>No echocardiogram performed (not accessible due to cost)</li>
+        <li>No adjunctive cardiac meds — no pimobendan / ACE-I / spironolactone</li>
+        <li>NT-proBNP, troponin, and taurine not measured</li>
+      </ul>
     </li>
     <li>
       <div class="dxh"><span class="dot" style="background:var(--blue)"></span><span class="dxn">Chronic kidney disease, IRIS Stage 2</span> <span class="tag">IRIS 2</span></div>
-      <div class="dxd">Creatinine 1.0 → 1.2 → 1.8 (Sep '24 – Sep '25). BUN 19 → 31 → 43 → 35. Phosphorus 5.1 (above IRIS target &lt;4.6). No urinalysis since Sep 2023; UPC ratio unknown. Furosemide + carprofen both nephrotoxic.</div>
+      <ul class="dxd">
+        <li>Creatinine <b>1.0 → 1.2 → 1.8</b> (Sep '24 – Sep '25)</li>
+        <li>BUN 19 → 31 → 43 → 35 · phosphorus <b>5.1</b> (above IRIS target &lt;4.6)</li>
+        <li>No urinalysis since Sep 2023; UPC ratio unknown</li>
+        <li>Furosemide + carprofen both nephrotoxic</li>
+      </ul>
     </li>
     <li>
       <div class="dxh"><span class="dot" style="background:var(--green)"></span><span class="dxn">Chronic hindlimb osteoarthritis</span> <span class="tag">Managed</span></div>
-      <div class="dxd">Multi-modal: carprofen 225 mg/day + amantadine 100 mg/day + Librela 20 mg SC as needed. Librela response good. Right rear confirmed (owner clarification Jun 2026; the Mar '26 clinic note recording left rear was a documentation error, per owner).</div>
+      <ul class="dxd">
+        <li>Multi-modal: carprofen 225 mg/day + amantadine 100 mg/day + Librela 20 mg SC as needed</li>
+        <li>Librela response good</li>
+        <li>Right rear confirmed (owner clarification Jun 2026; the Mar '26 "left rear" note was a documentation error, per owner)</li>
+      </ul>
     </li>
     <li>
       <div class="dxh"><span class="dot" style="background:var(--amber)"></span><span class="dxn">Mild hepatocellular changes</span> <span class="tag">Monitor</span></div>
-      <div class="dxd">ALT 46 → 121 → 128. Bilirubin spiked to 1.4 (Mar '25), resolved to 0.1 (Sep '25). Carprofen a possible contributor. Imaging deferred by the team in favor of quality-of-life focus.</div>
+      <ul class="dxd">
+        <li>ALT <b>46 → 121 → 128</b></li>
+        <li>Bilirubin spiked to 1.4 (Mar '25), resolved to 0.1 (Sep '25)</li>
+        <li>Carprofen a possible contributor; imaging deferred (quality-of-life focus)</li>
+      </ul>
     </li>
     <li>
       <div class="dxh"><span class="dot" style="background:var(--slate)"></span><span class="dxn">Benign cutaneous masses; GDV-risk breed</span></div>
-      <div class="dxd">2× FNA-confirmed lipomas (R axilla, R flank). ~2 mm dermal mass, R lateral cheek (stable; monitor, aspirate if changes). Simethicone 250 mg AM for bloat vigilance — deep-chested breed; pack-mate Sam died of GDV Feb 2023.</div>
+      <ul class="dxd">
+        <li>2× FNA-confirmed lipomas (R axilla, R flank)</li>
+        <li>~2 mm dermal mass, R lateral cheek — stable; monitor, aspirate if changes</li>
+        <li>Simethicone 250 mg AM for bloat vigilance — deep-chested breed; pack-mate Sam died of GDV Feb 2023</li>
+      </ul>
     </li>
   </ul>
 

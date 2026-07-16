@@ -838,5 +838,157 @@ li { font-size: 16px; line-height: 1.8; }
 .cover .deck       { font-size: 18px; line-height: 1.8; }
 .cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
 </style>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   CLEAN-WHITE MODERN RE-SKIN  ·  append-only override (wins by source order)
+   No HTML changed. No existing CSS edited. Data kept; advocacy prose hidden.
+   ═══════════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --cw-ink:      #1c1c24;
+  --cw-ink-2:    #3a3a44;
+  --cw-mute:     #6a6a78;
+  --cw-faint:    #8a8a96;
+  --cw-line:     #e4e4ea;
+  --cw-panel:    #f6f6f9;
+  --cw-indigo:   #3f3d6e;
+  --cw-blue:     #5f7fb0;
+  --cw-green:    #5f8a5a;
+  --cw-purple:   #856ba3;
+  --cw-amber:    #b5813f;
+  --cw-clay:     #a45a44;
+}
+
+/* ── Page shell ──────────────────────────────────────────────────────── */
+body {
+  background: #ececef !important;
+  font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  color: var(--cw-ink);
+}
+.wrap {
+  background: #fff;
+  border: 1px solid #d7d7e0;
+  border-radius: 6px;
+  box-shadow: 0 2px 18px rgba(30,30,50,.08);
+  margin: 24px auto;
+}
+
+/* ── Sidebar → clean light ───────────────────────────────────────────── */
+.doc-sidenav {
+  background: var(--cw-panel);
+  border-right: 1px solid var(--cw-line);
+  border-bottom-color: var(--cw-line);
+}
+.dsn-home {
+  background: var(--cw-indigo) !important;
+  color: #fff;
+  border-bottom: 2px solid var(--cw-indigo) !important;
+}
+.dsn-home:hover { background: #4a4880 !important; }
+.dsn-doc   { color: var(--cw-ink-2); border-bottom-color: var(--cw-line); }
+.dsn-group { color: var(--cw-faint); }
+.doc-sidenav a.dsn-link        { color: var(--cw-ink-2); }
+.doc-sidenav a.dsn-link:hover  { color: var(--cw-indigo); }
+.doc-sidenav a.dsn-link.active { background: #e9e9f2; color: var(--cw-indigo); }
+
+/* ── Cover + section-header bands → white ────────────────────────────── */
+.cover { background: #fff !important; border-bottom: 1px solid var(--cw-line); }
+.cover .ey { color: var(--cw-indigo); }
+.cover h1 { color: var(--cw-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 400; }
+.cover h1 em { color: var(--cw-blue); font-weight: 700; }
+
+.sec-head { color: var(--cw-ink); border-bottom: 1px solid var(--cw-line); }
+.sh-food, .sh-matrix, .sh-totals, .sh-gaps { background: #fff !important; }
+.sec-head .sh-ey { color: var(--cw-indigo); }
+.sec-head .sh-ey::before { background: var(--cw-blue); }
+.sec-head h2 { color: var(--cw-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 700; }
+
+/* ── HIDE interpretive / advocacy prose (facts remain in matrix/tables) ─ */
+.cover .deck,
+.sec-head .deck,
+.gap-box,
+.gap-watch { display: none !important; }
+
+/* ── Nutrient stat grid ──────────────────────────────────────────────── */
+.nutrient-grid { background: var(--cw-line); border: 1px solid var(--cw-line); }
+.ng-cell { background: #fff; }
+.ng-k, .ng-note { color: var(--cw-mute); }
+.ng-v { color: var(--cw-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 700; }
+.ng-v small { color: var(--cw-mute); }
+.ng-cell.watch { background: #faf6ee; }
+.ng-cell.watch .ng-v { color: var(--cw-amber); }
+.ng-cell.good  { background: #f0f5ef; }
+.ng-cell.good .ng-v { color: var(--cw-green); }
+
+/* ── Food card ───────────────────────────────────────────────────────── */
+.food-card { background: #fff; border: 1px solid var(--cw-line); border-radius: 6px; box-shadow: 0 1px 3px rgba(30,30,50,.05); }
+.food-head { background: #fbfbfd; border-bottom: 1px solid var(--cw-line); }
+.food-name { color: var(--cw-ink); }
+.food-sub  { color: var(--cw-mute); }
+.food-link { color: var(--cw-blue); }
+.food-body { background: var(--cw-line); }
+.food-col  { background: #fff; }
+.food-col h4 { color: var(--cw-mute); border-bottom-color: var(--cw-line); }
+.food-col li { color: var(--cw-ink-2); }
+.food-col li::before { color: var(--cw-blue); }
+.food-col li strong { color: var(--cw-ink); }
+.food-col li.good  { color: var(--cw-green); }
+.food-col li.watch { color: var(--cw-amber); }
+.food-col li.flag  { color: var(--cw-clay); }
+
+/* ── Interaction matrix ──────────────────────────────────────────────── */
+table.matrix th        { background: var(--cw-panel) !important; color: var(--cw-mute) !important; border-color: var(--cw-line); }
+table.matrix th.row-h  { background: var(--cw-panel) !important; color: var(--cw-ink-2) !important; }
+table.matrix th.sys-cardiac { color: var(--cw-clay)   !important; }
+table.matrix th.sys-renal   { color: var(--cw-blue)   !important; }
+table.matrix th.sys-hepatic { color: var(--cw-amber)  !important; }
+table.matrix th.sys-msk     { color: var(--cw-green)  !important; }
+table.matrix th.sys-gi      { color: var(--cw-purple) !important; }
+
+table.matrix td { border-color: var(--cw-line); }
+table.matrix td.row-label { background: #fff; color: var(--cw-ink); }
+table.matrix tbody tr:nth-child(even) td.row-label { background: var(--cw-panel); }
+table.matrix td.row-label span { color: var(--cw-mute); }
+table.matrix td.row-label .dose { color: var(--cw-indigo); background: #eeeef5; }
+
+/* semantic cell colours kept (meaning) but softened to the clean palette */
+.c-stress   { background: #faf0ee; color: var(--cw-clay); }
+.c-moderate { background: #faf4ea; color: var(--cw-amber); }
+.c-benefit  { background: #f0f5ef; color: var(--cw-green); }
+.c-neutral  { background: var(--cw-panel); color: var(--cw-mute); }
+.c-gap      { background: #f3f0f7; color: var(--cw-purple); }
+.c-unknown  { background: var(--cw-panel); color: var(--cw-faint); }
+
+/* matrix group-divider rows → light tinted labels */
+table.matrix tr.section-row td, table.matrix tr.section-row th { background: #eeeef5 !important; color: var(--cw-indigo) !important; border-color: var(--cw-line); }
+table.matrix tr.section-row.sr-food  td { background: #faf4ea !important; color: var(--cw-amber)  !important; }
+table.matrix tr.section-row.sr-meds  td { background: #faf0ee !important; color: var(--cw-clay)   !important; }
+table.matrix tr.section-row.sr-supps td { background: #f0f5ef !important; color: var(--cw-green)  !important; }
+table.matrix tr.section-row.sr-gaps  td { background: #f3f0f7 !important; color: var(--cw-purple) !important; }
+
+/* ── Stack totals cards ──────────────────────────────────────────────── */
+.total-card { background: #fff; border: 1px solid var(--cw-line); border-radius: 6px; box-shadow: 0 1px 3px rgba(30,30,50,.05); }
+.total-card.warn  { background: #fff; border-left: 4px solid var(--cw-clay); }
+.total-card.ok    { border-left: 4px solid var(--cw-green); }
+.total-card.watch { border-left: 4px solid var(--cw-amber); }
+.tc-label { color: var(--cw-mute); }
+.tc-val   { color: var(--cw-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 700; }
+.total-card.warn  .tc-val { color: var(--cw-clay); }
+.total-card.watch .tc-val { color: var(--cw-amber); }
+.tc-note  { color: var(--cw-ink-2); }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+footer { background: #fff; border-top-color: var(--cw-line); color: var(--cw-mute); }
+footer a { color: var(--cw-blue); }
+
+/* ── Print: keep white + hidden prose ────────────────────────────────── */
+@media print {
+  body, .wrap { background: #fff !important; box-shadow: none !important; border: none !important; margin: 0 !important; }
+  .sh-food, .sh-matrix, .sh-totals, .sh-gaps, .cover { background: #fff !important; }
+  .cover .deck, .sec-head .deck, .gap-box, .gap-watch { display: none !important; }
+}
+</style>
 </body>
 </html>
