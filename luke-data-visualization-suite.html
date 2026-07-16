@@ -212,6 +212,7 @@ main { padding: 0 0 100px; min-width: 0; }
   <div class="ey">Clinical Data Reference · Luke VonDog · 12 yr Blue Weimaraner</div>
   <h2>Every number.<br><em>What it means. What moves it.</em></h2>
   <p>All of Luke's laboratory data charted over time, with context on what each marker reflects physiologically, how it is currently impacting Luke, and how the numbers move.</p>
+  <p class="ai-note">The lab values, dates, and reference ranges here are transcribed from Luke's records. The physiological explanations, the "how it is impacting Luke" interpretations, and any "how to adjust / what would help" suggestions are <strong>AI-generated and speculative</strong> — background for discussion with Luke's veterinary team, not medical advice.</p>
   <div class="legend">
     <span><span class="swatch" style="background:oklch(78% 0.05 145);opacity:.5;"></span>Reference range (lab)</span>
     <span><span class="swatch" style="background:#8a6a1e;border-radius:0;height:2px;width:24px;"></span>Clinical threshold (e.g. IRIS target)</span>
@@ -1859,7 +1860,7 @@ li { font-size: 16px; line-height: 1.8; }
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
 :root{ --cink:#1c1c24; --cmut:#6a6a78; --cline:#d7d7e0; --crule:#e4e4ea; --cshade:#f6f6f9; }
 body{ background:#ececef !important; color:var(--cink) !important; font-family:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif !important; }
-.shell{ max-width:1080px !important; background:#fff !important; box-shadow:0 2px 18px rgba(30,30,50,.08) !important; border:1px solid var(--cline); border-radius:6px; margin:24px auto !important; }
+.shell{ max-width:none !important; background:#fff !important; box-shadow:none !important; border:none !important; border-radius:0 !important; margin:0 !important; }
 .side{ background:var(--cshade) !important; color:var(--cink) !important; border-right:1px solid var(--crule) !important; }
 .side .brand{ border-bottom:1px solid var(--crule) !important; }
 .side .brand .ey{ color:#3f3d6e !important; font-weight:700 !important; }
@@ -1895,7 +1896,18 @@ body{ background:#ececef !important; color:var(--cink) !important; font-family:"
 .data-tbl td{ border-bottom:1px solid var(--crule) !important; color:#3a3a44 !important; }
 .data-tbl td.d, .data-tbl td.v{ color:var(--cink) !important; }
 .gap-bar-wrap{ border:1px solid var(--crule) !important; } .gap-fill{ background:#5f7fb0 !important; }
-.prose-grid, .adjust{ display:none !important; }
+/* restored 2026-07-16: per-marker context is shown again (what it measures, how it
+   impacts Luke, how the numbers move / what to watch). Interpretive + adjustment
+   blocks are flagged AI-generated & speculative. */
+.prose-grid{ display:grid !important; }
+.adjust{ display:block !important; background:#fff !important; border:1px solid var(--crule) !important; border-left:4px solid #856ba3 !important; box-shadow:none !important; }
+.adjust .adj-title{ color:#6a4e86 !important; }
+.adj-col h5{ min-height:2.5em; display:flex; align-items:flex-end; } /* align lists across columns despite 1- vs 2-line headings */
+.adj-title::after{ content:" · AI-generated, speculative"; font-weight:400; font-style:italic; color:var(--cmut); font-size:12px; letter-spacing:0; }
+.adj-col.locked h5{ color:#8a6a1e !important; border-color:#e6dcbf !important; }
+.adj-col.locked ul{ color:#8a6a1e !important; }
+.ai-note{ max-width:none; margin:16px 0 4px; padding:12px 16px; background:#fbf7ef; border:1px solid #ece4d3; border-left:4px solid #b5813f; border-radius:0 6px 6px 0; font-size:14px; color:#3a3a44; line-height:1.55; }
+.ai-note strong{ color:#8a6a1e; }
 </style>
 </body>
 </html>

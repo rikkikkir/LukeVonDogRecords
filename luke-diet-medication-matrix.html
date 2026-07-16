@@ -644,6 +644,8 @@ footer a { color: var(--accent-soft); text-decoration: none; }
   </div>
   <div class="sec-body">
 
+  <div class="gap-ai-note">These "what would help" suggestions are <strong>AI-generated and speculative only</strong> — starting points for discussion with Luke's veterinary and nutrition team, not medical advice or a treatment plan. The doses, products, and reasoning have not been reviewed by a clinician.</div>
+
   <div class="gap-box">
     <div class="gap-label">⚠ Named Gap — Adjunctive Cardiac Medications</div>
     <p><strong>Standard ACVIM-aligned care for a dog at Luke's furosemide dose would include pimobendan</strong> (improves contractility so less diuretic is needed), <strong>an ACE inhibitor</strong> (reduces preload/afterload), and potentially <strong>spironolactone</strong> (supplemental diuretic allowing furosemide reduction). Luke has none of these. This is not a criticism of his care team — it may be a deliberate decision given his CKD (ACE inhibitors require monitoring in Stage 2 CKD) and his quality-of-life focus. But it is a gap worth naming explicitly to any new provider.</p>
@@ -905,11 +907,13 @@ body {
 .sec-head .sh-ey::before { background: var(--cw-blue); }
 .sec-head h2 { color: var(--cw-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 700; }
 
-/* ── HIDE interpretive / advocacy prose (facts remain in matrix/tables) ─ */
+/* ── Section decks stay hidden; "What Would Help Most" recommendations restored
+      2026-07-16 (flagged AI-generated & speculative below) ─────────────────── */
 .cover .deck,
-.sec-head .deck,
-.gap-box,
-.gap-watch { display: none !important; }
+.sec-head .deck { display: none !important; }
+.gap-box, .gap-watch { display: block !important; }
+.gap-ai-note { margin: 4px 0 20px; padding: 12px 16px; background: #fbf7ef; border: 1px solid #ece4d3; border-left: 4px solid #b5813f; border-radius: 0 6px 6px 0; font-size: 14px; color: #3a3a44; line-height: 1.55; }
+.gap-ai-note strong { color: #8a6a1e; }
 
 /* ── Nutrient stat grid ──────────────────────────────────────────────── */
 .nutrient-grid { background: var(--cw-line); border: 1px solid var(--cw-line); }
@@ -989,6 +993,10 @@ footer a { color: var(--cw-blue); }
   .sh-food, .sh-matrix, .sh-totals, .sh-gaps, .cover { background: #fff !important; }
   .cover .deck, .sec-head .deck, .gap-box, .gap-watch { display: none !important; }
 }
+</style>
+<style id="fw-override">/* full-width override 2026-07-16 */
+.sheet,.wrap,.shell,.page{ max-width:none !important; }
+.sheet,.wrap,.shell{ margin-left:0 !important; margin-right:0 !important; box-shadow:none !important; border-radius:0 !important; }
 </style>
 </body>
 </html>
