@@ -3,831 +3,415 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Luke VonDog — New Practitioner Packet</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<title>Luke VonDog — Care Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 <style>
+/* ═══ LUKE-BASE — canonical tokens · do not edit per-file ═══ */
+:root{
+  --paper:#f6f1e6; --paper-2:#efe9da; --paper-card:#fffdf8; --paper-soft:#faf6ec;
+  --ink:#1a1916; --ink-2:#353029; --ink-mute:#514a3d;
+  --rule:#d8cfba; --rule-soft:#e7dec9;
+  --accent:#2a4a52; --accent-deep:#1d343a; --accent-soft:#6e8e92;
+  --teal-mid:#3a6068; --moss:#3f5224; --plum:#4a2f4e; --ochre:#7a5c18; --burgundy:#6b2a2a; --sage:#6e8e92;
+  --terracotta:#9c4f2a; --spruce:#2f5d4e; --steel:#3f5a72; --indigo:#43457e;
+  --sidebar:264px; --content-max:1140px; --content-max-wide:1500px; --pad:20px;
+  /* per-page theme (hub = teal) */
+  --page-accent:#2a4a52; --page-accent-deep:#1d343a; --page-tint:#e9f0f0;
+}
+@media (min-width:900px){ :root{ --pad:40px; } }
 
-/* ─── Design tokens ─────────────────────────────────── */
-:root {
-  --paper:       #f6f1e6;
-  --paper-2:     #ede8d8;
-  --paper-card:  #fdfaf3;
-  --ink:         #1a1916;
-  --ink-2:       #3a332a;
-  --ink-mute:    #3d3830;
-  --rule:        #d4cab4;
-  --accent:      #2a4a52;
-  --accent-deep: #1d343a;
-  --accent-soft: #6e8e92;
-  --burgundy:    #6b2a2a;
-  --ochre:       #7a5c18;
-  --moss:        #3f5224;
-  --plum:        #4a2f4e;
-  --teal-mid:    #3a6068;
-  /* PASS 1 — single padding token, scaled per breakpoint */
-  --pad: 20px;
+/* ═══ LUKE-BASE — legibility system (Atkinson + Newsreader; real floors) ═══ */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif;
+  font-size:17px; line-height:1.7; letter-spacing:.012em; word-spacing:.05em;
+  color:var(--ink); background:var(--paper);
+  text-align:left;
+}
+h1,h2,h3,h4{ font-family:"Newsreader", Georgia, serif; line-height:1.12; }
+p,li{ font-size:17px; line-height:1.75; max-width:66ch; }   /* body/list floor + measure cap */
+a{ color:var(--page-accent); }
+.skip{ position:absolute; left:-999px; top:0; background:var(--page-accent-deep); color:#fff; padding:10px 16px; border-radius:0 0 8px 0; z-index:999; }
+.skip:focus{ left:0; }
+:focus-visible{ outline:3px solid var(--page-accent-soft, #6e8e92); outline-offset:2px; }
+@media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+
+/* ═══ LUKE-BASE — uniform nav (.lnav) ═══ */
+.lnav{ background:var(--page-accent-deep); color:#e8eeec; position:sticky; top:0; z-index:600;
+  font-family:"Atkinson Hyperlegible",system-ui,sans-serif; }
+.lnav-bar{ display:flex; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid rgba(255,255,255,.12); }
+.lnav-home{ color:#fff; text-decoration:none; font-size:14px; font-weight:700; background:var(--page-accent); padding:9px 13px; border-radius:7px; white-space:nowrap; }
+.lnav-home:hover{ filter:brightness(1.14); }
+.lnav-title{ font-family:"Newsreader",serif; font-size:18px; color:#fff; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lnav-toggle{ font:inherit; font-size:14px; font-weight:700; color:#fff; background:transparent; border:1.5px solid rgba(255,255,255,.4); border-radius:7px; padding:8px 13px; cursor:pointer; }
+.lnav-panel{ display:none; padding:8px 10px 16px; max-height:72vh; overflow-y:auto; }
+.lnav.open .lnav-panel{ display:block; }
+.lnav-grp{ font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.66); padding:14px 10px 6px; }
+.lnav-sec,.lnav-doc{ display:flex; align-items:center; gap:9px; padding:9px 10px; border-radius:7px; color:rgba(255,255,255,.9); text-decoration:none; font-size:15px; line-height:1.35; }
+.lnav-sec:hover,.lnav-doc:hover{ background:rgba(255,255,255,.1); color:#fff; }
+.lnav-sec.active{ background:rgba(255,255,255,.16); color:#fff; font-weight:700; }
+.lnav-doc .dot{ width:10px; height:10px; border-radius:50%; flex:none; background:var(--doc-accent,#fff); }
+.lnav-doc .n{ font-family:"Newsreader",serif; opacity:.7; width:1.5em; text-align:center; }
+.lnav-doc.current{ background:rgba(255,255,255,.15); color:#fff; font-weight:700; box-shadow:inset 3px 0 0 var(--doc-accent); }
+.lnav-updown{ display:flex; gap:8px; padding:14px 10px 0; }
+.lnav-updown a{ flex:1; text-align:center; font-size:13px; font-weight:700; color:#fff; text-decoration:none; border:1.5px solid rgba(255,255,255,.3); border-radius:7px; padding:10px 6px; }
+.lnav-updown a:hover{ background:rgba(255,255,255,.1); }
+@media (min-width:900px){
+  body{ padding-left:var(--sidebar); }
+  .lnav{ position:fixed; top:0; left:0; bottom:0; width:var(--sidebar); display:flex; flex-direction:column; border-right:1px solid rgba(255,255,255,.08); }
+  .lnav-bar{ flex-wrap:wrap; }
+  .lnav-toggle{ display:none; }
+  .lnav-title{ flex-basis:100%; white-space:normal; font-size:20px; margin-top:6px; }
+  .lnav-panel{ display:block; flex:1; }
+}
+@media print{ .lnav{ display:none!important; } body{ padding-left:0!important; } }
+
+/* ═══ INDEX — fresh modern layout ═══ */
+.wrap{ max-width:var(--content-max); margin:0 auto; padding:0 var(--pad) 64px; }
+
+/* hero */
+.hero{ padding:40px var(--pad) 30px; max-width:var(--content-max); margin:0 auto; }
+.hero-eyebrow{ font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--page-accent); }
+.hero-top{ display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; margin-top:12px; }
+.hero h1{ font-weight:300; font-size:clamp(40px,9vw,74px); letter-spacing:-.02em; color:var(--ink); }
+.hero h1 b{ font-weight:600; }
+.hero-sub{ font-family:"Newsreader",serif; font-size:clamp(19px,4vw,25px); color:var(--ink-2); line-height:1.3; margin-top:6px; max-width:22ch; }
+.hero-photo{ width:132px; height:132px; border-radius:16px; object-fit:cover; object-position:center top; flex:none; box-shadow:0 6px 22px rgba(0,0,0,.16); }
+.ataglance{ margin-top:24px; background:var(--page-accent-deep); color:#fff; border-radius:12px; padding:16px 20px; display:flex; flex-wrap:wrap; gap:6px 18px; align-items:baseline; }
+.ataglance .k{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-soft); width:100%; }
+.ataglance .who{ font-size:16px; color:#dbe8e6; }
+.ataglance .one{ font-size:18px; font-weight:700; color:#fff; }
+.ataglance .one b{ color:#ffd9a8; }
+.idline{ margin-top:14px; font-size:15px; color:var(--ink-mute); line-height:1.6; }
+.idline b{ color:var(--ink); font-weight:700; }
+
+/* section shell */
+.sec{ max-width:var(--content-max); margin:0 auto; padding:0 var(--pad); }
+.sec-h{ display:flex; align-items:baseline; gap:12px; margin:44px 0 16px; padding-bottom:10px; border-bottom:3px solid var(--sec-accent,var(--page-accent)); }
+.sec-h .num{ font-family:"Newsreader",serif; font-size:26px; color:var(--sec-accent,var(--page-accent)); }
+.sec-h h2{ font-weight:500; font-size:clamp(24px,5vw,32px); color:var(--ink); }
+
+/* safety */
+.safety{ background:var(--burgundy); color:#fff; border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(107,42,42,.28); }
+.safety-lead{ padding:22px 22px 20px; display:flex; gap:16px; align-items:flex-start; }
+.safety-badge{ flex:none; width:38px; height:38px; border-radius:50%; border:2.5px solid #fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; }
+.safety-lead h3{ font-family:"Atkinson Hyperlegible",sans-serif; font-size:clamp(21px,5vw,27px); font-weight:700; line-height:1.2; }
+.safety-lead .sub{ font-size:16px; color:#f2dada; margin-top:7px; line-height:1.5; }
+.safety-lead .act{ font-size:16px; font-weight:700; margin-top:11px; padding-top:11px; border-top:1px solid rgba(255,255,255,.28); }
+.safety-lead .act b{ color:#ffd9a8; }
+.safety-know{ background:#faf1ee; color:var(--ink-2); padding:18px 22px; }
+.safety-know .kl{ font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--burgundy); margin-bottom:9px; }
+.safety-know ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+.safety-know li{ font-size:16px; line-height:1.55; padding-left:16px; position:relative; max-width:none; }
+.safety-know li::before{ content:""; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%; background:var(--burgundy); }
+.safety-know li b{ color:var(--ink); }
+.noadd{ margin-top:12px; font-size:15px; font-weight:700; color:#6b2a2a; }
+
+/* goals */
+.goals{ background:var(--spruce); color:#fff; border-radius:14px; overflow:hidden; margin-top:18px; }
+.goals-in{ padding:20px 22px 22px; }
+.goals .who-luke{ font-size:16px; color:#dcebe3; margin-bottom:14px; }
+.goals .who-luke b{ color:#fff; }
+.goals h3{ font-family:"Atkinson Hyperlegible",sans-serif; font-size:20px; font-weight:700; }
+.directive{ background:#eef4ee; color:var(--ink-2); border-radius:10px; padding:16px 18px; margin-top:12px; }
+.directive .lead{ font-size:17px; color:var(--ink); }
+.directive .lead b{ color:#233f30; }
+.directive ul{ list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+.directive li{ font-size:16px; padding-left:24px; position:relative; max-width:none; }
+.directive li::before{ content:"\2713"; position:absolute; left:0; color:var(--spruce); font-weight:800; }
+.directive li b{ color:#233f30; }
+
+/* numbers row */
+.nums{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+.num{ background:var(--paper-card); border:1px solid var(--rule); border-left:4px solid var(--accent-soft); border-radius:8px; padding:10px 12px; }
+.num.hi{ border-left-color:var(--burgundy); }
+.num .nk{ font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-mute); }
+.num .nk .hchip{ font-size:11px; color:#fff; background:var(--burgundy); border-radius:3px; padding:1px 5px; margin-left:4px; }
+.num .nv{ font-family:"Newsreader",serif; font-size:26px; color:var(--ink); line-height:1.1; }
+.num.hi .nv{ color:var(--burgundy); }
+.num .nd{ font-size:13px; color:var(--ink-2); }
+.num .nd .up{ color:var(--burgundy); font-weight:700; }
+.stale{ font-size:14px; color:var(--burgundy); background:#f6ece9; border-left:3px solid var(--burgundy); padding:9px 12px; border-radius:0 6px 6px 0; margin-top:12px; line-height:1.5; max-width:none; }
+
+/* router */
+.router-grid{ display:grid; grid-template-columns:1fr; gap:16px; }
+.rlane{ background:var(--paper-card); border:1px solid var(--rule); border-top:6px solid var(--lane); border-radius:12px; padding:18px 20px 20px; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.rlane .rk{ font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--lane); }
+.rlane h3{ font-size:23px; font-weight:600; color:var(--ink); margin:3px 0 12px; }
+.rlane ul{ list-style:none; margin-bottom:14px; }
+.rlane li{ font-size:16px; line-height:1.5; padding-left:18px; position:relative; margin-bottom:7px; max-width:none; }
+.rlane li::before{ content:""; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%; background:var(--lane); }
+.rlane .rgo{ display:flex; flex-wrap:wrap; gap:8px; }
+.rlane .rgo a{ display:inline-flex; align-items:center; gap:7px; text-decoration:none; font-size:14px; font-weight:700; color:var(--ink); background:var(--paper-2); border:1px solid var(--rule); border-radius:20px; padding:7px 13px; }
+.rlane .rgo a:hover{ background:#fff; }
+.rlane .rgo a .chip{ width:10px; height:10px; border-radius:50%; background:var(--c); flex:none; }
+
+/* bozeman band */
+.boz{ background:#eaeff3; border:1px solid #c4d2df; border-left:5px solid var(--steel); border-radius:10px; padding:16px 18px; margin-top:16px; display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; }
+.boz .k{ width:100%; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--steel); }
+.boz .t{ font-size:16px; color:var(--ink-2); max-width:none; }
+.boz .t b{ color:var(--ink); }
+.boz a{ color:var(--steel); font-weight:700; text-decoration:none; }
+
+/* doc grid */
+.docs{ display:grid; grid-template-columns:1fr; gap:12px; }
+a.doc{ display:flex; gap:0; text-decoration:none; color:inherit; border:1px solid var(--rule); border-radius:10px; overflow:hidden; background:var(--dbg); transition:box-shadow .12s, transform .08s; box-shadow:0 1px 6px rgba(0,0,0,.05); }
+a.doc:hover{ box-shadow:0 5px 16px rgba(0,0,0,.12); }
+a.doc:active{ transform:scale(.99); }
+a.doc .bar{ width:8px; background:var(--dc); flex:none; }
+a.doc .body{ padding:15px 18px; flex:1; min-width:0; }
+a.doc .dt{ display:flex; align-items:baseline; gap:10px; }
+a.doc .dn{ font-family:"Newsreader",serif; font-size:28px; color:var(--dc); line-height:1; flex:none; }
+a.doc .dttl{ font-family:"Newsreader",serif; font-size:22px; font-weight:600; color:var(--ink); }
+a.doc .dsub{ font-size:15px; color:var(--ink-2); margin-top:5px; max-width:64ch; }
+a.doc .dtag{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--burgundy); margin-top:6px; }
+a.doc .arrow{ align-self:center; padding:0 18px; font-size:22px; color:var(--dc); }
+
+/* contacts */
+.contacts{ display:grid; grid-template-columns:1fr; gap:12px; }
+.contact{ background:var(--paper-card); border:1px solid var(--rule); border-top:3px solid var(--page-accent); border-radius:8px; padding:16px 18px; }
+.contact .ck{ font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--page-accent); margin-bottom:8px; }
+.contact .cv{ font-size:16px; color:var(--ink-2); line-height:1.7; max-width:none; }
+.contact .cv b{ color:var(--ink); }
+.contact .cv a{ color:var(--page-accent); font-weight:700; text-decoration:none; }
+.foot{ margin-top:44px; padding-top:18px; border-top:1px solid var(--rule); font-size:14px; color:var(--ink-mute); }
+
+@media (min-width:680px){
+  .nums{ grid-template-columns:repeat(3,1fr); }
+  .router-grid{ grid-template-columns:repeat(3,1fr); }
+  .docs{ grid-template-columns:1fr 1fr; }
+  .contacts{ grid-template-columns:repeat(3,1fr); }
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  -webkit-font-smoothing: antialiased;
-  /* PASS 1 — base 16px so clamp() works cleanly on mobile */
-  font-size: 16px;
-}
-
-body {
-  background: #111c1a;
-  color: var(--ink);
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.75;
-  letter-spacing: 0.02em;
-  word-spacing: 0.04em;
-}
-
-.shell {
-  max-width: 1080px;
-  margin: 0 auto;
-  width: 100%;
-  box-shadow: 0 0 100px rgba(0,0,0,.65);
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 2 — HEADER
-   Mobile: photo small + stacked below text, padding 20px.
-   Desktop: side-by-side, larger photo.
-══════════════════════════════════════════════════════ */
-
-.header {
-  background: var(--accent-deep);
-  padding: 32px var(--pad) 28px;
-}
-
-.header-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-/* Photo: small on mobile, pushed to second position */
-.header-photo {
-  order: -1;           /* photo first on mobile for visual anchor */
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 8px;
-  border: 2px solid rgba(255,255,255,.18);
-  flex: none;
-}
-
-.header h1 {
-  font-family: "Newsreader", serif;
-  font-weight: 300;
-  font-size: clamp(32px, 9.5vw, 68px);
-  line-height: .97;
-  letter-spacing: -.03em;
-  color: #fff;
-  margin-bottom: 14px;
-  text-wrap: pretty;
-}
-
-.header h1 span {
-  display: block;
-  font-weight: 400;
-  color: #8bbbb6;
-}
-
-.header-deck {
-  font-size: clamp(17px, 4.8vw, 20px);
-  line-height: 1.75;
-  color: #c8dada;
-  text-wrap: pretty;
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 3 — PATIENT BAND
-   Mobile: vertical stack, no nowrap, smaller text.
-   Desktop: 3-col row with dividers.
-══════════════════════════════════════════════════════ */
-
-.patient-band {
-  background: #1c2f35;
-  padding: 18px var(--pad);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.pb-field {
-  font-family: system-ui, -apple-system, sans-serif;
-  /* PASS 3 — NO white-space: nowrap; let everything wrap */
-  font-size: 16px;
-  color: #cfe0de;
-  line-height: 1.7;
-}
-
-.pb-field strong {
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.pb-field .pk {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: #7a9c9a;
-  margin-bottom: 3px;
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 4 — CRITICAL STRIP
-   Mobile: single column, aligned-start bullets so
-   text wraps under itself, not under the "!" icon.
-══════════════════════════════════════════════════════ */
-
-.critical {
-  background: var(--burgundy);
-  padding: 16px var(--pad);
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-
-.critical-item {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: clamp(14px, 3.8vw, 16px);
-  font-weight: 500;
-  color: #fff;
-  line-height: 1.45;
-  display: flex;
-  align-items: flex-start;   /* icon anchors to top of text */
-  gap: 10px;
-}
-
-.critical-item::before {
-  content: "!";
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  min-width: 18px;  /* prevents squish */
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,.55);
-  font-size: 11px;
-  font-weight: 700;
-  margin-top: 1px;  /* optical alignment with cap-height */
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 5 — DOC ROWS
-   Mobile: flex row (bar | body | arrow), generous touch
-   targets (min-height 96px), proportionate type.
-══════════════════════════════════════════════════════ */
-
-.doc-list-section {
-  background: var(--paper);
-  padding: 16px var(--pad) 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-a.doc-row {
-  display: flex;
-  align-items: stretch;
-  text-decoration: none;
-  color: inherit;
-  border: 1.5px solid var(--rule);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: background .12s, box-shadow .12s, transform .08s;
-  min-height: 88px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.07);
-}
-
-a.doc-row:hover { box-shadow: 0 4px 14px rgba(0,0,0,.12); }
-a.doc-row:hover .dr-title { color: var(--accent); }
-a.doc-row:active { transform: scale(0.975); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-
-/* color variants */
-a.doc-row.d01 { --bar: var(--teal-mid); --num: var(--teal-mid); background: #eef5f3; }
-a.doc-row.d01:hover { background: #e2eeec; }
-a.doc-row.d02 { --bar: var(--moss);     --num: var(--moss);     background: #eef4e8; }
-a.doc-row.d02:hover { background: #e2eddc; }
-a.doc-row.d03 { --bar: var(--plum);     --num: var(--plum);     background: #f2eef4; }
-a.doc-row.d03:hover { background: #e8e2ec; }
-a.doc-row.d04 { --bar: var(--ochre);    --num: var(--ochre);    background: #f5f2e3; }
-a.doc-row.d04:hover { background: #eae7d6; }
-a.doc-row.d05 { --bar: var(--burgundy); --num: var(--burgundy); background: #f5efee; }
-a.doc-row.d05:hover { background: #ece3e2; }
-
-.dr-bar {
-  background: var(--bar);
-  width: 7px;
-  min-width: 7px;
-  align-self: stretch;
-  flex: none;
-}
-
-.dr-body {
-  flex: 1;
-  min-width: 0;             /* prevents flex child overflow */
-  padding: 18px 12px 18px 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.dr-title-row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.dr-num {
-  font-family: "Newsreader", serif;
-  font-weight: 500;
-  font-size: clamp(22px, 6vw, 34px);
-  line-height: 1;
-  color: var(--num);
-  flex: none;
-}
-
-.dr-title {
-  font-family: "Newsreader", serif;
-  font-weight: 600;
-  font-size: clamp(20px, 5.2vw, 28px);
-  letter-spacing: -.006em;
-  line-height: 1.2;
-  color: var(--ink);
-  transition: color .12s;
-  text-wrap: pretty;
-}
-
-.dr-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.dr-bullets li {
-  font-size: 17px;
-  color: var(--ink);
-  line-height: 1.75;
-  padding-left: 13px;
-  position: relative;
-}
-
-.dr-bullets li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 7px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-}
-
-.dr-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  min-width: 48px;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--num);
-  background: rgba(0,0,0,.05);  /* fallback */
-  background: color-mix(in srgb, var(--bar) 14%, transparent);
-  border-left: 1px solid var(--rule);
-  flex: none;
-  transition: background .12s;
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 6 — CONTACTS + FOOTER
-   Mobile: single-column cards, tighter padding.
-   Desktop: 3-col grid restored.
-══════════════════════════════════════════════════════ */
-
-.contacts-section {
-  background: var(--paper);
-  padding: 0 0 36px;
-  border-top: 2px solid var(--rule);
-}
-
-.contacts-head {
-  background: var(--accent-deep);
-  padding: 30px var(--pad) 22px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.ch-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: #8bbbb6;
-  margin-bottom: 8px;
-}
-
-.contacts-head h2 {
-  font-family: "Newsreader", serif;
-  font-weight: 300;
-  font-size: clamp(28px, 7vw, 40px);
-  letter-spacing: -.025em;
-  line-height: 1.05;
-  color: #fff;
-}
-
-.ch-note {
-  font-size: 12px;
-  font-weight: 600;
-  color: #8ab3b0;
-  line-height: 1.6;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.contacts-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0 var(--pad);
-}
-
-.contact {
-  background: var(--paper-card);
-  border: 1px solid var(--rule);
-  border-top: 3px solid var(--accent);
-  border-radius: 0 0 5px 5px;
-  padding: 18px 18px;
-}
-
-.contact .ck {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-
-.contact .cv {
-  font-size: 16px;
-  color: var(--ink-2);
-  line-height: 1.7;
-}
-
-.contact .cv b { color: var(--ink); font-weight: 600; }
-
-.contact .cv a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.contact .cv a:hover {
-  color: var(--accent-deep);
-  text-decoration: underline;
-}
-
-.footer {
-  background: var(--paper-2);
-  border-top: 1px solid var(--rule);
-  padding: 14px var(--pad);
-  font-size: 12px;
-  color: var(--ink-mute);
-  text-align: center;
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PASS 6 cont. — DESKTOP BREAKPOINT ≥ 680px
-   Restores the wide-screen layout without touching mobile.
-══════════════════════════════════════════════════════ */
-
-@media (min-width: 680px) {
-  :root { --pad: 56px; }
-
-  /* Header: restore side-by-side */
-  .header { padding-top: 50px; padding-bottom: 36px; }
-  .header-inner { flex-direction: row; align-items: center; justify-content: space-between; }
-  .header-photo { order: 0; width: 150px; height: 150px; }
-
-  /* Patient band: 3-col row */
-  .patient-band {
-    flex-direction: row;
-    gap: 0;
-    align-items: flex-start;
-  }
-  .pb-field {
-    flex: 1;
-    font-size: 15px;
-  }
-  .pb-field strong { font-size: 16px; }
-  .pb-field + .pb-field {
-    border-left: 1px solid rgba(255,255,255,.1);
-    padding-left: 24px;
-    margin-left: 4px;
-  }
-
-  /* Critical: 2-col grid */
-  .critical {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 48px;
-  }
-
-  /* Doc rows: bigger */
-  .dr-bar { width: 8px; }
-  .dr-body { padding: 24px 20px 24px 20px; }
-  .dr-title-row { margin-bottom: 14px; }
-  .dr-bullets li { font-size: 15px; }
-  .dr-arrow { font-size: 22px; padding: 0 22px 0 8px; }
-
-  /* Contacts: 3-col grid */
-  .contacts-head { padding-top: 44px; padding-bottom: 32px; margin-bottom: 32px; }
-  .contacts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin: 0 var(--pad);
-  }
-
-  .footer {
-    text-align: left;
-    font-size: 13px;
-  }
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   START-HERE TRIAGE CARD  (30-second read; prints to its own sheet)
-   Content is composed from luke-at-a-glance.html — no new clinical
-   claims; every value carries its date.
-══════════════════════════════════════════════════════ */
-.triage {
-  background: var(--paper-card);
-  border: 2px solid var(--accent);
-  border-radius: 10px;
-  margin: 0 var(--pad) 6px;
-  overflow: hidden;
-  box-shadow: 0 3px 18px rgba(0,0,0,.12);
-}
-.triage-head { background: var(--accent-deep); color: #fff; padding: 16px var(--pad) 15px; }
-.th-kicker { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #8bbbb6; margin-bottom: 5px; }
-.triage-head h2 { font-family: "Newsreader", serif; font-weight: 500; font-size: clamp(21px, 4.6vw, 28px); line-height: 1.06; color: #fff; letter-spacing: -.01em; }
-.th-id { font-size: 13px; color: #a9c9c6; margin-top: 5px; line-height: 1.5; }
-.th-id b { color: #fff; }
-
-/* Reuse the existing .critical / .critical-item component for the red flags */
-.triage .critical { margin: 0; }
-.triage-noadd {
-  background: #7a3535; color: #fff; font-size: 13.5px; font-weight: 600;
-  padding: 10px var(--pad); line-height: 1.5;
-}
-
-.triage-body { padding: 16px var(--pad) 18px; display: flex; flex-direction: column; gap: 18px; }
-.tri-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 9px; padding-bottom: 5px; border-bottom: 1.5px solid var(--rule); }
-.tri-meds { font-size: 14.5px; color: var(--ink-2); line-height: 1.75; }
-.tri-meds b { color: var(--ink); font-weight: 600; }
-
-.tri-nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 16px; }
-.tri-num { border-left: 3px solid var(--accent-soft); padding: 2px 0 2px 11px; }
-.tri-num.warn { border-left-color: var(--burgundy); }
-.tn-k { font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-mute); }
-.tn-v { font-family: "Newsreader", serif; font-size: 21px; color: var(--ink); line-height: 1.15; }
-.tn-v small { font-size: .5em; color: var(--ink-mute); font-weight: 400; }
-.tn-d { font-size: 12px; color: var(--ink-2); line-height: 1.4; }
-.tri-gauge { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.5; }
-.tri-gauge b { color: var(--burgundy); }
-
-.tri-q { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-bottom: 7px; }
-.tri-q .qn { font-family: "Newsreader", serif; font-weight: 600; color: var(--burgundy); flex: none; }
-.tri-q b { color: var(--ink); }
-
-.tri-next { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2px; }
-.tri-next a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; padding: 11px 17px; border-radius: 6px; transition: background .12s; }
-.tri-next a:hover { background: var(--accent-deep); }
-.tri-next a.alt { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
-.tri-next a.alt:hover { background: var(--paper-2); }
-
-/* ═══ TRAVEL BAND — time-boxed; remove/demote after the trip ═══ */
-.travel-band {
-  margin: 6px var(--pad) 0;
-  background: #234b45; color: #dceeeb;
-  border-radius: 8px; padding: 14px 18px;
-  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px;
-  font-size: 14px; line-height: 1.5;
-}
-.tb-tag { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #7fc8bf; width: 100%; }
-.travel-band b { color: #fff; }
-.travel-band .tb-link { color: #9fe0d6; font-weight: 700; text-decoration: none; margin-left: auto; white-space: nowrap; }
-.travel-band .tb-link:hover { color: #fff; }
-
-@media (min-width: 680px) {
-  .triage-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 44px; align-items: start; }
-  .tri-block.span { grid-column: 1 / -1; }
-  .tri-nums { grid-template-columns: repeat(3, 1fr); }
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   PRINT / PDF  (this page had none). Light document; triage
-   card is the sheet handed over; hero hidden; nav n/a here.
-══════════════════════════════════════════════════════ */
-@media print {
-  @page { size: Letter; margin: 0.5in; }
-  html, body { background: #fff !important; color: #000 !important; }
-  .shell { max-width: none !important; box-shadow: none !important; }
-  .header { display: none !important; }                 /* hero hidden — triage leads */
-  .patient-band { background: #fff !important; border-bottom: 1px solid #999; }
-  .patient-band .pb-field, .patient-band strong { color: #000 !important; }
-  .patient-band .pk { color: #444 !important; }
-  .triage { page-break-inside: avoid; page-break-after: always; border-color: #000; box-shadow: none; }
-  /* keep semantic reds/darks on paper even with "background graphics" off */
-  .triage-head, .critical, .triage-noadd, .travel-band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .doc-row, .contact, .critical-item, .tri-num { page-break-inside: avoid; }
-  .tri-next { display: none !important; }               /* nav buttons are dead on paper */
-  a { color: #000 !important; }
+@media print{
+  @page{ size:Letter; margin:.55in; }
+  html,body{ background:#fff!important; color:#000!important; }
+  .ataglance,.safety,.safety-lead,.goals,.directive,.boz,.rlane,a.doc,.num.hi,.stale{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .safety{ page-break-inside:avoid; }
+  a{ color:#000!important; }
 }
 </style>
 </head>
 <body>
-<div class="shell">
+<a class="skip" href="#main">Skip to content</a>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="header-inner">
+<nav class="lnav" data-page="practitioner-packet" aria-label="Archive navigation">
+  <div class="lnav-bar">
+    <a class="lnav-home" href="luke-practitioner-packet.html">Luke · Home</a>
+    <span class="lnav-title">Care Archive</span>
+    <button class="lnav-toggle" aria-expanded="false" aria-controls="lnav-panel">Menu</button>
+  </div>
+  <div class="lnav-panel" id="lnav-panel">
+    <div class="lnav-grp">On this page</div>
+    <a class="lnav-sec" href="#safety">Safety &amp; goals of care</a>
+    <a class="lnav-sec" href="#who-for">Who's it for</a>
+    <a class="lnav-sec" href="#documents">All documents</a>
+    <a class="lnav-sec" href="#contacts">Contacts</a>
+    <div class="lnav-grp">All documents</div>
+    <div data-lnav-docs></div>
+    <div class="lnav-updown" data-lnav-updown></div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">Luke VonDog · a living care archive</div>
+    <div class="hero-top">
       <div>
-        <h1>Luke VonDog.<span>Everything a new provider needs.</span></h1>
-        <p class="header-deck">Start with the 30-second triage below — then the full clinical brief, lab trends, system conflicts, diet and medications, and his complete verbatim record.</p>
+        <h1>Luke <b>VonDog.</b></h1>
+        <p class="hero-sub">Everything the people caring for him need — in one place.</p>
       </div>
-      <img class="header-photo" src="luke-photo.png" alt="Luke VonDog">
+      <img class="hero-photo" src="luke-photo.png" alt="Luke, a blue Weimaraner, smiling outdoors">
     </div>
-  </div>
-
-  <!-- PATIENT IDENTITY STRIP -->
-  <div class="patient-band">
-    <div class="pb-field">
-      <span class="pk">Patient</span>
-      <strong>Luke VonDog</strong><br>
-      Blue Weimaraner · neutered male · 12 yr
+    <div class="ataglance">
+      <span class="k">At a glance</span>
+      <span class="one">The one thing: <b>never stop his furosemide.</b></span>
+      <span class="who">For his vet, his nutritionist, and whoever is watching him.</span>
     </div>
-    <div class="pb-field">
-      <span class="pk">Weight · Date of birth</span>
-      <strong>79.1 lb</strong> / 35.9 kg<br>
-      May 31, 2014
-    </div>
-    <div class="pb-field">
-      <span class="pk">Microchip &amp; owner</span>
-      <strong>941000016858399</strong><br>
-      Rikki Delaine · (616) 970-7690
-    </div>
-  </div>
+    <p class="idline">
+      <b>Luke VonDog</b> · Blue Weimaraner · neutered male · 12 yr (b. May 31, 2014) · <b>35.9 kg / 79.1 lb</b> (dosing weight) · microchip 941000016858399 · allergies / drug reactions: <b>none on record</b><br>
+      Owner-compiled orientation to Luke's records — a summary to help his team, <b>not a veterinary record or a directive.</b> Currently in Bozeman, MT through September 2026.
+    </p>
+  </header>
 
+  <!-- SAFETY + GOALS -->
+  <section class="sec" id="safety">
+    <div class="sec-h" style="--sec-accent:var(--burgundy)"><span class="num">◆</span><h2>Read first — safety &amp; goals</h2></div>
 
-  <!-- ═══ START HERE: 30-SECOND TRIAGE (composed from luke-at-a-glance.html) ═══ -->
-  <section class="triage">
-    <div class="triage-head">
-      <div class="th-kicker">Start here · 30-second triage</div>
-      <h2>The five things that keep Luke safe</h2>
-      <div class="th-id"><b>Luke VonDog</b> · 12 yr Blue Weimaraner (neutered male) · 79.1 lb / 35.9 kg · microchip 941000016858399 · full detail in <b>Luke at a Glance ↓</b></div>
-    </div>
-
-    <div class="critical">
-      <div class="critical-item"><span><b>Furosemide (Lasix) 300 mg/day — do NOT stop.</b> High risk of life-threatening respiratory event (Dr. Denney). ≈ 8.4 mg/kg/day — at ACVIM Stage D threshold.</span></div>
-      <div class="critical-item"><span><b>Cardiac vs renal — conditions in conflict.</b> Presumptive, diuretic-dependent CHF alongside IRIS Stage 2 CKD. Furosemide + carprofen are both nephrotoxic — ongoing renal tension.</span></div>
-      <div class="critical-item"><span><b>Cardiac diagnosis is presumptive.</b> No echo, no NT-proBNP, no troponin drawn; no pimobendan / ACE-I / spironolactone on board.</span></div>
-      <div class="critical-item"><span><b>Most recent renal labs are ~10 months old.</b> Creatinine 1.8 and phosphorus 5.1 are both Sep '25. Recheck before adjusting renal or cardiac meds.</span></div>
-      <div class="critical-item"><span><b>GDV vigilance.</b> High-risk Weimaraner; pack-mate Sam died of GDV Feb 2023; on simethicone each morning.</span></div>
-    </div>
-    <div class="triage-noadd">⚠ Do not add other NSAIDs — carprofen already loads both kidney and liver.</div>
-
-    <div class="triage-body">
-      <div class="tri-block span">
-        <div class="tri-label">Current medications</div>
-        <div class="tri-meds"><b>Furosemide</b> 300 mg/day (q12h) · <b>Carprofen</b> 225 mg/day · <b>Amantadine</b> 100 mg/day · <b>Librela</b> 20 mg SC as needed · <b>Cytopoint</b> 80 mg · <b>Simparica Trio</b> monthly · <b>Simethicone</b> 250 mg AM</div>
-      </div>
-
-      <div class="tri-block span">
-        <div class="tri-label">Key numbers — with dates</div>
-        <div class="tri-nums">
-          <div class="tri-num warn"><div class="tn-k">Creatinine</div><div class="tn-v">1.8<small>H</small></div><div class="tn-d">Sep '25 · ↑ 1.0→1.2→1.8 · IRIS Stg 2</div></div>
-          <div class="tri-num warn"><div class="tn-k">Phosphorus</div><div class="tn-v">5.1</div><div class="tn-d">Sep '25 · target &lt;4.6</div></div>
-          <div class="tri-num"><div class="tn-k">BUN</div><div class="tn-v">35<small>H</small></div><div class="tn-d">Mar '26 · ref 7–28</div></div>
-          <div class="tri-num"><div class="tn-k">ALT</div><div class="tn-v">128<small>H</small></div><div class="tn-d">Sep '25 · ↑ 46→121→128</div></div>
-          <div class="tri-num"><div class="tn-k">SDMA</div><div class="tn-v">13</div><div class="tn-d">near top of range (0–14)</div></div>
-          <div class="tri-num"><div class="tn-k">Weight</div><div class="tn-v">79.1<small>lb</small></div><div class="tn-d">Mar '26 · BCS 5/9</div></div>
-        </div>
-        <div class="tri-gauge">Home decompensation gauge: <b>resting respiratory rate &gt; 30/min while asleep</b> = early warning.</div>
-      </div>
-
-      <div class="tri-block">
-        <div class="tri-label">Two things this visit can most help with</div>
-        <div class="tri-q"><span class="qn">01</span><span><b>Urinalysis + UPC ratio.</b> Proteinuria status unknown since 2023.</span></div>
-        <div class="tri-q"><span class="qn">02</span><span><b>NT-proBNP + troponin.</b> Would test the presumptive cardiac diagnosis.</span></div>
-      </div>
-
-      <div class="tri-block">
-        <div class="tri-label">Go deeper</div>
-        <div class="tri-next">
-          <a href="luke-at-a-glance.html">Full 2-page brief →</a>
-          <a class="alt" href="luke-bozeman-travel-brief.html">Bozeman travel brief →</a>
+    <div class="safety">
+      <div class="safety-lead">
+        <div class="safety-badge" aria-hidden="true">!</div>
+        <div>
+          <h3>Do NOT stop the furosemide (Lasix), 300&nbsp;mg/day.</h3>
+          <div class="sub">Stopping risks a fatal respiratory event (per Dr. Denney). ≈ 8.4 mg/kg/day — near ACVIM Stage D.</div>
+          <div class="act">→ If he arrives breathing hard, open-mouthed, or resting-asleep breaths &gt; 30/min: <b>treat as CHF decompensation.</b></div>
         </div>
       </div>
+      <div class="safety-know">
+        <div class="kl">Know this before you manage him</div>
+        <ul>
+          <li><b>Cardiac vs renal — conditions in conflict.</b> Diuretic-dependent (presumptive) CHF alongside IRIS Stage 2 CKD; furosemide + carprofen are both nephrotoxic.</li>
+          <li><b>The cardiac diagnosis is presumptive.</b> No echo, no NT-proBNP, no troponin; no pimobendan / ACE-I / spironolactone — treat the dog, not the label.</li>
+          <li><b>Renal labs are ~10 months old.</b> Creatinine 1.8 and phosphorus 5.1 are both Sep '25 — you may want fresh values before adjusting renal or cardiac meds.</li>
+          <li><b>GDV vigilance.</b> High-risk Weimaraner; pack-mate Sam died of GDV Feb 2023; on simethicone each morning.</li>
+        </ul>
+        <div class="noadd">⚠ Please don't add another NSAID or steroid — carprofen (225 mg/day ≈ 6.3 mg/kg, owner calc) already loads kidney + liver.</div>
+      </div>
+    </div>
+
+    <div class="goals">
+      <div class="goals-in">
+        <div class="who-luke"><b>Who Luke is:</b> friendly with everyone · a brilliant, athletic beast · a lover of food and learning.</div>
+        <h3>What Rikki wants for Luke — her directive, please honor it</h3>
+        <div class="directive">
+          <div class="lead"><b>Luke is to have a peaceful, dignified death.</b> His health and comfort come before resuscitation.</div>
+          <ul>
+            <li><b>DNR — no CPR.</b></li>
+            <li><b>No hospitalization.</b></li>
+            <li>Keep him <b>well and comfortable</b>; when his time comes, let him go <b>peacefully</b> — do not resuscitate or prolong.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="nums">
+      <div class="num hi"><div class="nk">Creatinine <span class="hchip">HIGH</span></div><div class="nv">1.8</div><div class="nd"><span class="up">↑ 1.0→1.2→1.8</span> · Sep '25</div></div>
+      <div class="num hi"><div class="nk">Phosphorus <span class="hchip">HIGH</span></div><div class="nv">5.1</div><div class="nd">Sep '25 · target &lt; 4.6</div></div>
+      <div class="num hi"><div class="nk">BUN <span class="hchip">HIGH</span></div><div class="nv">35</div><div class="nd">Mar '26 · ref 7–28</div></div>
+      <div class="num hi"><div class="nk">ALT <span class="hchip">HIGH</span></div><div class="nv">128</div><div class="nd"><span class="up">↑ 46→121→128</span> · Sep '25</div></div>
+      <div class="num"><div class="nk">SDMA</div><div class="nv">13</div><div class="nd">Sep '25 · near top (0–14)</div></div>
+      <div class="num"><div class="nk">Weight</div><div class="nv">79.1</div><div class="nd">Mar '26 · lb · BCS 5/9</div></div>
+    </div>
+    <p class="stale">Values dated Sep '25 – Mar '26. Renal/liver chemistry not rechecked since <b>Sep 2025</b>; only Mar '26 value is BUN. A snapshot, not today's status.</p>
+  </section>
+
+  <!-- AUDIENCE ROUTER -->
+  <section class="sec" id="who-for">
+    <div class="sec-h" style="--sec-accent:var(--page-accent)"><span class="num">❱</span><h2>Who's it for — start here</h2></div>
+    <div class="router-grid">
+
+      <div class="rlane" style="--lane:var(--teal-mid)">
+        <div class="rk">For your veterinarian</div>
+        <h3>What a vet wants to know</h3>
+        <ul>
+          <li>Never stop the furosemide (respiratory-death risk).</li>
+          <li>DNR · no hospitalization · comfort over resuscitation.</li>
+          <li>Cardiac ↔ renal conflict; both meds nephrotoxic.</li>
+          <li>Labs are ~10 months old — recheck before adjusting.</li>
+        </ul>
+        <div class="rgo">
+          <a href="luke-at-a-glance.html"><span class="chip" style="--c:var(--teal-mid)"></span>At a Glance</a>
+          <a href="luke-system-map.html"><span class="chip" style="--c:var(--plum)"></span>System Map</a>
+          <a href="luke-data-visualization-suite.html"><span class="chip" style="--c:var(--moss)"></span>Data Viz</a>
+          <a href="luke-verbatim-timeline.html"><span class="chip" style="--c:var(--burgundy)"></span>Full Record</a>
+        </div>
+      </div>
+
+      <div class="rlane" style="--lane:var(--terracotta)">
+        <div class="rk">For a nutritionist</div>
+        <h3>What the nutritionist wants to know</h3>
+        <ul>
+          <li>The cardiac-vs-renal diet tension (no shelf diet fits).</li>
+          <li>The omega-3 gap — he's at ~6% of the cardiac target.</li>
+          <li>Daily goat-cheese pill vehicle + unlimited carrots = real loads.</li>
+          <li>Confirm the picture first (taurine, fresh renal panel).</li>
+        </ul>
+        <div class="rgo">
+          <a href="luke-nutrition-consult.html"><span class="chip" style="--c:var(--terracotta)"></span>Nutrition Consult</a>
+          <a href="luke-diet-medication-matrix.html"><span class="chip" style="--c:var(--ochre)"></span>Diet Matrix</a>
+          <a href="luke-helping-thrive.html"><span class="chip" style="--c:var(--spruce)"></span>Helping Thrive</a>
+        </div>
+      </div>
+
+      <div class="rlane" style="--lane:var(--indigo)">
+        <div class="rk">For a pet sitter</div>
+        <h3>What a pet sitter wants to know</h3>
+        <ul>
+          <li>His pills go in goat cheese — never skip the furosemide.</li>
+          <li>Food, unlimited carrots, and his Woojer mat.</li>
+          <li>The warning signs that mean call right now.</li>
+          <li>Who to call, in order.</li>
+        </ul>
+        <div class="rgo">
+          <a href="luke-pet-sitter-guide.html"><span class="chip" style="--c:var(--indigo)"></span>Pet-Sitter Guide</a>
+          <a href="luke-bozeman-travel-brief.html"><span class="chip" style="--c:var(--steel)"></span>Bozeman Local-Care</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="boz">
+      <span class="k">Currently in Bozeman</span>
+      <span class="t"><b>Bozeman, MT · through September 2026</b> — ~4,820 ft altitude increases cardiac workload; wildfire-smoke season. Local ER: <b>Foothills Veterinary Hospital</b> · <a href="tel:+14065560604">(406) 556-0604</a> · fvhmt.com.</span>
     </div>
   </section>
 
-  <!-- ═══ TRAVEL BAND — time-boxed; remove or demote after Aug 2026 ═══ -->
-  <div class="travel-band">
-    <div class="tb-tag">Traveling now</div>
-    <span><b>Bozeman, MT · Jul–Aug 2026</b> — ~4,820 ft altitude increases cardiac workload; wildfire-smoke season. Local vet: <b>Foothills Veterinary Hospital</b> · (406) 556-0604 · fvhmt.com</span>
-    <a class="tb-link" href="luke-bozeman-travel-brief.html">→ Travel brief</a>
-  </div>
+  <!-- ALL DOCUMENTS -->
+  <section class="sec" id="documents">
+    <div class="sec-h" style="--sec-accent:var(--page-accent)"><span class="num">▤</span><h2>All documents</h2></div>
+    <div class="docs">
 
+      <a class="doc" href="luke-at-a-glance.html" style="--dc:var(--teal-mid);--dbg:#eaf1f0">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">1</span><span class="dttl">Luke at a Glance</span></span><span class="dsub">The 2-page clinical brief — diagnoses, meds, dated labs, open questions, QoL.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-data-visualization-suite.html" style="--dc:var(--moss);--dbg:#edf1e4">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">2</span><span class="dttl">Data Visualization Suite</span></span><span class="dsub">10 years of bloodwork charted — every trend and inflection point.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-system-map.html" style="--dc:var(--plum);--dbg:#f0ecf1">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">3</span><span class="dttl">System Map</span></span><span class="dsub">Conditions in conflict — how every treatment trades off across four organ systems.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-diet-medication-matrix.html" style="--dc:var(--ochre);--dbg:#f3eeda">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">4</span><span class="dttl">Diet &amp; Medication Matrix</span></span><span class="dsub">Everything he eats and takes, mapped against all four systems.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-verbatim-timeline.html" style="--dc:var(--burgundy);--dbg:#f3eae8">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">5</span><span class="dttl">Verbatim Timeline</span></span><span class="dsub">The complete unedited record — the source of truth behind every summary.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-what-could-help.html" style="--dc:var(--sage);--dbg:#eef2f1">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">6</span><span class="dttl">What Could Help</span></span><span class="dtag">Owner's proposed interventions · for discussion</span><span class="dsub">Named care gaps and testable ideas, ranked — for your review, not a directive.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-nutrition-consult.html" style="--dc:var(--terracotta);--dbg:#f6ece3">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">7</span><span class="dttl">Nutrition Consult</span></span><span class="dsub">A brief for a board-certified nutritionist to build his food plan.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-helping-thrive.html" style="--dc:var(--spruce);--dbg:#e8f0ec">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">8</span><span class="dttl">Helping Luke Thrive</span></span><span class="dsub">Modern options — nutrition, movement, bodywork — filtered for his heart + kidneys.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-bozeman-travel-brief.html" style="--dc:var(--steel);--dbg:#eaeff3">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">9</span><span class="dttl">Bozeman Local-Care</span></span><span class="dsub">At-altitude reference — local ER, air-quality &amp; altitude management, current meds.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="doc" href="luke-pet-sitter-guide.html" style="--dc:var(--indigo);--dbg:#ecedf4">
+        <span class="bar"></span><span class="body"><span class="dt"><span class="dn">10</span><span class="dttl">Pet-Sitter Guide</span></span><span class="dsub">Plain-language care for whoever's watching Luke — meds, food, comforts, emergencies.</span></span><span class="arrow" aria-hidden="true">→</span>
+      </a>
 
-  <!-- DOCUMENT LIST -->
-  <div class="doc-list-section">
-
-    <a class="doc-row d01" href="luke-at-a-glance.html">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">1</span>
-          <div class="dr-title">Luke at a Glance</div>
-        </div>
-        <ul class="dr-bullets">
-          <li>What is Luke's diagnosis, and what makes his case complex</li>
-          <li>Which lab values need attention, and which direction they're trending</li>
-          <li>Six clinical questions the record has not yet answered</li>
-          <li>How Rikki measures Luke's quality of life at home</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-    <a class="doc-row d02" href="luke-data-visualization-suite.html">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">2</span>
-          <div class="dr-title">Data Visualization Suite</div>
-        </div>
-        <ul class="dr-bullets">
-          <li>10 years of bloodwork charted — every trend and inflection point</li>
-          <li>What each marker means for a dog with Luke's combination of conditions</li>
-          <li>What would need to change to move each number</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-    <a class="doc-row d03" href="luke-system-map.html">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">3</span>
-          <div class="dr-title">System Map — Conditions in Conflict</div>
-        </div>
-        <ul class="dr-bullets">
-          <li>Why every treatment decision involves a tradeoff across four organ systems</li>
-          <li>How everything Luke takes maps against cardiac, renal, hepatic, and MSK</li>
-          <li>Six named conflicts — each with a resolution path</li>
-          <li>Altitude and health risk context for the Montana trip</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-    <a class="doc-row d04" href="luke-diet-medication-matrix.html">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">4</span>
-          <div class="dr-title">Diet &amp; Medication Matrix</div>
-        </div>
-        <ul class="dr-bullets">
-          <li>Everything Luke eats and takes, mapped against all four organ systems</li>
-          <li>Whether his current caloric and nutrient intake meets his needs</li>
-          <li>What's missing from the stack and what would most improve his trajectory</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-    <a class="doc-row d05" href="luke-verbatim-timeline.html">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">5</span>
-          <div class="dr-title">All of Luke VonDog's Data — Verbatim Timeline</div>
-        </div>
-        <ul class="dr-bullets">
-          <li>The complete unedited record — nothing summarized or interpreted</li>
-          <li>Every Thornwood visit, email, and clinical note from 2016 to 2026</li>
-          <li>The source of truth behind every summary in this packet</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-    <a class="doc-row d06" href="luke-what-could-help.html" style="--bar:#6e8e92; --num:#6e8e92; background:#eef1ef;">
-      <div class="dr-bar"></div>
-      <div class="dr-body">
-        <div class="dr-title-row">
-          <span class="dr-num">6</span>
-          <div class="dr-title">What Could Help</div>
-        </div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--burgundy);margin:-4px 0 8px;">Owner's proposed interventions · for discussion with your vet</div>
-        <ul class="dr-bullets">
-          <li>Named care gaps and testable interventions, ranked by priority</li>
-          <li>Owner-compiled — offered for your review, not a clinical directive</li>
-        </ul>
-      </div>
-      <div class="dr-arrow">→</div>
-    </a>
-
-  </div>
-
-  <!-- KEY CONTACTS -->
-  <div class="contacts-section">
-    <div class="contacts-head">
-      <div>
-        <div class="ch-label">People &amp; places</div>
-        <h2>Key Contacts</h2>
-      </div>
-      <div class="ch-note">Bozeman travel<br>Jul–Aug 2026</div>
     </div>
-    <div class="contacts-grid">
+  </section>
 
-      <div class="contact">
-        <div class="ck">Primary clinic</div>
-        <div class="cv">
-          <b>Thornwood Veterinary Clinic &amp; Kennel</b><br>
-          1501 Buttrick Ave SE, Ada, MI 49301<br>
-          (616) 676-1251<br>
-          Dr. Kaitlyn Denney · Dr. G<br>
-          <a href="https://www.thornwoodvet.com">thornwoodvet.com</a>
-        </div>
-      </div>
-
+  <!-- CONTACTS -->
+  <section class="sec" id="contacts">
+    <div class="sec-h" style="--sec-accent:var(--page-accent)"><span class="num">☎</span><h2>Key contacts</h2></div>
+    <div class="contacts">
       <div class="contact">
         <div class="ck">Owner &amp; caregiver</div>
-        <div class="cv">
-          <b>Rikki Delaine</b><br>
-          Ada, Michigan<br>
-          (616) 970-7690<br>
-          <a href="mailto:RikkiDelaine84@gmail.com">RikkiDelaine84@gmail.com</a>
-        </div>
+        <div class="cv"><b>Rikki Delaine</b><br>Currently in Bozeman, MT<br><a href="tel:+16169707690">(616) 970-7690</a></div>
       </div>
-
-      <div class="contact" style="border-top-color: var(--teal-mid);">
-        <div class="ck" style="color: var(--teal-mid);">Bozeman veterinarian (Jul–Aug 2026)</div>
-        <div class="cv">
-          <b>Foothills Veterinary Hospital</b><br>
-          707 Bridger Drive, Suite E<br>
-          Bozeman, MT 59715<br>
-          (406) 556-0604 · Mon–Fri 8am–6pm<br>
-          <a href="https://fvhmt.com">fvhmt.com</a>
-        </div>
+      <div class="contact">
+        <div class="ck">Local ER — Bozeman</div>
+        <div class="cv"><b>Foothills Veterinary Hospital</b><br>707 Bridger Drive, Suite E, Bozeman, MT<br><a href="tel:+14065560604">(406) 556-0604</a> · fvhmt.com</div>
       </div>
-
+      <div class="contact">
+        <div class="ck">Home clinic &amp; records</div>
+        <div class="cv"><b>Thornwood Veterinary Clinic</b><br>Ada, MI · Dr. Denney / Dr. G<br><a href="tel:+16166761251">(616) 676-1251</a> · thornwoodvet.com</div>
+      </div>
     </div>
-  </div>
+    <p class="foot">Luke VonDog · owner-compiled care archive · as of July 2026 · not a veterinary record or a directive. Every value carries its date; verify current status before acting.</p>
+  </section>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    Luke VonDog · New Practitioner Packet · Compiled June 2026
-  </div>
+</main>
 
-</div>
-<!-- bundler thumbnail -->
-<template id="__bundler_thumbnail">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 56">
-  <rect width="80" height="56" fill="#1d343a"/>
-  <rect x="16" y="10" width="48" height="5" rx="1" fill="#6e8e92" opacity=".7"/>
-  <rect x="16" y="19" width="32" height="3" rx="1" fill="#fff" opacity=".9"/>
-  <rect x="16" y="25" width="40" height="2" rx="1" fill="#6e8e92" opacity=".5"/>
-  <rect x="16" y="32" width="48" height="14" rx="2" fill="#6b2a2a" opacity=".8"/>
-</svg>
-</template>
+<script src="luke-nav.js" defer></script>
 </body>
 </html>
