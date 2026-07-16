@@ -3759,5 +3759,141 @@ li { font-size: 16px; line-height: 1.8; }
 .cover .deck       { font-size: 18px; line-height: 1.8; }
 .cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
 </style>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   CLEAN-WHITE RE-SKIN — appended override (surface/chrome/colour only)
+   Full record is preserved: every entry, ledger, number and sparkline
+   stays exactly as authored above. This block only repaints the shell
+   to a calm modern white and is the last stylesheet, so it wins.
+════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* 1 — Palette remap: flip the paper to white + a muted accent set.
+       Re-declaring the same :root vars later in source repaints every
+       var() reference at once, no HTML or existing CSS touched. */
+:root {
+  --paper:       #ffffff;
+  --paper-2:     #f6f6f9;
+  --ink:         #1c1c24;
+  --ink-2:       #2a2a33;
+  --ink-3:       #3a3a44;
+  --ink-mute:    #6a6a78;
+  --rule:        #d7d7e0;
+  --rule-soft:   #e4e4ea;
+  --accent:      #5f7fb0;  /* blue   */
+  --accent-soft: #8fa8c4;
+  --burgundy:    #a45a44;  /* clay   */
+  --ochre:       #b5813f;  /* amber  */
+  --moss:        #5f8a5a;  /* green  */
+  --plum:        #856ba3;  /* purple */
+}
+
+/* 2 — Page canvas */
+html, body { background: #ececef; color: var(--ink); }
+body { font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif; }
+.page { background: #fff; }
+.page::before { display: none; }
+
+/* Atkinson across the sans UI/text; serif display type stays Newsreader */
+.eyebrow, .legend, .legend .kind, .meta, .meta .date, .meta .kind, .meta .author,
+.allcaps, .label, .attribution, .section-marker, ul.bare li, .feature h4, .colophon,
+.ledger-eyebrow, .ldg-tag, .ldg-note, .ldg-foot, table.num, table.num.lab,
+table.num.lab td:first-child, table.num.meds td:nth-child(1), table.num.meds td:nth-child(5),
+.ct-l, .ct-d, .dl, .dn, .pid-eyebrow, .pid-sub, .pid-dl, .pid-dl dt, .pid-dl dd, .pid-dx-h,
+.pid-dx-list li, .dx-name, .dx-note, .side, .side *, .spark-title, .spark-title em,
+.spark-title strong, .spark-mini-h, .threads-eyebrow, .thread-axis, .thread-tick, .lane-bar,
+.lane-label .lane-sub, .lane-event, .lane-foot, .openq-eyebrow, .q-tag, .q-body, .snap-h,
+.snap-vet, .ss-l, .ss-d, .ss-v .ss-u, .sg-h, .snap-givens ul, .sf-l, .sf-v, .tv-row, .tv-l,
+.travel-grid, .searchbar, .searchbar input, .fh-eyebrow, .fh-meta, .fh-ribbon .seg .yr,
+.fh-ribbon-note, .fh-col .h, .fh-col .b, .fh-num small, .fh-panel .sub, .fh-panel p,
+.fh-roles li, .snack-cell .h, .snack-cell li, .fh-favorites p, .od-eyebrow, .od-when,
+.od-note, .od-source, .gloss-eyebrow, .gloss-dl, .gloss-dl dd, .dn-yr, .dn-q,
+.year .count, .year .sev-lbl {
+  font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+}
+
+/* 3 — Shell: white card, hairline border, soft shadow, rounded.
+       (No overflow:hidden — it would break the sticky sidebar.) */
+.shell {
+  background: #fff;
+  border: 1px solid #d7d7e0;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(20,20,40,.05), 0 10px 34px rgba(20,20,40,.06);
+}
+
+/* 4 — Sidebar: dark rail → clean light rail */
+.side {
+  background: #f6f6f9;
+  color: #3a3a44;
+  border-right: 1px solid #e4e4ea;
+  border-top-left-radius: 6px;
+}
+.side .brand      { border-bottom: 1px solid #e4e4ea; }
+.side .brand .ey  { color: #6a6a78; }
+.side .brand h1   { color: #1c1c24; }
+.side .brand .sub { color: #6a6a78; }
+.side nav .grp    { color: #6a6a78; }
+.side nav a       { color: #3a3a44; }
+.side nav a:hover { background: #ececef; color: #1c1c24; }
+.side nav a.active     { background: #3f3d6e; color: #fff; }   /* indigo */
+.side nav a.active .yr { color: #d6d5ea; }
+.side nav a .yr   { color: #9a9aa8; }
+.side nav a .dot  { background: #b4b4c2; }
+.side .foot { color: #6a6a78; border-top: 1px solid #e4e4ea; }
+
+/* 5 — Fixed top bar (inline-styled in markup → !important to win) */
+body > div[style*="z-index:9999"] {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e4e4ea !important;
+}
+body > div[style*="z-index:9999"] > a {
+  background: #3f3d6e !important;   /* indigo home button */
+  color: #fff !important;
+}
+
+/* 6 — Cover / masthead */
+.masthead { border-bottom: 1px solid #d7d7e0; }
+.masthead .eyebrow .acc { color: #3f3d6e; }   /* indigo eyebrow */
+
+/* 7 — Section bands → white with a calm hairline */
+.ledger, .threads, .openq, .foodhist, .ownerdiary, .glossary {
+  background: #fff;
+  border-top: 1px solid #e4e4ea;
+  border-bottom: 1px solid #e4e4ea;
+}
+.glossary { border-bottom: none; }
+
+/* 8 — Cards */
+.pid {
+  background: #fff;
+  border: 1px solid #d7d7e0;
+  box-shadow: 0 1px 3px rgba(20,20,40,.06);
+}
+.snap { border: 1px solid #d7d7e0; }
+.snap-foot { border-top-color: #d7d7e0; }
+
+/* 9 — Ledger tables: muted heads, hairline rules, subtle even-row shading.
+       Sparkline SVGs are untouched (only recoloured via the vars above). */
+.ldg-h { border-bottom: 1px solid #d7d7e0; }
+table.num thead th { color: #6a6a78; border-bottom: 1px solid #d7d7e0; }
+table.num tbody td { border-bottom: 1px solid #e4e4ea; }
+table.num tbody tr:nth-child(even):not(.grp) td { background: #f6f6f9; }
+table.num tr.grp td { border-bottom: 1px solid #d7d7e0; border-top: 1px solid #e4e4ea; }
+table.num tbody tr:hover td,
+table.num tbody tr:nth-child(even):not(.grp):hover td { background: #eef1f6; }
+
+/* 10 — Remaining heavy dark rules → calm */
+.colophon    { border-top: 1px solid #e4e4ea; }
+.searchbar   { border: 1px solid #d7d7e0; }
+.counts      { border-top-color: #d7d7e0; }
+.dose-grid   { border-bottom-color: #d7d7e0; }
+.thread-axis { border-bottom-color: #d7d7e0; }
+
+/* 11 — Print stays a clean flat white document */
+@media print {
+  .shell { border: none; border-radius: 0; box-shadow: none; }
+  html, body { background: #fff; }
+}
+</style>
 </body>
 </html>
