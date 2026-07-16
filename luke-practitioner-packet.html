@@ -6,306 +6,118 @@
 <title>Luke VonDog — Care Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ═══ LUKE-BASE — tokens (diet-matrix design language) ═══ */
 :root{
-  --paper:#f6f1e6; --paper-2:#ede8d8; --paper-card:#ffffff; --rule:#d4cab4; --rule-soft:#e4daca;
-  --ink:#1a1916; --ink-2:#353029; --ink-mute:#4a4335;
-  --accent:#2a4a52; --accent-deep:#1d343a; --accent-soft:#6e8e92;
-  --teal-mid:#3a6068; --moss:#3f5224; --plum:#4a2f4e; --ochre:#7a5c18; --burgundy:#6b2a2a; --sage:#5f7d80;
-  --terracotta:#9c4f2a; --spruce:#2f5d4e; --steel:#3f5a72; --indigo:#43457e;
-  --void:#13211f; --sidebar:236px; --content-max:1280px;
-  --page-accent:#2a4a52; --page-deep:#1d343a;
+  --ink:#1c1c24; --ink-2:#3a3a44; --muted:#6a6a78;
+  --rule:#e4e4ea; --line:#d7d7e0; --shade:#f6f6f9; --bg:#ececef; --card:#ffffff;
+  --indigo:#3f3d6e; --blue:#5f7fb0; --green:#5f8a5a; --purple:#856ba3; --amber:#b5813f; --clay:#a45a44; --slate:#5a6b7a; --sage:#5f7d80; --terra:#9c4f2a; --steel:#3f5a72;
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
 html{ -webkit-text-size-adjust:100%; }
-body{ background:var(--void); color:var(--ink);
-  font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif;
-  font-size:17px; line-height:1.7; letter-spacing:.01em; text-align:left; }
-h1,h2,h3,h4{ font-family:"Newsreader", Georgia, serif; line-height:1.05; }
-p,li{ font-size:17px; line-height:1.7; max-width:66ch; }
-a{ color:var(--page-accent); }
-.skip{ position:absolute; left:-999px; top:0; background:var(--accent-deep); color:#fff; padding:10px 16px; z-index:999; }
-.skip:focus{ left:0; }
-:focus-visible{ outline:3px solid var(--accent-soft); outline-offset:2px; }
-@media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif; font-size:15px; line-height:1.55; padding:28px 16px 48px; }
+.sheet{ max-width:960px; margin:0 auto; background:var(--card); border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 18px rgba(30,30,50,.08); padding:44px clamp(24px,5vw,56px) 48px; }
+.title{ font-family:"Newsreader",serif; font-weight:500; font-size:clamp(32px,5vw,50px); letter-spacing:-.01em; }
+.title small{ display:block; font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+.rule{ height:2px; background:var(--ink); margin:16px 0 20px; }
+.meta{ font-size:14px; color:var(--ink-2); max-width:80ch; } .meta b{ color:var(--ink); }
 
-/* ═══ LUKE-BASE — sidebar nav (.lnav, diet-matrix look + cross-doc switcher) ═══ */
-.lnav{ background:var(--accent-deep); color:#e8eeec; position:sticky; top:0; z-index:600; font-family:"Atkinson Hyperlegible",system-ui,sans-serif; }
-.lnav-bar{ display:flex; align-items:center; gap:10px; padding:0; }
-.lnav-home{ color:#fff; text-decoration:none; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:#245a55; padding:14px 18px; white-space:nowrap; flex:1; }
-.lnav-home:hover{ background:#2b6b64; }
-.lnav-title{ display:none; }
-.lnav-toggle{ font:inherit; font-size:13px; font-weight:700; color:#fff; background:transparent; border:none; border-left:1px solid rgba(255,255,255,.12); padding:14px 16px; cursor:pointer; }
-.lnav-panel{ display:none; padding:6px 0 16px; }
-.lnav.open .lnav-panel{ display:block; }
-.lnav-pagetitle{ font-family:"Newsreader",serif; font-size:16px; font-weight:500; color:#fff; padding:14px 18px 10px; border-bottom:1px solid rgba(255,255,255,.08); }
-.lnav-grp{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.5); font-weight:700; padding:14px 18px 5px; }
-.lnav-sec{ display:block; padding:6px 18px; font-size:14px; color:rgba(255,255,255,.8); text-decoration:none; line-height:1.4; }
-.lnav-sec:hover{ color:#fff; }
-.lnav-sec.active{ background:rgba(255,255,255,.13); color:#fff; font-weight:700; }
-.lnav-doc{ display:flex; align-items:center; gap:9px; padding:7px 18px; font-size:13.5px; color:rgba(255,255,255,.8); text-decoration:none; line-height:1.3; }
-.lnav-doc:hover{ background:rgba(255,255,255,.08); color:#fff; }
-.lnav-doc .dot{ width:9px; height:9px; border-radius:50%; flex:none; background:var(--doc-accent,#fff); }
-.lnav-doc .n{ font-family:"Newsreader",serif; opacity:.65; width:1.4em; text-align:center; }
-.lnav-doc.current{ background:rgba(255,255,255,.14); color:#fff; font-weight:700; box-shadow:inset 3px 0 0 var(--doc-accent); }
-.lnav-updown{ display:flex; gap:6px; padding:12px 14px 0; }
-.lnav-updown a{ flex:1; text-align:center; font-size:12px; font-weight:700; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.28); border-radius:6px; padding:9px 5px; }
-.lnav-updown a:hover{ background:rgba(255,255,255,.1); }
-@media (min-width:960px){
-  body{ padding-left:var(--sidebar); }
-  .lnav{ position:fixed; top:0; left:0; bottom:0; width:var(--sidebar); display:flex; flex-direction:column; overflow-y:auto; border-right:1px solid rgba(255,255,255,.07); }
-  .lnav-bar{ flex-wrap:wrap; }
-  .lnav-toggle{ display:none; }
-  .lnav-panel{ display:block; flex:1; }
-}
-@media (max-width:959px){ .lnav-bar{ border-bottom:1px solid rgba(255,255,255,.12); } }
-@media print{ .lnav{ display:none!important; } body{ padding-left:0!important; } }
+h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:36px 0 14px; padding-bottom:7px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:9px; }
+h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--sc,var(--indigo)); flex:none; }
 
-/* ═══ the paper sheet ═══ */
-.wrap{ max-width:var(--content-max); margin:0 auto; background:var(--paper); box-shadow:0 0 90px rgba(0,0,0,.5); }
-
-/* cover (dark hero, two-tone serif) */
-.cover{ background:var(--accent-deep); padding:56px var(--cpad,64px) 48px; }
-.cover .ey{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-soft); margin-bottom:16px; }
-.cover-top{ display:flex; gap:34px; align-items:center; flex-wrap:wrap; }
-.cover h1{ font-weight:300; font-size:clamp(42px,6vw,68px); letter-spacing:-.025em; color:#fff; }
-.cover h1 em{ font-style:normal; font-weight:400; color:var(--accent-soft); }
-.cover .deck{ font-size:18px; color:#bcd3d0; line-height:1.55; margin-top:16px; max-width:60ch; }
-.cover-photo{ width:132px; height:132px; border-radius:12px; object-fit:cover; object-position:center top; flex:none; border:2px solid rgba(255,255,255,.16); }
-
-/* full-bleed colored section band */
-.sec-head{ padding:40px var(--cpad,64px) 32px; color:#fff; }
-.sec-head .sh-ey{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
-.sec-head .sh-ey::before{ content:""; width:8px; height:8px; background:rgba(255,255,255,.55); border-radius:1px; flex:none; }
-.sec-head h2{ font-weight:500; font-size:clamp(28px,3.6vw,42px); letter-spacing:-.02em; color:#fff; }
-.sec-head .deck{ font-size:16px; color:rgba(255,255,255,.8); line-height:1.6; margin-top:12px; max-width:62ch; }
-.sh-safety{ background:var(--burgundy); }
-.sh-router{ background:var(--spruce); }
-.sh-docs{ background:var(--accent-deep); }
-.sh-contacts{ background:var(--steel); }
-.sec-body{ padding:40px var(--cpad,64px) 48px; }
-
-/* safety */
-.lead{ background:var(--burgundy); color:#fff; border-radius:10px; padding:22px 24px; display:flex; gap:16px; align-items:flex-start; }
-.lead .badge{ flex:none; width:40px; height:40px; border-radius:50%; border:2.5px solid #fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; }
-.lead h3{ font-family:"Atkinson Hyperlegible",sans-serif; font-size:clamp(21px,4.4vw,27px); font-weight:700; line-height:1.2; }
-.lead .act{ font-size:16px; font-weight:700; margin-top:11px; } .lead .act b{ color:#ffd9a8; }
-.chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
-.chip{ font-size:15px; font-weight:600; color:var(--ink-2); background:var(--paper-card); border:1px solid var(--rule); border-radius:22px; padding:8px 15px; }
-.chip.warn{ background:var(--burgundy); color:#fff; border-color:var(--burgundy); }
-
-.goals{ background:#eef3ef; border:1px solid #cfe0d5; border-left:5px solid var(--spruce); border-radius:10px; padding:18px 22px; margin-top:20px; }
-.goals .who{ font-size:16px; color:var(--ink-mute); margin-bottom:10px; max-width:none; } .goals .who b{ color:var(--ink); }
-.goals .dir{ font-size:clamp(18px,3.6vw,22px); font-weight:700; color:#233f30; line-height:1.3; font-family:"Atkinson Hyperlegible",sans-serif; }
-.goals .sub{ font-size:15px; color:var(--ink-mute); margin-top:8px; max-width:none; }
-
-.nums{ display:grid; grid-template-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:8px; overflow:hidden; margin-top:22px; }
-.num{ background:var(--paper-card); padding:14px 16px; }
-.num .nk{ font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); }
-.num .nk .h{ font-size:10px; color:#fff; background:var(--burgundy); border-radius:3px; padding:1px 5px; margin-left:4px; }
-.num .nv{ font-family:"Newsreader",serif; font-size:30px; color:var(--ink); line-height:1; margin-top:4px; }
-.num.hi .nv{ color:var(--burgundy); }
-.num .nd{ font-size:13px; color:var(--ink-2); margin-top:4px; } .num .nd .up{ color:var(--burgundy); font-weight:700; }
-.stale{ font-size:14px; color:var(--burgundy); margin-top:14px; max-width:none; }
+/* safety — calm, factual */
+.safety{ background:#fbfbfd; border:1px solid var(--line); border-left:4px solid var(--indigo); border-radius:8px; padding:16px 20px; }
+.safety p{ font-size:15px; color:var(--ink-2); max-width:80ch; } .safety b{ color:var(--ink); }
+.safety .lead{ font-size:16px; color:var(--ink); font-weight:700; margin-bottom:8px; }
+.goals{ margin-top:12px; font-size:15px; color:var(--ink-2); } .goals b{ color:var(--ink); }
 
 /* router */
-.router{ display:grid; grid-template-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:8px; overflow:hidden; }
-.lane{ background:var(--paper-card); padding:22px 24px; }
+.router{ display:grid; grid-template-columns:1fr; gap:14px; }
+.lane{ border:1px solid var(--line); border-top:4px solid var(--l); border-radius:8px; padding:16px 18px; background:var(--card); }
 .lane .k{ font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--l); }
-.lane h3{ font-family:"Atkinson Hyperlegible",sans-serif; font-size:20px; font-weight:700; color:var(--ink); margin:3px 0 12px; }
-.lane ul{ list-style:none; margin-bottom:16px; }
-.lane li{ font-size:16px; line-height:1.45; padding-left:18px; position:relative; margin-bottom:8px; max-width:none; }
-.lane li::before{ content:""; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%; background:var(--l); }
-.lane .go{ display:flex; flex-wrap:wrap; gap:8px; }
-.lane .go a{ display:inline-flex; align-items:center; gap:7px; text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:var(--l); border-radius:20px; padding:8px 15px; }
-.lane .go a:hover{ filter:brightness(1.1); }
-
-.boz{ background:#eef1f4; border:1px solid #cdd7e0; border-left:5px solid var(--steel); border-radius:8px; padding:16px 20px; margin-top:22px; }
-.boz .k{ font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--steel); }
-.boz p{ font-size:16px; color:var(--ink-2); margin-top:4px; max-width:none; } .boz b{ color:var(--ink); } .boz a{ color:var(--steel); font-weight:700; text-decoration:none; }
+.lane h3{ font-family:"Newsreader",serif; font-size:19px; font-weight:600; margin:2px 0 10px; }
+.lane ul{ list-style:none; margin-bottom:12px; }
+.lane li{ font-size:14px; color:var(--ink-2); padding-left:16px; position:relative; margin-bottom:6px; }
+.lane li::before{ content:""; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:50%; background:var(--l); }
+.lane .go{ display:flex; flex-wrap:wrap; gap:7px; }
+.lane .go a{ font-size:13px; font-weight:700; color:var(--ink); background:var(--shade); border:1px solid var(--line); border-radius:16px; padding:6px 12px; text-decoration:none; }
+.lane .go a:hover{ background:#fff; }
 
 /* docs */
-.docs{ display:grid; grid-template-columns:1fr; gap:12px; }
-a.doc{ display:flex; text-decoration:none; color:inherit; border:1px solid var(--rule); border-left:6px solid var(--dc); border-radius:8px; overflow:hidden; background:var(--paper-card); transition:box-shadow .12s, transform .08s; }
-a.doc:hover{ box-shadow:0 5px 18px rgba(0,0,0,.1); transform:translateY(-1px); }
-a.doc .body{ padding:16px 20px; flex:1; min-width:0; display:flex; align-items:baseline; gap:14px; }
-a.doc .dn{ font-family:"Newsreader",serif; font-size:30px; color:var(--dc); line-height:.9; flex:none; }
-a.doc .dttl{ display:block; font-family:"Newsreader",serif; font-size:22px; font-weight:600; color:var(--ink); }
-a.doc .dsub{ display:block; font-size:14px; color:var(--ink-2); margin-top:2px; max-width:52ch; }
-a.doc .arrow{ align-self:center; padding:0 18px; font-size:20px; color:var(--dc); }
+.docs{ display:grid; grid-template-columns:1fr; gap:2px; }
+a.doc{ display:flex; align-items:baseline; gap:12px; text-decoration:none; color:inherit; padding:11px 6px; border-bottom:1px solid var(--rule); }
+a.doc:hover{ background:var(--shade); }
+a.doc .dot{ width:10px; height:10px; border-radius:50%; background:var(--dc); flex:none; align-self:center; }
+a.doc .dn{ font-family:"Newsreader",serif; color:var(--dc); font-size:17px; width:1.6em; text-align:center; flex:none; }
+a.doc .dt{ font-weight:700; color:var(--ink); } a.doc .ds{ color:var(--muted); font-size:13px; }
+a.doc .ar{ margin-left:auto; color:var(--dc); }
 
-/* contacts */
-.contacts{ display:grid; grid-template-columns:1fr; gap:12px; }
-.contact{ background:var(--paper-card); border:1px solid var(--rule); border-top:3px solid var(--page-accent); border-radius:8px; padding:16px 20px; }
-.contact .ck{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--page-accent); margin-bottom:8px; }
-.contact .cv{ font-size:16px; color:var(--ink-2); line-height:1.7; max-width:none; } .contact .cv b{ color:var(--ink); } .contact .cv a{ color:var(--page-accent); font-weight:700; text-decoration:none; }
-.foot{ background:var(--paper-2); padding:18px var(--cpad,64px); font-size:14px; color:var(--ink-mute); max-width:none; }
+.contacts{ display:grid; grid-template-columns:1fr; gap:10px; }
+.contact{ font-size:15px; color:var(--ink-2); } .contact b{ color:var(--ink); } .contact a{ color:var(--indigo); font-weight:700; text-decoration:none; }
+.foot{ margin-top:34px; padding-top:14px; border-top:1px solid var(--rule); font-size:12px; color:var(--muted); }
 
-@media (min-width:720px){
-  .nums{ grid-template-columns:repeat(3,1fr); }
-  .router{ grid-template-columns:repeat(3,1fr); }
-  .docs{ grid-template-columns:1fr 1fr; }
-  .contacts{ grid-template-columns:repeat(3,1fr); }
-}
-@media (max-width:600px){ :root{ --cpad:24px; } }
-
+@media (min-width:680px){ .router{ grid-template-columns:repeat(3,1fr); } .docs{ grid-template-columns:1fr 1fr; column-gap:32px; } .contacts{ grid-template-columns:repeat(3,1fr); } }
 @media print{
-  @page{ size:Letter; margin:.55in; }
-  html,body{ background:#fff!important; color:#000!important; }
-  .wrap{ box-shadow:none!important; max-width:none!important; }
-  .cover,.sec-head,.lead,.chip.warn,.goals,.boz,.num,a.doc,.foot{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .lead,.goals{ page-break-inside:avoid; } a{ color:#000!important; }
+  body{ background:#fff; padding:0; } .sheet{ box-shadow:none; border:none; border-radius:0; max-width:none; padding:0; }
+  @page{ size:Letter; margin:.6in; }
+  .dot,.lane,.safety{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<div class="sheet">
+  <h1 class="title">Luke VonDog<small>Care Archive</small></h1>
+  <div class="rule"></div>
+  <p class="meta"><b>Blue Weimaraner</b> · neutered male · 12 yr · 35.9 kg / 79.1 lb · microchip 941000016858399 · no known drug reactions · currently in Bozeman, MT through Sep 2026. Owner-compiled from Thornwood records — not a veterinary record or directive.</p>
 
-<nav class="lnav" data-page="practitioner-packet" aria-label="Archive navigation">
-  <div class="lnav-bar">
-    <a class="lnav-home" href="luke-practitioner-packet.html">Luke · Home</a>
-    <button class="lnav-toggle" aria-expanded="false" aria-controls="lnav-panel">Menu</button>
+  <h2 style="--sc:var(--indigo)">Safety essentials</h2>
+  <div class="safety">
+    <div class="lead">Furosemide (Lasix) 300 mg/day is his ongoing CHF medication — continue as prescribed.</div>
+    <p>Presumptive cardiac disease and IRIS Stage 2 kidney disease are managed together; furosemide + carprofen are both nephrotoxic, so renal labs (creatinine 1.8, phosphorus 5.1, both Sep '25) are worth rechecking before changing renal or cardiac meds. Deep-chested breed — GDV vigilance.</p>
+    <div class="goals"><b>Goals of care (Rikki's directive):</b> a peaceful, dignified death — DNR, no CPR, no hospitalization, comfort over resuscitation. <b>Who Luke is:</b> friendly, a brilliant athletic beast, a lover of food and learning.</div>
   </div>
-  <div class="lnav-panel" id="lnav-panel">
-    <div class="lnav-pagetitle">Care Archive</div>
-    <div class="lnav-grp">On this page</div>
-    <a class="lnav-sec" href="#safety">Safety &amp; goals</a>
-    <a class="lnav-sec" href="#who-for">Who's it for</a>
-    <a class="lnav-sec" href="#documents">Documents</a>
-    <a class="lnav-sec" href="#contacts">Contacts</a>
-    <div class="lnav-grp">All documents</div>
-    <div data-lnav-docs></div>
-    <div class="lnav-updown" data-lnav-updown></div>
+
+  <h2 style="--sc:var(--slate)">Who's it for</h2>
+  <div class="router">
+    <div class="lane" style="--l:var(--blue)">
+      <div class="k">Veterinarian</div><h3>For your vet</h3>
+      <ul><li>Meds, diagnoses, labs.</li><li>Systems &amp; conflicts.</li><li>The full record.</li></ul>
+      <div class="go"><a href="luke-at-a-glance.html">At a Glance</a><a href="luke-system-map.html">System Map</a></div>
+    </div>
+    <div class="lane" style="--l:var(--terra)">
+      <div class="k">Nutritionist</div><h3>For a nutritionist</h3>
+      <ul><li>Diet &amp; the omega-3 gap.</li><li>Cardiac vs renal tension.</li><li>Confirm the picture first.</li></ul>
+      <div class="go"><a href="luke-nutrition-consult.html">Nutrition Consult</a><a href="luke-diet-medication-matrix.html">Diet Matrix</a></div>
+    </div>
+    <div class="lane" style="--l:var(--purple)">
+      <div class="k">Pet sitter</div><h3>For a pet sitter</h3>
+      <ul><li>Pills in goat cheese.</li><li>Food, carrots, Woojer mat.</li><li>When to call.</li></ul>
+      <div class="go"><a href="luke-pet-sitter-guide.html">Pet-Sitter Guide</a></div>
+    </div>
   </div>
-</nav>
 
-<div class="wrap">
-<main id="main">
+  <h2 style="--sc:var(--green)">All documents</h2>
+  <div class="docs">
+    <a class="doc" href="luke-at-a-glance.html" style="--dc:var(--blue)"><span class="dn">1</span><span><span class="dt">Luke at a Glance</span> <span class="ds">— clinical brief, meds, labs</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-data-visualization-suite.html" style="--dc:var(--green)"><span class="dn">2</span><span><span class="dt">Data Visualization</span> <span class="ds">— 10 years of bloodwork, charted</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-system-map.html" style="--dc:var(--purple)"><span class="dn">3</span><span><span class="dt">System Map</span> <span class="ds">— conditions in conflict</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-diet-medication-matrix.html" style="--dc:var(--amber)"><span class="dn">4</span><span><span class="dt">Diet &amp; Meds Matrix</span> <span class="ds">— food + drugs mapped</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-verbatim-timeline.html" style="--dc:var(--clay)"><span class="dn">5</span><span><span class="dt">Verbatim Timeline</span> <span class="ds">— the complete record</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-what-could-help.html" style="--dc:var(--sage)"><span class="dn">6</span><span><span class="dt">What Could Help</span> <span class="ds">— owner's ideas, for discussion</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-nutrition-consult.html" style="--dc:var(--terra)"><span class="dn">7</span><span><span class="dt">Nutrition Consult</span> <span class="ds">— brief for a nutritionist</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-helping-thrive.html" style="--dc:var(--green)"><span class="dn">8</span><span><span class="dt">Helping Luke Thrive</span> <span class="ds">— options for his body</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-bozeman-travel-brief.html" style="--dc:var(--steel)"><span class="dn">9</span><span><span class="dt">Bozeman Local-Care</span> <span class="ds">— at-altitude reference</span></span><span class="ar">→</span></a>
+    <a class="doc" href="luke-pet-sitter-guide.html" style="--dc:var(--indigo)"><span class="dn">10</span><span><span class="dt">Pet-Sitter Guide</span> <span class="ds">— plain-language care</span></span><span class="ar">→</span></a>
+  </div>
 
-  <!-- COVER -->
-  <header class="cover">
-    <div class="ey">A living care archive</div>
-    <div class="cover-top">
-      <div>
-        <h1>Luke <em>VonDog.</em></h1>
-        <p class="deck">Everything the people caring for him need — his vet, his nutritionist, and whoever's watching him — in one place. The one thing: <b style="color:#ffd9a8">never stop his furosemide.</b></p>
-      </div>
-      <img class="cover-photo" src="luke-photo.png" alt="Luke, a blue Weimaraner, smiling outdoors">
-    </div>
-  </header>
+  <h2 style="--sc:var(--indigo)">Contacts</h2>
+  <div class="contacts">
+    <div class="contact"><b>Owner</b> · Rikki Delaine<br>Bozeman, MT · <a href="tel:+16169707690">(616) 970-7690</a></div>
+    <div class="contact"><b>Local ER</b> · Foothills, Bozeman<br><a href="tel:+14065560604">(406) 556-0604</a></div>
+    <div class="contact"><b>Home clinic</b> · Thornwood, Ada MI<br><a href="tel:+16166761251">(616) 676-1251</a></div>
+  </div>
 
-  <!-- SAFETY -->
-  <section id="safety">
-    <div class="sec-head sh-safety">
-      <div class="sh-ey">Read first</div>
-      <h2>Safety &amp; goals of care</h2>
-      <p class="deck">Blue Weimaraner · 12 yr · 35.9 kg / 79.1 lb · no known drug reactions · currently in Bozeman, MT through September 2026.</p>
-    </div>
-    <div class="sec-body">
-      <div class="lead">
-        <div class="badge" aria-hidden="true">!</div>
-        <div>
-          <h3>Do NOT stop the furosemide (Lasix), 300&nbsp;mg/day.</h3>
-          <div class="act">→ Breathing hard, open-mouthed, or asleep breaths &gt; 30/min: <b>treat as CHF decompensation.</b></div>
-        </div>
-      </div>
-      <div class="chips">
-        <span class="chip warn">Cardiac ↔ renal — both meds nephrotoxic</span>
-        <span class="chip">Cardiac dx presumptive (no echo/biomarkers)</span>
-        <span class="chip">Labs ~10 mo old — recheck first</span>
-        <span class="chip">GDV risk · no 2nd NSAID or steroid</span>
-      </div>
-      <div class="goals">
-        <div class="who"><b>Who Luke is:</b> friendly · a brilliant, athletic beast · a lover of food and learning.</div>
-        <div class="dir">A peaceful, dignified death. DNR · no CPR · no hospitalization · comfort over resuscitation.</div>
-        <div class="sub">Rikki's directive — please honor it. Keep him well and comfortable; when it's time, let him go peacefully.</div>
-      </div>
-      <div class="nums">
-        <div class="num hi"><div class="nk">Creatinine <span class="h">HIGH</span></div><div class="nv">1.8</div><div class="nd"><span class="up">↑ 1.0→1.2→1.8</span> · Sep '25</div></div>
-        <div class="num hi"><div class="nk">Phosphorus <span class="h">HIGH</span></div><div class="nv">5.1</div><div class="nd">Sep '25 · target &lt; 4.6</div></div>
-        <div class="num hi"><div class="nk">ALT <span class="h">HIGH</span></div><div class="nv">128</div><div class="nd"><span class="up">↑ rising</span> · Sep '25</div></div>
-      </div>
-      <p class="stale">Labs are Sep '25 – Mar '26 — a snapshot, not today's status. Full detail in <a href="luke-at-a-glance.html">Luke at a Glance</a>.</p>
-    </div>
-  </section>
-
-  <!-- ROUTER -->
-  <section id="who-for">
-    <div class="sec-head sh-router">
-      <div class="sh-ey">Start here</div>
-      <h2>Who's it for</h2>
-      <p class="deck">Three ways in — each tells you the few things that reader needs, then the documents built for them.</p>
-    </div>
-    <div class="sec-body">
-      <div class="router">
-        <div class="lane" style="--l:var(--teal-mid)">
-          <div class="k">Veterinarian</div><h3>What a vet wants to know</h3>
-          <ul><li>Never stop furosemide.</li><li>DNR · comfort over rescue.</li><li>Cardiac ↔ renal; labs ~10 mo old.</li></ul>
-          <div class="go"><a href="luke-at-a-glance.html">At a Glance</a><a href="luke-system-map.html">System Map</a></div>
-        </div>
-        <div class="lane" style="--l:var(--terracotta)">
-          <div class="k">Nutritionist</div><h3>What the nutritionist wants to know</h3>
-          <ul><li>No shelf diet fits (heart vs kidney).</li><li>~94% short on omega-3.</li><li>Confirm the picture first.</li></ul>
-          <div class="go"><a href="luke-nutrition-consult.html">Nutrition Consult</a><a href="luke-helping-thrive.html">Thrive</a></div>
-        </div>
-        <div class="lane" style="--l:var(--indigo)">
-          <div class="k">Pet sitter</div><h3>What a pet sitter wants to know</h3>
-          <ul><li>Pills in goat cheese — never skip furosemide.</li><li>Food, carrots, his Woojer mat.</li><li>The signs that mean call now.</li></ul>
-          <div class="go"><a href="luke-pet-sitter-guide.html">Pet-Sitter Guide</a></div>
-        </div>
-      </div>
-      <div class="boz">
-        <div class="k">Currently in Bozeman</div>
-        <p><b>Through September 2026</b> · ~4,820 ft altitude + wildfire-smoke season. Local ER: <b>Foothills</b> · <a href="tel:+14065560604">(406) 556-0604</a>.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- DOCUMENTS -->
-  <section id="documents">
-    <div class="sec-head sh-docs">
-      <div class="sh-ey">Everything</div>
-      <h2>All documents</h2>
-      <p class="deck">Each document has its own color — you'll see it again on the page and in the sidebar.</p>
-    </div>
-    <div class="sec-body">
-      <div class="docs">
-        <a class="doc" href="luke-at-a-glance.html" style="--dc:var(--teal-mid)"><span class="body"><span class="dn">1</span><span><span class="dttl">Luke at a Glance</span><span class="dsub">The 2-page clinical brief.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-data-visualization-suite.html" style="--dc:var(--moss)"><span class="body"><span class="dn">2</span><span><span class="dttl">Data Visualization</span><span class="dsub">10 years of bloodwork, charted.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-system-map.html" style="--dc:var(--plum)"><span class="body"><span class="dn">3</span><span><span class="dttl">System Map</span><span class="dsub">Conditions in conflict.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-diet-medication-matrix.html" style="--dc:var(--ochre)"><span class="body"><span class="dn">4</span><span><span class="dttl">Diet &amp; Meds Matrix</span><span class="dsub">Food + drugs, mapped to his systems.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-verbatim-timeline.html" style="--dc:var(--burgundy)"><span class="body"><span class="dn">5</span><span><span class="dttl">Verbatim Timeline</span><span class="dsub">The complete record — source of truth.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-what-could-help.html" style="--dc:var(--sage)"><span class="body"><span class="dn">6</span><span><span class="dttl">What Could Help</span><span class="dsub">Owner's ideas — for discussion.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-nutrition-consult.html" style="--dc:var(--terracotta)"><span class="body"><span class="dn">7</span><span><span class="dttl">Nutrition Consult</span><span class="dsub">A brief for a nutritionist.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-helping-thrive.html" style="--dc:var(--spruce)"><span class="body"><span class="dn">8</span><span><span class="dttl">Helping Luke Thrive</span><span class="dsub">Modern options, filtered for his body.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-bozeman-travel-brief.html" style="--dc:var(--steel)"><span class="body"><span class="dn">9</span><span><span class="dttl">Bozeman Local-Care</span><span class="dsub">At-altitude reference.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-        <a class="doc" href="luke-pet-sitter-guide.html" style="--dc:var(--indigo)"><span class="body"><span class="dn">10</span><span><span class="dttl">Pet-Sitter Guide</span><span class="dsub">Plain-language care for Luke.</span></span></span><span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACTS -->
-  <section id="contacts">
-    <div class="sec-head sh-contacts">
-      <div class="sh-ey">Reach</div>
-      <h2>Contacts</h2>
-    </div>
-    <div class="sec-body">
-      <div class="contacts">
-        <div class="contact"><div class="ck">Owner</div><div class="cv"><b>Rikki Delaine</b><br>Bozeman, MT<br><a href="tel:+16169707690">(616) 970-7690</a></div></div>
-        <div class="contact"><div class="ck">Local ER — Bozeman</div><div class="cv"><b>Foothills Veterinary</b><br><a href="tel:+14065560604">(406) 556-0604</a> · fvhmt.com</div></div>
-        <div class="contact"><div class="ck">Home clinic &amp; records</div><div class="cv"><b>Thornwood</b> · Ada, MI<br><a href="tel:+16166761251">(616) 676-1251</a></div></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="foot">Luke VonDog · owner-compiled care archive · as of July 2026 · not a veterinary record or a directive.</div>
-
-</main>
+  <div class="foot">Luke VonDog · owner-compiled care archive · as of July 2026 · every value carries its date.</div>
 </div>
-
-<script src="luke-nav.js" defer></script>
 </body>
 </html>
