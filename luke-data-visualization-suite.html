@@ -1853,5 +1853,49 @@ li { font-size: 16px; line-height: 1.8; }
 .cover .deck       { font-size: 18px; line-height: 1.8; }
 .cover-meta .cm-field { font-size: 14px; line-height: 1.7; }
 </style>
+
+<style>
+/* ═══ CLEAN-WHITE RE-SKIN (overrides win the cascade) — keeps every chart, value, range & table; hides interpretive commentary ═══ */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+:root{ --cink:#1c1c24; --cmut:#6a6a78; --cline:#d7d7e0; --crule:#e4e4ea; --cshade:#f6f6f9; }
+body{ background:#ececef !important; color:var(--cink) !important; font-family:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif !important; }
+.shell{ max-width:1080px !important; background:#fff !important; box-shadow:0 2px 18px rgba(30,30,50,.08) !important; border:1px solid var(--cline); border-radius:6px; margin:24px auto !important; }
+.side{ background:var(--cshade) !important; color:var(--cink) !important; border-right:1px solid var(--crule) !important; }
+.side .brand{ border-bottom:1px solid var(--crule) !important; }
+.side .brand .ey{ color:#3f3d6e !important; font-weight:700 !important; }
+.side .brand h1{ color:var(--cink) !important; }
+.side .brand .sub{ color:var(--cmut) !important; }
+.side nav .grp{ color:var(--cmut) !important; }
+.side nav a{ color:#3a3a44 !important; }
+.side nav a:hover{ background:#e8e8ee !important; color:var(--cink) !important; }
+.side nav a.active{ background:#e2e2ea !important; color:var(--cink) !important; }
+.side .foot{ color:var(--cmut) !important; border-top:1px solid var(--crule) !important; }
+.fl.H{ background:#f6ece9 !important; color:#a45a44 !important; } .fl.L{ background:#f3efe0 !important; color:#8a6a1e !important; } .fl.OK{ color:#5f8a5a !important; background:transparent !important; } .fl.Q{ background:#efeaf3 !important; color:#856ba3 !important; }
+.cover{ background:#fff !important; border-bottom:2px solid var(--cink) !important; }
+.cover .ey{ color:#3f3d6e !important; font-weight:700 !important; letter-spacing:.14em; text-transform:uppercase; }
+.cover h2{ color:var(--cink) !important; } .cover h2 em{ color:#5f7fb0 !important; }
+.cover p, .cover .legend{ color:#3a3a44 !important; }
+.section{ background:#fff !important; border-top:1px solid var(--crule) !important; }
+.s-head{ background:transparent !important; color:var(--cink) !important; margin:30px 0 18px !important; border-bottom:1px solid var(--crule); padding-bottom:12px; align-items:baseline !important; }
+.s-head-inner{ padding:0 !important; }
+.s-head h3{ color:var(--cink) !important; font-size:clamp(24px,3vw,32px) !important; }
+.s-badge{ color:var(--cmut) !important; } .s-cat{ color:#8a8a96 !important; }
+.s-current{ border-left:none !important; padding:0 !important; min-width:0 !important; flex-direction:row !important; align-items:baseline !important; gap:12px !important; text-align:left !important; }
+.s-current .val{ color:var(--cink) !important; font-size:32px !important; }
+.s-current .val small{ color:var(--cmut) !important; }
+.pill{ font-size:12px !important; padding:3px 10px !important; border-width:1px !important; }
+.pill.OK{ background:#eef3ee !important; color:#5f8a5a !important; border-color:#cfe0d5 !important; }
+.pill.H{ background:#f6ece9 !important; color:#a45a44 !important; border-color:#e6d3cf !important; }
+.pill.L{ background:#eef1f6 !important; color:#5a6b7a !important; border-color:#cdd7e0 !important; }
+.pill.Q{ background:#efeaf3 !important; color:#856ba3 !important; border-color:#ddd0e6 !important; }
+.pill.WARN{ background:#f3efe0 !important; color:#8a6a1e !important; border-color:#e6dcbf !important; }
+.s-current .pill-date{ color:var(--cmut) !important; font-size:13px !important; }
+.chart-card{ border:1px solid var(--crule) !important; box-shadow:none !important; }
+.data-tbl th{ color:var(--cmut) !important; border-bottom:1px solid var(--cline) !important; font-size:11px !important; }
+.data-tbl td{ border-bottom:1px solid var(--crule) !important; color:#3a3a44 !important; }
+.data-tbl td.d, .data-tbl td.v{ color:var(--cink) !important; }
+.gap-bar-wrap{ border:1px solid var(--crule) !important; } .gap-fill{ background:#5f7fb0 !important; }
+.prose-grid, .adjust{ display:none !important; }
+</style>
 </body>
 </html>
