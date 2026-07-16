@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — Systems Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c24; --ink-2:#3a3a44; --muted:#6a6a78;
+  --rule:#e4e4ea; --line:#d7d7e0; --shade:#f5f5f8; --bg:#ececef; --card:#ffffff;
+  --indigo:#3f3d6e; --blue:#5f7fb0; --green:#5f8a5a; --purple:#856ba3; --amber:#b5813f; --clay:#a45a44; --slate:#5a6b7a;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif; font-size:15px; line-height:1.55; padding:28px 16px; }
+.sheet{ max-width:960px; margin:0 auto; background:var(--card); border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 18px rgba(30,30,50,.08); padding:44px clamp(24px,5vw,56px) 48px; }
+.title{ font-family:"Newsreader",serif; font-weight:500; font-size:clamp(30px,5vw,44px); letter-spacing:-.01em; }
+.title small{ display:block; font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+.rule{ height:2px; background:var(--ink); margin:16px 0 20px; }
+.intro{ font-size:14.5px; color:var(--ink-2); max-width:80ch; margin-bottom:26px; }
+.intro b{ color:var(--ink); }
+
+table{ width:100%; border-collapse:collapse; font-size:14px; }
+th{ text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:8px 12px; border-bottom:1px solid var(--line); }
+td{ padding:12px 12px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-2); }
+tbody tr:nth-child(even){ background:var(--shade); }
+.sys{ color:var(--ink); font-weight:700; white-space:nowrap; }
+.sys .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:9px; vertical-align:middle; }
+.status{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:12px; white-space:nowrap; }
+.st-watch{ background:#f6ece9; color:var(--clay); } .st-mon{ background:#eef1f6; color:var(--slate); } .st-man{ background:#eef3ee; color:var(--green); } .st-ok{ background:#f2f2f5; color:var(--muted); }
+td b{ color:var(--ink); font-weight:700; }
+.conflict{ margin-top:30px; background:#fbfbfd; border:1px solid var(--line); border-left:4px solid var(--indigo); border-radius:8px; padding:18px 20px; }
+.conflict h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--indigo); margin-bottom:12px; }
+.conflict ul{ list-style:none; }
+.conflict li{ font-size:14px; padding:6px 0 6px 18px; position:relative; color:var(--ink-2); }
+.conflict li::before{ content:""; position:absolute; left:0; top:12px; width:6px; height:6px; border-radius:50%; background:var(--indigo); }
+.conflict li b{ color:var(--ink); }
+.foot{ margin-top:32px; padding-top:14px; border-top:1px solid var(--rule); font-size:12px; color:var(--muted); }
+@media print{
+  body{ background:#fff; padding:0; } .sheet{ box-shadow:none; border:none; border-radius:0; max-width:none; padding:0; }
+  @page{ size:Letter; margin:.6in; }
+  tbody tr:nth-child(even){ background:#f5f5f8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .status,.dot,.conflict{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1 class="title">Luke VonDog<small>Systems Overview</small></h1>
+  <div class="rule"></div>
+  <p class="intro">Luke is managed across several organ systems at once, and some of the treatments interact — the notes below flag where. <b>Blue Weimaraner · 12 yr · 35.9 kg.</b></p>
+
+  <table>
+    <thead><tr><th>System</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--clay)"></span>Cardiac</td>
+        <td><span class="status st-watch">Primary</span></td>
+        <td>Presumptive CHF on <b>furosemide 300 mg/day</b>. No echocardiogram or cardiac biomarkers on file — diagnosis is empiric. No adjunctive cardiac meds (pimobendan / ACE-I / spironolactone).</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--blue)"></span>Renal</td>
+        <td><span class="status st-mon">Monitor</span></td>
+        <td>CKD, <b>IRIS Stage 2</b>. Creatinine 1.0 → 1.2 → 1.8; phosphorus 5.1. No urinalysis / UPC since Sep 2023. Furosemide and carprofen are both nephrotoxic.</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--amber)"></span>Hepatic</td>
+        <td><span class="status st-mon">Monitor</span></td>
+        <td>Mild hepatocellular changes. ALT 46 → 121 → 128; bilirubin spike (Mar '25) resolved. Carprofen a possible contributor.</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--green)"></span>Musculoskeletal</td>
+        <td><span class="status st-man">Managed</span></td>
+        <td>Chronic hindlimb osteoarthritis (right rear). Carprofen + amantadine + Librela; response good. No radiographs on file.</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--purple)"></span>GI / GDV</td>
+        <td><span class="status st-ok">Vigilance</span></td>
+        <td>Deep-chested breed — bloat risk. Simethicone each morning; small, warm meals. Pack-mate died of GDV (Feb 2023).</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--slate)"></span>Dermatologic</td>
+        <td><span class="status st-ok">Stable</span></td>
+        <td>Managed with Cytopoint. 2× FNA-confirmed lipomas; ~2 mm cheek mass stable.</td>
+      </tr>
+      <tr>
+        <td class="sys"><span class="dot" style="background:var(--muted)"></span>Neurologic</td>
+        <td><span class="status st-ok">Normal</span></td>
+        <td>Normal neuro exam (Mar '26). No ataxia, seizures, or cognitive signs documented.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="conflict">
+    <h2>Where treatments interact</h2>
+    <ul>
+      <li><b>Cardiac vs. renal.</b> The heart wants diuresis; the kidney wants hydration and phosphorus control. Furosemide + carprofen are both nephrotoxic on a Stage-2 kidney.</li>
+      <li><b>Pain vs. renal/hepatic.</b> Carprofen (NSAID) helps his arthritis but loads both kidney and liver; a dose review was discussed Sep '25.</li>
+      <li><b>Open items.</b> A urinalysis / UPC (none since 2023) and cardiac biomarkers (never drawn) would firm up the renal and cardiac pictures.</li>
+    </ul>
+  </div>
+
+  <div class="foot">Luke VonDog · owner-compiled from Thornwood records · not a clinical directive. See the full record for provenance.</div>
+</div>
+</body>
+</html>
