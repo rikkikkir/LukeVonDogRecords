@@ -27,6 +27,13 @@ body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible
 .idk{ font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
 .idv{ font-size:16px; color:var(--ink); margin-top:3px; }
 .disc{ font-size:13px; color:var(--muted); font-style:italic; margin:0; }
+/* "Where Luke is right now" note (mirrors Our Time) */
+.state{ background:#fbfbfd; border:1px solid var(--line); border-left:4px solid var(--clay); border-radius:8px; padding:18px 22px; max-width:78ch; }
+.state p{ font-size:15.5px; color:var(--ink-2); margin:0 0 12px; } .state p:last-child{ margin-bottom:0; }
+.state b{ color:var(--ink); }
+.state a.src{ color:var(--clay); font-weight:700; text-decoration:none; }
+.state a.src:hover{ text-decoration:underline; }
+.wheels{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--line); font-size:15px; color:var(--ink-2); }
 
 h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:36px 0 14px; padding-bottom:7px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:9px; }
 h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--sc,var(--indigo)); flex:none; }
@@ -83,6 +90,14 @@ a.doc .ar{ margin-left:auto; color:var(--dc); font-size:20px; font-weight:700; f
     <div><span class="idk">Currently</span><span class="idv">Bozeman, MT · through Sep 2026</span></div>
   </div>
   <p class="disc">Owner-compiled from Thornwood records — not a veterinary record or directive.</p>
+
+  <h2 style="--sc:var(--clay)">Where Luke is right now</h2>
+  <div class="state">
+    <p>Luke is still very active, but he's steadily slowed over the past two years — from pain, not lost enthusiasm. His <b>back right leg</b> is the sore one (both are sore, the right more so): he rises slowly, increasingly runs with both back legs moving as one, and on a startled quick turn the leg can give out — he's fallen. He's changed how he settles, too — he spins to swing his right leg under him and rest on the hip rather than bend the joint deeply, and sits with that leg off to the side.</p>
+    <p>There's a mass growing behind each knee that I believe is part of the pain. He digs one-armed now instead of with both front legs, and <b>gets winded faster, needing more breaks</b>. I occasionally hear a toenail drag on a step. I want to slow and reverse his decline as much as I can.</p>
+    <div class="wheels"><b>As of July 2026</b>, I'm getting him set up with a Walking Wheels cart — I now have all the parts, pieces, and straps. He'll enjoy the walks at speed, without the pain in his knee, hip, and ligaments.</div>
+    <p style="margin-top:12px;margin-bottom:0;font-size:14px"><a class="src" href="luke-verbatim-timeline.html#owner-current-state">This note is kept in the Verbatim Timeline →</a></p>
+  </div>
 
   <h2 style="--sc:var(--green)">All documents</h2>
   <div class="docs">
