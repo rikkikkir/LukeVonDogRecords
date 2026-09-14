@@ -75,3 +75,35 @@ Only these properties: colour, background, border colour/width, box-shadow, font
 - **Print.** The page breaks in print, including the mostly blank first page on Helping Thrive and Bozeman, were already there before. Print still uses white paper.
 - **Visuals.** Desktop (1280) and mobile (390) screenshots were captured before and after.
 - **Visuals.** Desktop (1280) and mobile (390) screenshots were captured before and after.
+
+---
+
+## 2026-09-14 — content updates (commit 4b44a57)
+
+Every change is sourced; nothing was removed except the corrected sentences noted.
+
+- **Hub (luke-practitioner-packet.html)**
+  - Restored the goals-of-care card word for word from git history (`16d3b10^`): *"Goals of care (Rikki's directive): a peaceful, dignified death — DNR, no CPR, no hospitalization, comfort over resuscitation. Who Luke is: friendly, a brilliant athletic beast, a lover of food and learning."* (Rikki asked for this on 2026-09-14.)
+  - Added a dated "Current medications — updated Sep 14, 2026" note:
+    - furosemide 80 mg tablets, 2 at breakfast + 2 at dinner = 320 mg/day, since Aug 10, 2026 (per Rikki);
+    - carprofen 75 mg chewables × 2 = 150 mg/day (Thornwood Rx May 8, 2026: "Give up to 150mg per day");
+    - amantadine 100 mg once daily.
+  - "Drug reactions: None known" → "Thornwood allergy field blank · reactions noted: Vectra (2016), Cytopoint (2023)". Source: Thornwood EMR 4/26/2016 and 9/1/2023.
+- **At a Glance (luke-at-a-glance.html)**
+  - The furosemide rows and lines now say 320 mg/day since Aug 10, 2026; the previous 300 mg/day is kept as "previously".
+  - The carprofen lines now say 150 mg/day (they said 225 mg/day, which contradicted Thornwood's own Rx).
+  - Corrected the false sentence "The Mar 9, 2026 panel reported BUN only." The EMR shows a full in-clinic chemistry: creatinine 1.6, phosphorus 2.9, ALT 98, BUN 35 H.
+  - The "As of July 2026" stamp now adds "doses updated Sep 14, 2026".
+- **Known, not yet fixed:** other pages still show the older doses (300 mg/day furosemide, 225 mg/day carprofen). The hub note says so.
+
+## How to pull these changes back
+
+The state of the site before today's work is tagged **`before-2026-09-14`** (commit 83b7ef3). In the repo `~/Downloads/LukeVonDogRecords`:
+
+- **Undo everything from today (styling + content):**
+  `git checkout main && git revert --no-edit 4b44a57 75894bd && git push origin main`
+- **Undo only the new styling:** `git checkout main && git revert --no-edit 75894bd && git push origin main`
+- **Undo only the content updates:** `git checkout main && git revert --no-edit 4b44a57 && git push origin main`
+- **To see the old version** without changing anything: `git show before-2026-09-14:luke-practitioner-packet.html`
+
+`git revert` adds new "undo" commits, so no history is lost and every step can itself be undone. GitHub Pages republishes within a minute or two of a push.
