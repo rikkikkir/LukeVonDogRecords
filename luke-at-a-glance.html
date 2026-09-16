@@ -15,6 +15,7 @@
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
 html{ -webkit-text-size-adjust:100%; }
+html,body{ overflow-x:clip; max-width:100%; }
 body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif; font-size:15px; line-height:1.55; }
 
 .topbar{ max-width:1000px; margin:0 auto; padding:14px 16px 0; display:flex; gap:14px; align-items:center; }
@@ -79,6 +80,21 @@ td b,.drug{ color:var(--ink); font-weight:700; }
 .foot{ margin-top:36px; padding-top:14px; border-top:1px solid var(--rule); font-size:12px; color:var(--muted); }
 a.link{ color:var(--indigo); font-weight:700; }
 
+@media (max-width:640px){
+  .sheet{ padding:24px 14px 30px; margin:8px; border-radius:4px; }
+  .topbar{ padding:10px 14px 0; flex-wrap:wrap; }
+  .title{ font-size:28px; }
+  .meta{ font-size:13px; gap:3px 12px; }
+  .meta .as{ margin-left:0; }
+  table{ font-size:13px; }
+  th, td{ padding:5px 6px; }
+  .grid2{ gap:18px; }
+  /* wide tables scroll inside their own box instead of widening the page.
+     display:block on the table is NOT enough — thead/tbody/tr keep their
+     intrinsic width and push the document sideways. */
+  table{ display:table; width:100%; table-layout:fixed; }
+  table td, table th{ overflow-wrap:anywhere; word-break:break-word; }
+}
 @media print{
   body{ background:#fff; } .topbar{ display:none; }
   .sheet{ box-shadow:none; border:none; border-radius:0; max-width:none; margin:0; padding:0; }
@@ -90,6 +106,7 @@ a.link{ color:var(--indigo); font-weight:700; }
 </style>
 </head>
 <body>
+<div class="ai-note" style="max-width:1000px;margin:12px auto 0;padding:11px 16px;border:1px solid #d7d7e0;border-left:4px solid #a45a44;border-radius:5px;background:#faf7f6;color:#3a3a44;font-size:13.5px;line-height:1.5;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;"><b>How to read this page.</b> Laboratory values, dates and quoted clinic text are transcribed from Luke's records. The explanatory prose, interpretations and any suggested interventions are <b>AI-written and speculative</b> — decision-support for conversation, not medical advice and not a directive. Nothing here should be <b>started, stopped, or dosed</b> without his own veterinary team. <a href="luke-ai-build-log.html" style="color:#3f3d6e;font-weight:700;">What was built, changed and found wrong →</a></div>
 <div class="topbar"><a href="luke-practitioner-packet.html">← Care archive</a><span class="spacer"></span><span class="doc">Luke at a Glance · vet record</span></div>
 <div class="sheet">
 
@@ -103,6 +120,8 @@ a.link{ color:var(--indigo); font-weight:700; }
     <span>Thornwood <b>#4677</b> · Client #8077</span>
     <span class="as">As of July 2026 · doses and labs updated Sep 14, 2026</span>
   </div>
+
+  <div class="goals" style="margin:14px 0 0;padding:12px 16px;border:1.5px solid var(--ink);border-radius:6px;font-size:14.5px;"><b>Goals of care (Rikki's directive):</b> a peaceful, dignified death — <b>DNR, no CPR, no hospitalization</b>, comfort over resuscitation.</div>
 
   <div class="grid2">
     <div>

@@ -18,7 +18,8 @@
     { f: "luke-nutrition-consult.html",        n: "7",  label: "Nutrition Consult" },
     { f: "luke-helping-thrive.html",           n: "8",  label: "Helping Thrive" },
     { f: "luke-bozeman-travel-brief.html",     n: "9",  label: "Bozeman Care" },
-    { f: "luke-our-time.html",                 n: "10", label: "Our Time" }
+    { f: "luke-our-time.html",                 n: "10", label: "Our Time" },
+    { f: "luke-ai-build-log.html",              n: "11", label: "AI Build Log" }
   ];
 
   function run() {

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luke VonDog — AI Build &amp; Audit Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c24; --ink-2:#3a3a44; --muted:#6a6a78;
+  --rule:#e4e4ea; --line:#d7d7e0; --shade:#f6f6f9; --bg:#ececef; --card:#ffffff;
+  --indigo:#3f3d6e; --blue:#5f7fb0; --green:#5f8a5a; --purple:#856ba3; --amber:#b5813f; --clay:#a45a44; --slate:#5a6b7a;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{ background:var(--bg); color:var(--ink); font-family:"Atkinson Hyperlegible", system-ui,-apple-system, sans-serif; font-size:15px; line-height:1.55; }
+
+.sheet{ max-width:1060px; margin:14px auto 40px; background:var(--card); border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 18px rgba(30,30,50,.08); padding:44px clamp(20px,5vw,56px) 48px; }
+.title{ font-family:"Newsreader",serif; font-weight:500; font-size:clamp(28px,5vw,44px); letter-spacing:-.01em; }
+.title small{ display:block; font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+.rule{ height:2px; background:var(--ink); margin:16px 0 22px; }
+.lede{ font-size:16px; color:var(--ink-2); max-width:70ch; }
+.lede + .lede{ margin-top:10px; }
+
+h2{ font-family:"Atkinson Hyperlegible",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:38px 0 12px; padding-bottom:7px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:9px; }
+h2::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--sc,var(--indigo)); flex:none; }
+h3{ font-family:"Newsreader",serif; font-size:19px; font-weight:600; margin:22px 0 6px; }
+p{ max-width:74ch; margin-bottom:10px; }
+ul{ padding-left:20px; margin-bottom:10px; max-width:74ch; }
+li{ margin:4px 0; }
+code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; background:var(--shade); border:1px solid var(--rule); border-radius:3px; padding:1px 5px; }
+pre{ background:var(--shade); border:1px solid var(--rule); border-radius:5px; padding:12px 14px; overflow-x:auto; margin:10px 0 14px; }
+pre code{ background:none; border:0; padding:0; font-size:12.5px; line-height:1.7; }
+
+.tablewrap{ overflow-x:auto; margin-bottom:12px; }
+table{ width:100%; border-collapse:collapse; font-size:14px; }
+th{ text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:7px 9px; border-bottom:1.5px solid var(--ink-2); white-space:nowrap; }
+td{ padding:9px; border-bottom:1px solid var(--rule); vertical-align:top; }
+td.h{ white-space:nowrap; font-family:ui-monospace,Menlo,monospace; font-size:12.5px; color:var(--indigo); }
+td.when{ white-space:nowrap; color:var(--muted); font-size:13px; }
+.sev{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:3px; white-space:nowrap; }
+.sev.high{ background:#f6ece9; color:#8a3f2c; } .sev.med{ background:#f6f2e6; color:#7a5d24; } .sev.low{ background:var(--shade); color:var(--muted); }
+
+.callout{ border:1.5px solid var(--ink); border-radius:6px; padding:14px 18px; margin:18px 0; }
+.callout h3{ margin-top:0; }
+.note{ font-size:13.5px; color:var(--muted); max-width:74ch; }
+.kv{ display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font-size:14px; margin-bottom:12px; }
+.kv dt{ font-weight:700; white-space:nowrap; }
+.footer{ margin-top:34px; padding-top:12px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--muted); }
+
+@media (max-width:640px){
+  .sheet{ padding:26px 16px 32px; margin:8px; }
+  table{ font-size:13px; min-width:560px; }
+  .tablewrap{ -webkit-overflow-scrolling:touch; border:1px solid var(--rule); border-radius:5px; }
+  pre code{ font-size:11.5px; }
+  .kv{ grid-template-columns:1fr; gap:2px 0; }
+  .kv dt{ margin-top:8px; }
+}
+@media print{
+  body{ background:#fff; } .sheet{ box-shadow:none; border:0; margin:0; padding:0; max-width:none; }
+  pre, .callout{ break-inside:avoid; } tr{ break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <h1 class="title">AI Build &amp; Audit Log<small>Luke VonDog · Care Archive · document 11</small></h1>
+  <div class="rule"></div>
+
+  <p class="lede">This archive was assembled with AI assistance. This page records what was built, what was changed, what was removed, and — most importantly — <b>what was found to be wrong and corrected</b>, so that any error you spot can be traced to when it entered and when it left.</p>
+  <p class="lede">Every entry cites a commit you can inspect yourself. Nothing here is written from memory: the history below is generated from the repository's own record.</p>
+
+  <h2 style="--sc:var(--clay)">How much to trust each part of this archive</h2>
+  <p>The pages are not uniform in reliability, and it matters which kind of statement you are reading.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Kind of content</th><th>How it was produced</th><th>How far it has been verified</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Lab values and dates</b><br><span class="note">the dataset, the ledger, the charts</span></td>
+        <td>Transcribed from the clinic records into <code>luke-labs-data.js</code>, then rendered.</td>
+        <td><b>Checked value by value</b> against the 116-page Thornwood patient history report and, for Sep 14 2026, against the two Foothills result PDFs. Transcription errors have been found and fixed twice (see below).</td>
+      </tr>
+      <tr>
+        <td><b>Quoted clinic text</b><br><span class="note">visit notes, emails, lab comments</span></td>
+        <td>Transcribed from the clinic export.</td>
+        <td><b>Mostly faithful, but not entirely.</b> Two blocks were found altered in Sep 2026 — one of them labelled "verbatim". Both are corrected. Others have not been re-checked line by line.</td>
+      </tr>
+      <tr>
+        <td><b>Explanatory prose</b><br><span class="note">"what this measures", "how it is impacting Luke", suggested interventions</span></td>
+        <td><b>AI-written.</b> Interpretation, mechanism and suggestion, not clinic findings.</td>
+        <td><b>Not a clinical source.</b> Treat as background for discussion with the veterinary team.</td>
+      </tr>
+      <tr>
+        <td><b>Owner's own words</b><br><span class="note">the letter, current-state notes, goals of care</span></td>
+        <td>Written by Rikki.</td>
+        <td>Reproduced as written; typos fixed only. <b>Never reworded by AI.</b></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 style="--sc:var(--clay)">Errors found and corrected</h2>
+  <p>Listed worst first. "Entered" is the commit where the text first appears in the repository; <code>d654e52</code> is the original import, so anything marked there was present in the first AI-built packet and predates version control.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>What was wrong</th><th>Entered</th><th>Fixed</th><th>How it was caught</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="sev high">fabrication</span><br><b>A quotation attributed to a named veterinarian that she never said.</b> The System Map and the At a Glance medication table carried: <i>"discontinuing Lasix is considered high-risk for a life-threatening respiratory event"</i>, attributed to Dr. Denney. The phrase appears nowhere in the 116-page clinic export. Replaced with two real, dated record entries.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Searched the clinic export for the quoted phrase during the Sep 2026 audit; zero matches.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">fabrication</span><br><b>A lab note labelled "verbatim" that had been rewritten to say the opposite.</b> The IDEXX kidney comment ended "monitoring is recommended at the next routine visit". The real text ends: <i>"Recommended next step: evaluation of other renal function tests and complete urinalysis"</i> — the very test this archive elsewhere calls overdue. Restored word for word.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Compared the block against the clinic export; restored text now matches it exactly.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">wrong dose</span><br><b>Carprofen shown as 225 mg/day on six pages.</b> Every Thornwood prescription reads "give up to 150mg per day". One page proposed "reducing to 150 mg/day" as a future step — a reduction that had already happened.</td>
+        <td class="h">124f529 et al.<br><span class="when">Jul 2026</span></td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Compared every dose on the site against the prescriptions in the clinic export.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">stale dose</span><br><b>Furosemide shown as 300 mg/day on eight pages</b>, including the one-page hand-off written for an out-of-state clinic, and the only dispensing instruction on the site. His dose changed to 320 mg/day on Aug 10 2026. The derived figure (8.4 mg/kg/day) was stale with it.</td>
+        <td class="h">—<br><span class="when">from Aug 10 2026</span></td>
+        <td class="h">4b44a57, cbf44e6<br><span class="when">Sep 14–16 2026</span></td>
+        <td>Owner reported the change; the site was then swept page by page.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">superseded value</span><br><b>Phosphorus shown as 5.1 (Sep 2025) as if current on five pages</b>, with a phosphate-binder recommendation resting on it. The newest measurement is 2.9 (Mar 9 2026) — within target.</td>
+        <td class="h">—</td>
+        <td class="h">53b4936, cbf44e6<br><span class="when">Sep 15–16 2026</span></td>
+        <td>Independent fact-check against the dataset during the Sep 2026 work.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">false statement</span><br><b>"The Mar 9 2026 panel reported BUN only."</b> The clinic export shows a full chemistry panel for that date (creatinine 1.6, phosphorus 2.9, ALT 98, BUN 35).</td>
+        <td class="h">—</td>
+        <td class="h">4b44a57<br><span class="when">Sep 14 2026</span></td>
+        <td>Found while reconciling the record against the export.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">invented flags</span><br><b>Values flagged high or low that their own laboratory did not flag.</b> The charts page compared Foothills results against the older Thornwood reference ranges, so albumin, MCH, lymphocytes, BUN:creatinine and platelets displayed as out of range. Flags now follow whichever laboratory ran the test.</td>
+        <td class="h">—</td>
+        <td class="h">53b4936<br><span class="when">Sep 15 2026</span></td>
+        <td>Independent fact-check pass.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">missing data</span><br><b>Monocytes — the only newly flagged abnormality on the Sep 14 2026 panel — were absent from the bloodwork ledger</b>, which had no monocyte row at all.</td>
+        <td class="h">—</td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Independent fact-check pass.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">stale thresholds</span><br><b>Three "if this value is reached" warnings that had already been passed</b> — creatinine (2.5), SDMA (19), ALT (251) — still written as future events.</td>
+        <td class="h">—</td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Audit pass.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">transcription</span><br><b>Errors in the bloodwork ledger</b> — phosphorus 3.6 for 4.3, phosphorus 4.1 for 5.2, SDMA 14 for 13, hematocrit 49.9 for 53.2, MCV 70 for 65, T4 1.9 for 1.7 — plus two whole panels (2018, 2020) omitted. The ledger was regenerated from the checked dataset.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">7f6aa0c<br><span class="when">Jul 16 2026</span></td>
+        <td>Reconciling the ledger against the clinic export.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">truncated charts</span><br><b>Featured charts were hard-coded to 2024–2026</b>, hiding the earlier history they claimed to show.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">be9642f<br><span class="when">Jul 16 2026</span></td>
+        <td>Comparing the charts against the underlying dataset.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">unsupported claim</span><br><b>"ACVIM Stage D" asserted from arithmetic.</b> A dose in mg/kg was treated as if it assigned a disease stage. Stage D is defined by clinical signs, not a calculation, and no echocardiogram has ever been done. The pages now say so.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Audit pass.</td>
+      </tr>
+      <tr>
+        <td><span class="sev low">introduced then fixed</span><br><b>A value placed in the wrong row.</b> While adding the Sep 2026 panel, a script put BUN's result (87) into the BUN:creatinine row. Caught before publication by reading the rendered table; corrected to 34.</td>
+        <td class="h">—<br><span class="when">Sep 15 2026</span></td>
+        <td class="h">53b4936<br><span class="when">same day</span></td>
+        <td>Reading the printed output rather than the source.</td>
+      </tr>
+      <tr>
+        <td><span class="sev low">assorted</span><br>A broken internal link; a botched address redaction that left part of a street name; vaccine due-dates shown as upcoming after they had passed; a location line reading "through Sep 2026" after that date arrived; the May 2026 medication list labelled "current".</td>
+        <td class="h">various</td>
+        <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
+        <td>Audit pass.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout">
+    <h3>Two audit findings that were themselves wrong</h3>
+    <p>The Sep 2026 audit used several independent AI passes. Two of their most confidently stated findings were false, and acting on either would have <b>introduced</b> an error into a clinical page. Both were caught by checking the primary source before editing.</p>
+    <ul>
+      <li><b>"The IRIS Stage 2 band 1.4–2.8 is invented."</b> It is not. <i>IRIS Staging of CKD (modified 2019)</i> gives dogs Stage 2 as creatinine 1.4–2.8 mg/dL with SDMA 18–35. The archive was correct and was left alone.</li>
+      <li><b>"A named third party's private family circumstances are published."</b> The quoted passage does not exist anywhere in the files.</li>
+    </ul>
+    <p class="note" style="margin-bottom:0">Recorded here because it is the most useful caution this page can offer: an automated check can be wrong in the same direction as the thing it is checking.</p>
+  </div>
+
+  <h2 style="--sc:var(--indigo)">Build history</h2>
+  <p>Thirty-five commits, 24 June – 16 September 2026. Grouped by working session.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>When</th><th>Commits</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr><td class="when">Jun 24 2026</td><td class="h">d654e52<br>383aa1a</td><td><b>Original import.</b> Eight pages, the lab dataset and a photo, generated in an earlier AI session and uploaded whole. <b>Both fabrications listed above were already present in this import</b>, as were the ledger transcription errors and the truncated charts.</td></tr>
+      <tr><td class="when">Jun 29 2026</td><td class="h">b694a78</td><td>Records refreshed from a later packet revision.</td></tr>
+      <tr><td class="when">Jul 14–15 2026</td><td class="h">03dd488 → 23177fb<br><span class="note">7 commits</span></td><td>Responsive and print overhaul; a "start here" triage card; two orphaned pages linked in. <b>Owner corrections applied:</b> the carrots are raw and unlimited, not steamed; the Woojer device is the mat, not the vest. <b>Goals of care added</b> at Rikki's direction. Nutrition Consult page added.</td></tr>
+      <tr><td class="when">Jul 16 2026</td><td class="h">438350f → 83b7ef3<br><span class="note">19 commits</span></td><td>Design rebuilt twice, then settled; shared navigation added to every page; the Our Time page written; the archive root given a redirect. <b>Data-integrity work:</b> ledger regenerated from the checked dataset, charts restored to their full history, hidden context restored. Goals-of-care card was lost during a hub rebuild in this run.</td></tr>
+      <tr><td class="when">Sep 14 2026</td><td class="h">75894bd<br>4b44a57<br>8e7e1fd</td><td>Four pages that still looked different were brought onto the shared theme (styling only; every word checked before and after). <b>Goals-of-care card restored</b> word for word from history. Current doses recorded. The false "BUN only" statement corrected. First rollback tag created.</td></tr>
+      <tr><td class="when">Sep 15 2026</td><td class="h">53b4936<br>e5bd71c</td><td><b>The Sep 14 Foothills panel absorbed</b> — 30 markers updated, 10 measured for the first time, a ninth column added to the ledger, sparklines regenerated. Flag logic corrected so a value is never flagged by a laboratory that did not flag it.</td></tr>
+      <tr><td class="when">Sep 16 2026</td><td class="h">cbf44e6</td><td><b>Pedantic audit of the whole archive.</b> Both fabrications removed; carprofen, furosemide and phosphorus corrected across fourteen pages' worth of mentions; crossed thresholds restated; monocyte row added; expired dates fixed.</td></tr>
+      <tr><td class="when">Sep 16 2026</td><td class="h">this page</td><td><b>This log created</b>, as document 11, generated from the repository's own history. In the same run, at Rikki's direction: <b>goals of care added to At a Glance and to the Bozeman emergency brief</b> (it had been on the home page only, and those are the two documents read in a hurry); <b>an authorship notice added to the five pages that carried none</b> — At a Glance, System Map, What Could Help, the Verbatim Timeline and the Bozeman brief; <b>four sentences on What Could Help reworded</b> that read as instructions rather than questions for the vet, including one that said an intervention needed no diagnostic workup and one that gave a starting dose for a drug Luke is not prescribed; and <b>a phone layout added to At a Glance</b>, which had no phone breakpoint at all and was cutting values mid-word on the page the travel brief tells vets to have in hand. Two further errors surfaced while checking that work, both caught by looking at the rendered pages rather than the source: the <b>Bozeman emergency brief still listed carprofen as "3 tablets"</b> — 225 mg/day, 50% above the prescribed maximum — on the one document written for an out-of-state clinic, and its medication card was still dated to the March 2026 visit; and the first attempt at the At a Glance phone layout did not work, because making a table scroll requires a wrapping container rather than the table itself, which left the page 468px wide at a 390px screen.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 style="--sc:var(--green)">Checking any of this yourself</h2>
+  <p>The repository is public. Nothing below changes anything — these commands only show you what happened.</p>
+  <pre><code>git clone https://github.com/rikkikkir/LukeVonDogRecords.git
+cd LukeVonDogRecords
+
+git log --oneline                      # every change, newest first
+git show cbf44e6                       # exactly what one commit changed
+git log -S "a phrase you doubt"        # find when a sentence entered or left
+git diff before-2026-09-16 HEAD        # everything the audit changed</code></pre>
+  <p>Longer written records of the recent work are in <code>CHANGELOG-2026-09.md</code> and <code>CHANGELOG-responsive-phase1.md</code> in the same repository.</p>
+
+  <h2 style="--sc:var(--amber)">Undo points</h2>
+  <p>Three tags mark the state of the site before each recent batch of changes. Any batch can be reversed without losing history.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Tag</th><th>The site as it stood</th><th>To reverse that batch</th></tr></thead>
+    <tbody>
+      <tr><td class="h">before-2026-09-14</td><td>Before the theme unification and the dose corrections</td><td><code>git revert 4b44a57 75894bd</code></td></tr>
+      <tr><td class="h">before-2026-09-15</td><td>Before the Foothills panel was absorbed</td><td><code>git revert 53b4936</code></td></tr>
+      <tr><td class="h">before-2026-09-16</td><td>Before the audit corrections</td><td><code>git revert cbf44e6</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 style="--sc:var(--slate)">Known and still open</h2>
+  <ul>
+    <li><b>The clinic text has not been re-checked line by line.</b> Two altered blocks were found in Sep 2026; others may exist. Anything quoted here can be compared against the clinic's own patient history report, which Rikki holds.</li>
+    <li><b>Explanatory prose is AI-written throughout</b> and has not been reviewed by a veterinarian.</li>
+    <li><b>Some figures cannot be verified from any record</b> — notably the current 320 mg/day furosemide regimen, which postdates the clinic export and rests on Rikki's account, and the daily calorie figures.</li>
+    <li>The dose figures appear in roughly eight places. They drift within days of a change; the home page carries the current list.</li>
+  </ul>
+
+  <div class="footer">
+    Luke VonDog · Care Archive · AI Build &amp; Audit Log · generated from the repository's own history, last updated Sep 16 2026.
+    Owner-compiled with AI assistance — not a veterinary record or directive.
+  </div>
+</div>
+
+<script src="luke-nav.js"></script>
+</body>
+</html>
