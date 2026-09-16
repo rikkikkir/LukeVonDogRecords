@@ -1,7 +1,9 @@
 /* ============================================================
    Luke VonDog — complete laboratory & body-metric dataset
-   Source: Thornwood Veterinary Clinic & Kennel patient history
-   (Luke_Delaine_FULL transcript). Every recorded value is here.
+   Sources: Thornwood Veterinary Clinic & Kennel patient history
+   (Luke_Delaine_FULL transcript) through Mar 9 2026, and from
+   Sep 14 2026 Foothills Veterinary Hospital (Bozeman, MT)
+   in-house analyzers. Every recorded value is here.
    Two labs were used: IDEXX in-clinic (Catalyst) and IDEXX
    Reference Lab — their reference intervals differ slightly, so
    each data point carries the flag the lab itself assigned.
@@ -17,7 +19,8 @@ window.LUKE_LABS = (function () {
     "2024-09-20": "Sep 2024",
     "2025-03-27": "Mar 2025",
     "2025-09-11": "Sep 2025",
-    "2026-03-09": "Mar 2026"
+    "2026-03-09": "Mar 2026",
+    "2026-09-14": "Sep 2026"
   };
 
   // Shorthand: p(date, value, flag) → data point
@@ -55,15 +58,17 @@ window.LUKE_LABS = (function () {
       impact: "Creatinine is the number that defined Luke's chronic kidney disease (CKD). It crept up over years and reached 1.8 in Sep 2025 — the reading that put him at IRIS Stage 2. Higher means less filtering reserve.",
       watch: "Muscle mass and hydration affect it; trended values matter more than one spot reading.",
       series: [ p("2018-11-16",0.9), p("2020-10-13",0.7), p("2023-09-06",0.8), p("2024-02-21",0.8),
-        p("2024-09-20",1.0), p("2025-03-27",1.2), p("2025-09-11",1.8,"H"), p("2026-03-09",1.6) ]
+        p("2024-09-20",1.0), p("2025-03-27",1.2), p("2025-09-11",1.8,"H"), p("2026-03-09",1.6) ,
+        p("2026-09-14",2.5,"H") ]
     },
     {
       id: "sdma", name: "SDMA", abbr: "SDMA", cat: "Kidney", unit: "µg/dL",
       refLow: 0, refHigh: 14, refNote: "0–14",
       about: "Symmetric dimethylarginine — a newer, more sensitive kidney marker that rises earlier than creatinine and isn't thrown off by muscle loss.",
-      impact: "Luke's SDMA has climbed steadily (5 → 8 → 11 → 13) and now sits right at the top of normal. Read alongside creatinine, it supports the IRIS Stage 2 CKD picture.",
-      watch: "A value above 14, or a continued climb, would confirm declining kidney function.",
-      series: [ p("2020-10-13",5), p("2023-09-06",8), p("2024-09-20",11), p("2025-09-11",13) ]
+      impact: "Through Sep 2025 Luke's SDMA climbed steadily (5 → 8 → 11 → 13), sitting at the top of normal, and alongside creatinine it supported the IRIS Stage 2 CKD picture of that time. On Sep 14 2026 it was 19, above the 0–14 range and flagged high by the analyzer that ran it.",
+      watch: "The Sep 14 2026 value of 19 is the first above the 0–14 range on file.",
+      series: [ p("2020-10-13",5), p("2023-09-06",8), p("2024-09-20",11), p("2025-09-11",13) ,
+        p("2026-09-14",19,"H") ]
     },
     {
       id: "bun", name: "Blood urea nitrogen", abbr: "BUN", cat: "Kidney", unit: "mg/dL",
@@ -72,7 +77,8 @@ window.LUKE_LABS = (function () {
       impact: "BUN has trended up with Luke's kidney disease and has been flagged high several times (31, 43, 35). It also rises with a high-protein meal or mild dehydration, so it's read in context.",
       watch: "His high-protein home/cooked diet nudges BUN up independent of kidney function.",
       series: [ p("2018-11-16",17), p("2020-10-13",17), p("2023-09-06",11), p("2024-02-21",11),
-        p("2024-09-20",19), p("2025-03-27",31,"H"), p("2025-09-11",43,"H"), p("2026-03-09",35,"H") ]
+        p("2024-09-20",19), p("2025-03-27",31,"H"), p("2025-09-11",43,"H"), p("2026-03-09",35,"H") ,
+        p("2026-09-14",87,"H") ]
     },
     {
       id: "phos", name: "Phosphorus", abbr: "PHOS", cat: "Kidney", unit: "mg/dL",
@@ -89,7 +95,9 @@ window.LUKE_LABS = (function () {
       about: "The ratio of urea to creatinine. It helps separate kidney causes from non-kidney causes (diet, dehydration, GI bleeding) of a high BUN.",
       impact: "Luke's ratio has hovered in the teens–20s. A disproportionately high ratio points more to diet/dehydration than to kidney tissue itself.",
       series: [ p("2018-11-16",19), p("2020-10-13",24.3), p("2023-09-06",13.8), p("2024-02-21",14),
-        p("2024-09-20",19.0), p("2025-03-27",26), p("2025-09-11",23.9), p("2026-03-09",21) ]
+        p("2024-09-20",19.0), p("2025-03-27",26), p("2025-09-11",23.9), p("2026-03-09",21) ,
+        p("2026-09-14",34) ],
+      pointNote: { "2026-09-14": "Reported as BUN/CREA 34; that analyzer prints no reference range." }
     },
 
     /* ---------------------- LIVER & PANCREAS ---------------------- */
@@ -100,7 +108,8 @@ window.LUKE_LABS = (function () {
       impact: "Luke's ALT is usually normal but rose to 121–128 in 2025 (mildly high on the reference range), fitting the early liver/gallbladder changes seen that spring.",
       watch: "Persistent elevation would prompt a closer liver workup or imaging.",
       series: [ p("2018-11-16",84), p("2020-10-13",40), p("2023-09-06",46), p("2024-02-21",72),
-        p("2024-09-20",46), p("2025-03-27",121), p("2025-09-11",128,"H"), p("2026-03-09",98) ]
+        p("2024-09-20",46), p("2025-03-27",121), p("2025-09-11",128,"H"), p("2026-03-09",98) ,
+        p("2026-09-14",251,"H") ]
     },
     {
       id: "alkp", name: "Alkaline phosphatase", abbr: "ALKP", cat: "Liver", unit: "U/L",
@@ -108,7 +117,8 @@ window.LUKE_LABS = (function () {
       about: "An enzyme from liver/bile ducts and bone. Rises with bile-flow problems, certain medications (steroids), or bone activity.",
       impact: "Luke's ALKP has stayed within range, with a mild bump to 163 in Feb 2024. Steroid courses earlier in life can transiently raise it.",
       series: [ p("2018-11-16",36), p("2020-10-13",55), p("2023-09-06",116), p("2024-02-21",163),
-        p("2024-09-20",63), p("2025-03-27",43), p("2025-09-11",69), p("2026-03-09",84) ]
+        p("2024-09-20",63), p("2025-03-27",43), p("2025-09-11",69), p("2026-03-09",84) ,
+        p("2026-09-14",63) ]
     },
     {
       id: "ast", name: "AST (aspartate aminotransferase)", abbr: "AST", cat: "Liver", unit: "U/L",
@@ -163,17 +173,20 @@ window.LUKE_LABS = (function () {
       id: "tp", name: "Total protein", abbr: "TP", cat: "Proteins", unit: "g/dL",
       refLow: 5.5, refHigh: 7.5, refNote: "ref lab 5.5–7.5 · in-clinic 5.2–8.2",
       about: "All the protein in blood — mostly albumin plus globulins. Reflects hydration, nutrition, inflammation, and immune activity.",
-      impact: "Luke runs at the upper end (7.0–8.2). Mild elevations track with his globulins and hydration status rather than disease.",
+      impact: "Through Sep 2025 Luke ran at the upper end (7.0–8.2), and mild elevations tracked with his globulins and hydration status rather than disease. On Sep 14 2026: 5.8 g/dL against that analyzer's 5.2–8.2 range, not flagged.",
       series: [ p("2018-11-16",6.7), p("2020-10-13",6.8), p("2023-09-06",7.2), p("2024-02-21",7.8),
-        p("2024-09-20",6.7), p("2025-03-27",8.2), p("2025-09-11",7.0), p("2026-03-09",7.3) ]
+        p("2024-09-20",6.7), p("2025-03-27",8.2), p("2025-09-11",7.0), p("2026-03-09",7.3) ,
+        p("2026-09-14",5.8) ]
     },
     {
       id: "alb", name: "Albumin", abbr: "ALB", cat: "Proteins", unit: "g/dL",
       refLow: 2.7, refHigh: 3.9, refNote: "ref lab 2.7–3.9 · in-clinic 2.2–3.9",
       about: "The main blood protein, made by the liver. Holds fluid in vessels and carries hormones and drugs. Falls with liver, kidney, or gut protein loss; rises with dehydration.",
-      impact: "Steady and healthy. A 4.2 (Mar 2025) was mildly high — consistent with dehydration/hemoconcentration at that draw — and normalized after.",
+      impact: "Steady and healthy through Sep 2025. A 4.2 (Mar 2025) was mildly high — consistent with dehydration/hemoconcentration at that draw — and normalized after. On Sep 14 2026: 2.6 g/dL, inside that analyzer's 2.2–3.9 range and not flagged.",
       series: [ p("2018-11-16",3.1), p("2020-10-13",3.1), p("2023-09-06",3.6), p("2024-02-21",3.7),
-        p("2024-09-20",3.2), p("2025-03-27",4.2,"H"), p("2025-09-11",3.4), p("2026-03-09",3.1) ]
+        p("2024-09-20",3.2), p("2025-03-27",4.2,"H"), p("2025-09-11",3.4), p("2026-03-09",3.1) ,
+        p("2026-09-14",2.6) ],
+      pointNote: { "2026-09-14": "Foothills in-house range 2.2–3.9 g/dL; not flagged by that analyzer." }
     },
     {
       id: "glob", name: "Globulin", abbr: "GLOB", cat: "Proteins", unit: "g/dL",
@@ -181,7 +194,8 @@ window.LUKE_LABS = (function () {
       about: "The family of immune and transport proteins (antibodies and more). Rises with chronic inflammation or immune stimulation.",
       impact: "Mostly normal, occasionally at the upper edge (4.1–4.3) — fitting a dog with a long history of allergic/inflammatory skin disease.",
       series: [ p("2018-11-16",3.6), p("2020-10-13",3.7), p("2023-09-06",3.6), p("2024-02-21",4.1),
-        p("2024-09-20",3.5), p("2025-03-27",4.0), p("2025-09-11",3.6), p("2026-03-09",4.3) ]
+        p("2024-09-20",3.5), p("2025-03-27",4.0), p("2025-09-11",3.6), p("2026-03-09",4.3) ,
+        p("2026-09-14",3.2) ]
     },
     {
       id: "agratio", name: "Albumin / Globulin ratio", abbr: "A/G", cat: "Proteins", unit: "ratio",
@@ -189,7 +203,8 @@ window.LUKE_LABS = (function () {
       about: "The balance between albumin and globulins. A low ratio suggests inflammation or albumin loss.",
       impact: "Luke sits in the low-normal band (0.7–1.1), nudged down by his upper-end globulins. The 0.7 in Mar 2026 is at the floor but still within range.",
       series: [ p("2018-11-16",0.9), p("2020-10-13",0.8), p("2023-09-06",1.0), p("2024-02-21",0.9),
-        p("2024-09-20",0.9), p("2025-03-27",1.1), p("2025-09-11",0.9), p("2026-03-09",0.7) ]
+        p("2024-09-20",0.9), p("2025-03-27",1.1), p("2025-09-11",0.9), p("2026-03-09",0.7) ,
+        p("2026-09-14",0.8) ]
     },
 
     /* ---------------------- ELECTROLYTES ---------------------- */
@@ -200,7 +215,8 @@ window.LUKE_LABS = (function () {
       impact: "Generally normal. A single 5.5 (Sep 2023) was mildly high and not repeated. Worth watching in CKD and with his diuretic (Lasix), which can lower potassium.",
       watch: "Both very high and very low potassium affect the heart — relevant given Luke's cardiac and kidney history.",
       series: [ p("2018-11-16",4.3), p("2020-10-13",4.7), p("2023-09-06",5.5,"H"),
-        p("2024-09-20",4.8), p("2025-09-11",4.7) ]
+        p("2024-09-20",4.8), p("2025-09-11",4.7) ,
+        p("2026-09-14",4.1) ]
     },
     {
       id: "sodium", name: "Sodium", abbr: "Na", cat: "Electrolytes", unit: "mmol/L",
@@ -208,7 +224,8 @@ window.LUKE_LABS = (function () {
       about: "The main electrolyte outside cells; governs fluid balance and blood volume.",
       impact: "Rock-steady (147–152) across every panel — no concerning shifts despite his diuretic and kidney disease.",
       series: [ p("2018-11-16",152), p("2020-10-13",148), p("2023-09-06",150),
-        p("2024-09-20",148), p("2025-09-11",147) ]
+        p("2024-09-20",148), p("2025-09-11",147) ,
+        p("2026-09-14",148) ]
     },
     {
       id: "chloride", name: "Chloride", abbr: "Cl", cat: "Electrolytes", unit: "mmol/L",
@@ -216,7 +233,8 @@ window.LUKE_LABS = (function () {
       about: "An electrolyte that moves with sodium and helps maintain acid-base balance.",
       impact: "Near-normal throughout; a mild 106 (Sep 2025) was flagged low but is not clinically alarming on its own.",
       series: [ p("2018-11-16",114), p("2020-10-13",111), p("2023-09-06",111),
-        p("2024-09-20",109), p("2025-09-11",106,"L") ]
+        p("2024-09-20",109), p("2025-09-11",106,"L") ,
+        p("2026-09-14",111) ]
     },
     {
       id: "nakratio", name: "Sodium / Potassium ratio", abbr: "Na/K", cat: "Electrolytes", unit: "ratio",
@@ -224,7 +242,8 @@ window.LUKE_LABS = (function () {
       about: "A derived ratio; a low value can hint at certain hormonal (e.g. adrenal) or kidney issues.",
       impact: "Mostly normal; the single low 27 (Sep 2023) accompanied that visit's high potassium and wasn't repeated.",
       series: [ p("2018-11-16",35), p("2020-10-13",31), p("2023-09-06",27,"L"),
-        p("2024-09-20",31), p("2025-09-11",31) ]
+        p("2024-09-20",31), p("2025-09-11",31) ,
+        p("2026-09-14",36) ]
     },
     {
       id: "aniongap", name: "Anion gap", abbr: "AGAP", cat: "Electrolytes", unit: "mmol/L",
@@ -256,7 +275,8 @@ window.LUKE_LABS = (function () {
       about: "Blood sugar — the body's main fuel. Persistently high suggests diabetes; low can cause weakness or collapse.",
       impact: "Normal on every panel (91–109). No evidence of diabetes; his glucose handling looks healthy.",
       series: [ p("2018-11-16",91), p("2020-10-13",98), p("2023-09-06",104), p("2024-02-21",96),
-        p("2024-09-20",102), p("2025-03-27",109), p("2025-09-11",97), p("2026-03-09",99) ]
+        p("2024-09-20",102), p("2025-03-27",109), p("2025-09-11",97), p("2026-03-09",99) ,
+        p("2026-09-14",84) ]
     },
     {
       id: "chol", name: "Cholesterol", abbr: "CHOL", cat: "Metabolic", unit: "mg/dL",
@@ -288,7 +308,8 @@ window.LUKE_LABS = (function () {
       about: "The percentage of blood made up of red cells — a direct measure of anemia (low) or dehydration/excess (high).",
       impact: "Healthy on most panels (41–55). The 32 (Sep 2023) flagged 'low' but that sample was hemolyzed and lipemic, making it unreliable; follow-up values were normal.",
       series: [ p("2018-11-16",54.7), p("2020-10-13",41.0), p("2023-09-06",32.0,"L"),
-        p("2024-09-20",53.2), p("2025-09-11",53.2) ],
+        p("2024-09-20",53.2), p("2025-09-11",53.2) ,
+        p("2026-09-14",50.4) ],
       pointNote: { "2023-09-06": "Hemolyzed/lipemic sample — value unreliable." }
     },
     {
@@ -296,7 +317,8 @@ window.LUKE_LABS = (function () {
       refLow: 13.4, refHigh: 20.7, refNote: "≈ 13.4–21.7 (varies by lab)",
       about: "The oxygen-carrying protein in red cells. Tracks closely with hematocrit.",
       impact: "Normal where measurable (17.5–19.9). Two panels couldn't report it because lipemia/hemolysis interfered with the analyzer.",
-      series: [ p("2018-11-16",19.9), p("2024-09-20",17.5), p("2025-09-11",18.8) ],
+      series: [ p("2018-11-16",19.9), p("2024-09-20",17.5), p("2025-09-11",18.8) ,
+        p("2026-09-14",16.8) ],
       extraRows: [
         { d:"2020-10-13", label:"HGB", v:"see notes", note:"lipemia — not reportable" },
         { d:"2023-09-06", label:"HGB", v:"see notes", note:"lipemia/hemolysis — not reportable" }
@@ -308,7 +330,8 @@ window.LUKE_LABS = (function () {
       about: "The number of red cells per volume of blood.",
       impact: "Within range throughout (6.4–8.31). No persistent anemia.",
       series: [ p("2018-11-16",8.31), p("2020-10-13",6.59), p("2023-09-06",6.41),
-        p("2024-09-20",7.73), p("2025-09-11",8.23) ]
+        p("2024-09-20",7.73), p("2025-09-11",8.23) ,
+        p("2026-09-14",8.3) ]
     },
     {
       id: "mcv", name: "Mean cell volume", abbr: "MCV", cat: "Red cells", unit: "fL",
@@ -316,29 +339,34 @@ window.LUKE_LABS = (function () {
       about: "Average red-cell size. Small cells (low MCV) can indicate iron issues; large cells point elsewhere.",
       impact: "Normal except a 50 (Sep 2023) flagged low — again from that hemolyzed sample, not a true finding.",
       series: [ p("2018-11-16",65.8), p("2020-10-13",62), p("2023-09-06",50,"L"),
-        p("2024-09-20",69), p("2025-09-11",65) ],
+        p("2024-09-20",69), p("2025-09-11",65) ,
+        p("2026-09-14",60.8) ],
       pointNote: { "2023-09-06": "Artifact of hemolysis." }
     },
     {
       id: "mch", name: "Mean cell hemoglobin", abbr: "MCH", cat: "Red cells", unit: "pg",
       refLow: 21.9, refHigh: 26.7, refNote: "≈ 21.9–26.7",
       about: "Average amount of hemoglobin per red cell.",
-      impact: "Normal where reportable (22.6–23.9).",
-      series: [ p("2018-11-16",23.9), p("2024-09-20",22.6), p("2025-09-11",22.8) ]
+      impact: "Normal where reportable (22.6–23.9) through Sep 2025. On Sep 14 2026: 20.3 pg, inside that analyzer's 20.1–27.6 range and not flagged.",
+      series: [ p("2018-11-16",23.9), p("2024-09-20",22.6), p("2025-09-11",22.8) ,
+        p("2026-09-14",20.3) ],
+      pointNote: { "2026-09-14": "Foothills in-house range 20.1–27.6 pg; not flagged by that analyzer." }
     },
     {
       id: "mchc", name: "Mean cell Hgb concentration", abbr: "MCHC", cat: "Red cells", unit: "g/dL",
       refLow: 32.0, refHigh: 38.0, refNote: "≈ 32–39",
       about: "Hemoglobin concentration within red cells.",
       impact: "Normal where reportable (32.9–36.4).",
-      series: [ p("2018-11-16",36.4), p("2024-09-20",32.9), p("2025-09-11",35.3) ]
+      series: [ p("2018-11-16",36.4), p("2024-09-20",32.9), p("2025-09-11",35.3) ,
+        p("2026-09-14",33.4) ]
     },
     {
       id: "rdw", name: "Red cell distribution width", abbr: "RDW", cat: "Red cells", unit: "%",
       refLow: 13.6, refHigh: 21.7, refNote: "≈ 13.6–21.7 (10–19 newer)",
       about: "How variable red-cell size is. A rising RDW can be an early sign of a changing red-cell population.",
       impact: "Within range (17.3–19.7) on the two panels that reported it.",
-      series: [ p("2018-11-16",19.7), p("2025-09-11",17.3) ]
+      series: [ p("2018-11-16",19.7), p("2025-09-11",17.3) ,
+        p("2026-09-14",19) ]
     },
     {
       id: "retichgb", name: "Reticulocyte hemoglobin", abbr: "RETIC-HGB", cat: "Red cells", unit: "pg",
@@ -353,9 +381,10 @@ window.LUKE_LABS = (function () {
       id: "retic", name: "Reticulocytes (absolute)", abbr: "RETIC", cat: "Red cells", unit: "K/µL",
       refLow: 10, refHigh: 110, refNote: "≈ 10–140",
       about: "The count of brand-new red cells — shows how actively the marrow is replacing them.",
-      impact: "Normal (38–54), meaning Luke's marrow is producing red cells appropriately, with no regenerative anemia.",
+      impact: "Normal (38–54) through Sep 2025, meaning Luke's marrow was producing red cells appropriately, with no regenerative anemia. On Sep 14 2026: 15.9 K/µL against a 10.0–110.0 range, not flagged.",
       series: [ p("2018-11-16",54), p("2020-10-13",53), p("2023-09-06",38),
-        p("2024-09-20",46), p("2025-09-11",41) ]
+        p("2024-09-20",46), p("2025-09-11",41) ,
+        p("2026-09-14",15.9) ]
     },
 
     /* ---------------------- CBC: WHITE ---------------------- */
@@ -363,33 +392,40 @@ window.LUKE_LABS = (function () {
       id: "wbc", name: "White blood cell count", abbr: "WBC", cat: "White cells", unit: "K/µL",
       refLow: 4.9, refHigh: 17.6, refNote: "≈ 4.9–17.6",
       about: "Total infection- and inflammation-fighting cells.",
-      impact: "Normal on every panel (7.6–11.8) — no evidence of active infection or marrow problem.",
+      impact: "Normal on every panel through Sep 2025 (7.6–11.8) — no evidence of active infection or marrow problem at those draws. On Sep 14 2026: 13.74 K/µL against a 5.05–18.60 range, not flagged.",
       series: [ p("2018-11-16",9.14), p("2020-10-13",7.6), p("2023-09-06",11.8),
-        p("2024-09-20",8.4), p("2025-09-11",8.2) ]
+        p("2024-09-20",8.4), p("2025-09-11",8.2) ,
+        p("2026-09-14",13.74) ]
     },
     {
       id: "neut", name: "Neutrophils (absolute)", abbr: "NEUT", cat: "White cells", unit: "/µL",
       refLow: 2940, refHigh: 12670, refNote: "≈ 2940–12670",
       about: "The front-line white cells against bacterial infection and inflammation.",
-      impact: "Normal throughout (5270–8472). No 'stress' or infection leukogram of concern.",
+      impact: "Normal throughout Sep 2025 (5270–8472), with no 'stress' or infection leukogram of concern at those draws. On Sep 14 2026: 10,410/µL — reported as 10.41 K/µL against a 2.92–13.80 range, not flagged.",
       series: [ p("2018-11-16",5270), p("2020-10-13",5700), p("2023-09-06",8472),
-        p("2024-09-20",5620), p("2025-09-11",5929) ]
+        p("2024-09-20",5620), p("2025-09-11",5929) ,
+        p("2026-09-14",10410) ],
+      pointNote: { "2026-09-14": "Reported as 10.41 K/µL (range 2.92–13.80); converted to /µL here." }
     },
     {
       id: "lymph", name: "Lymphocytes (absolute)", abbr: "LYMPH", cat: "White cells", unit: "/µL",
       refLow: 1060, refHigh: 4950, refNote: "≈ 1000–4950",
       about: "White cells central to the immune response and antibody production.",
-      impact: "Normal (1353–1856) across all panels.",
+      impact: "Normal (1353–1856) across all panels through Sep 2025. On Sep 14 2026: 770/µL — reported as 0.77 K/µL, inside that analyzer's 0.76–4.40 range and not flagged.",
       series: [ p("2018-11-16",1840), p("2020-10-13",1596), p("2023-09-06",1770),
-        p("2024-09-20",1856), p("2025-09-11",1353) ]
+        p("2024-09-20",1856), p("2025-09-11",1353) ,
+        p("2026-09-14",770) ],
+      pointNote: { "2026-09-14": "Reported as 0.77 K/µL (range 0.76–4.40); not flagged by that analyzer." }
     },
     {
       id: "mono", name: "Monocytes (absolute)", abbr: "MONO", cat: "White cells", unit: "/µL",
       refLow: 130, refHigh: 1150, refNote: "≈ 130–1150",
       about: "White cells that clean up debris and support longer-term inflammation.",
-      impact: "Within range (152–560) on every panel.",
+      impact: "Within range (152–560) on every panel through Sep 2025. On Sep 14 2026: 2,280/µL — reported as 2.28 K/µL against a 0.31–1.95 range and flagged high by the analyzer that ran it.",
       series: [ p("2018-11-16",560), p("2020-10-13",152), p("2023-09-06",260),
-        p("2024-09-20",361), p("2025-09-11",500) ]
+        p("2024-09-20",361), p("2025-09-11",500) ,
+        p("2026-09-14",2280,"H") ],
+      pointNote: { "2026-09-14": "Reported as 2.28 K/µL (range 0.31–1.95), flagged HIGH; converted to /µL here." }
     },
     {
       id: "eos", name: "Eosinophils (absolute)", abbr: "EOS", cat: "White cells", unit: "/µL",
@@ -397,7 +433,9 @@ window.LUKE_LABS = (function () {
       about: "White cells tied to allergies and parasites.",
       impact: "Elevated in 2018 (1450, flagged high) and high-normal in 2023 (1286) — a fingerprint of Luke's long-standing allergic skin disease. Recent panels are mid-range.",
       series: [ p("2018-11-16",1450,"H"), p("2020-10-13",152), p("2023-09-06",1286),
-        p("2024-09-20",554), p("2025-09-11",410) ]
+        p("2024-09-20",554), p("2025-09-11",410) ,
+        p("2026-09-14",280) ],
+      pointNote: { "2026-09-14": "Reported as 0.28 K/µL (range 0.06–1.23); converted to /µL here." }
     },
     {
       id: "baso", name: "Basophils (absolute)", abbr: "BASO", cat: "White cells", unit: "/µL",
@@ -405,7 +443,9 @@ window.LUKE_LABS = (function () {
       about: "The rarest white cells, involved in allergic and inflammatory responses.",
       impact: "Normal (0–20) throughout.",
       series: [ p("2018-11-16",20), p("2020-10-13",0), p("2023-09-06",12),
-        p("2024-09-20",8), p("2025-09-11",8) ]
+        p("2024-09-20",8), p("2025-09-11",8) ,
+        p("2026-09-14",0) ],
+      pointNote: { "2026-09-14": "Reported as 0.00 K/µL (range 0.00–0.10); converted to /µL here." }
     },
 
     /* ---------------------- CBC: PLATELETS ---------------------- */
@@ -413,10 +453,11 @@ window.LUKE_LABS = (function () {
       id: "plt", name: "Platelets", abbr: "PLT", cat: "Platelets", unit: "K/µL",
       refLow: 143, refHigh: 448, refNote: "ref lab 143–448 · newer 120–412",
       about: "Tiny cell fragments that form clots and stop bleeding.",
-      impact: "Healthy clotting numbers throughout. The 481 (Sep 2025) flagged mildly high — often a benign reaction, and platelets clump on smear, which can skew the count.",
+      impact: "Healthy clotting numbers throughout. The 481 (Sep 2025) flagged mildly high — often a benign reaction, and platelets clump on smear, which can skew the count. On Sep 14 2026: 513 K/µL, inside that analyzer's 148–674 range and not flagged by it.",
       series: [ p("2018-11-16",220), p("2020-10-13",240), p("2023-09-06",381),
-        p("2024-09-20",348), p("2025-09-11",481,"H") ],
-      pointNote: { "2020-10-13": "Manual method gave 222 (clumping)." }
+        p("2024-09-20",348), p("2025-09-11",481,"H") ,
+        p("2026-09-14",513) ],
+      pointNote: { "2026-09-14": "Foothills in-house range 148–674 K/µL; not flagged by that analyzer.", "2020-10-13": "Manual method gave 222 (clumping)." }
     },
 
     /* ---------------------- COAGULATION ---------------------- */
@@ -433,6 +474,78 @@ window.LUKE_LABS = (function () {
       about: "Tests the other main clotting pathway. Read with PT to assess bleeding risk.",
       impact: "Measured once (Oct 2020) at 12.4 — normal.",
       series: [ p("2020-10-13",12.4) ]
+    },
+
+    /* ------------- FIRST MEASURED Sep 14 2026 (Foothills) ------------- */
+    {
+      id: "mpv", name: "Mean platelet volume", abbr: "MPV", cat: "Platelets", unit: "fL",
+      refLow: 8.1, refHigh: 14.7, refNote: "Foothills in-house 8.1–14.7",
+      about: "The average size of the platelets in a sample.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 8.3 fL. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",8.3) ]
+    },
+    {
+      id: "pdw", name: "Platelet distribution width", abbr: "PDW", cat: "Platelets", unit: "fL",
+      refLow: 6.4, refHigh: 21.2, refNote: "Foothills in-house 6.4–21.2",
+      about: "How much platelet size varies within the sample.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 11.0 fL. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",11.0) ]
+    },
+    {
+      id: "pct", name: "Plateletcrit", abbr: "PCT", cat: "Platelets", unit: "%",
+      refLow: 0.16, refHigh: 0.75, refNote: "Foothills in-house 0.16–0.75",
+      about: "The share of blood volume made up of platelets — the platelet equivalent of hematocrit.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 0.42%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",0.42) ]
+    },
+    {
+      id: "pctretic", name: "Reticulocytes (percent)", abbr: "%RETIC", cat: "Red cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of red cells that are reticulocytes — young red cells newly released from the marrow. The absolute reticulocyte count is tracked separately.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 0.2%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",0.2) ]
+    },
+    {
+      id: "pneu", name: "Neutrophils (percent)", abbr: "%NEU", cat: "White cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of white cells that are neutrophils. The absolute count is tracked separately and is the figure most reference ranges apply to.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 75.8%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",75.8) ]
+    },
+    {
+      id: "plym", name: "Lymphocytes (percent)", abbr: "%LYM", cat: "White cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of white cells that are lymphocytes. The absolute count is tracked separately and is the figure most reference ranges apply to.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 5.6%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",5.6) ]
+    },
+    {
+      id: "pmono", name: "Monocytes (percent)", abbr: "%MONO", cat: "White cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of white cells that are monocytes. The absolute count is tracked separately and is the figure most reference ranges apply to.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 16.6%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",16.6) ]
+    },
+    {
+      id: "peos", name: "Eosinophils (percent)", abbr: "%EOS", cat: "White cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of white cells that are eosinophils. The absolute count is tracked separately and is the figure most reference ranges apply to.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 2.0%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",2.0) ]
+    },
+    {
+      id: "pbaso", name: "Basophils (percent)", abbr: "%BASO", cat: "White cells", unit: "%",
+      refNote: "no reference range printed by the analyzer",
+      about: "The share of white cells that are basophils. The absolute count is tracked separately and is the figure most reference ranges apply to.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 0.0%. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",0.0) ]
+    },
+    {
+      id: "osm", name: "Calculated osmolality", abbr: "OSM", cat: "Electrolytes", unit: "mmol/kg",
+      refNote: "no reference range printed by the analyzer",
+      about: "An estimate of the total concentration of dissolved particles in blood, calculated from sodium, potassium, glucose and urea rather than measured directly.",
+      impact: "Measured for the first time on Sep 14 2026 (Foothills in-house) at 319 mmol/kg. One measurement, so there is no trend to read yet; it is recorded here for future panels to compare against.",
+      series: [ p("2026-09-14",319) ]
     }
   ];
 
