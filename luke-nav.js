@@ -53,6 +53,7 @@
       + '.lukenav-pill:hover{background:rgba(255,255,255,.16);color:#fff;}'
       + '.lukenav-pill.is-current{background:#fff;color:#26243b;border-color:#fff;}'
       + '.lukenav-pill.is-current i{opacity:.5;}'
+      + '@media (min-width:1100px){.lukenav-scroll{overflow-x:visible;}.lukenav-docs{width:auto;flex-wrap:wrap;row-gap:4px;}}'
       + '@media (max-width:640px){.lukenav-home span{display:none;}.lukenav-home b{font-size:14px;}}'
       + '@media print{.lukenav{display:none !important;}}';
     var style = document.createElement("style");

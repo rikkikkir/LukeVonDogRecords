@@ -460,7 +460,7 @@ footer a { color: var(--accent-soft); text-decoration: none; }
         <td class="c-neutral">Neutral</td>
       </tr>
       <tr>
-        <td class="row-label">Carprofen (Rimadyl)<span>NSAID · pain control</span><span class="dose">150 mg/day</span></td>
+        <td class="row-label">Carprofen (Rimadyl)<span>NSAID · pain control</span><span class="dose">stopped Sep 14 2026 (was 150 mg/day)</span></td>
         <td class="c-neutral">Neutral</td>
         <td class="c-stress">NEPHROTOXIC<br>NSAID reduces renal perfusion</td>
         <td class="c-stress">HEPATOTOXIC<br>Likely driver of ALT trend 46→128 (Sep '25); 98 Mar '26, 251 Sep 14 '26</td>
@@ -546,7 +546,7 @@ footer a { color: var(--accent-soft); text-decoration: none; }
         <td class="c-neutral">Neutral</td>
         <td class="c-neutral">Renal excretion — dose adjust; monitor</td>
         <td class="c-neutral">No hepatic metabolism</td>
-        <td class="c-gap">POTENTIAL BENEFIT<br>Neurogenic pain; may allow carprofen reduction</td>
+        <td class="c-gap">POTENTIAL BENEFIT<br>Neurogenic pain (noted before carprofen stopped Sep 14 2026)</td>
         <td class="c-neutral">Neutral</td>
       </tr>
       <tr>
@@ -631,7 +631,7 @@ footer a { color: var(--accent-soft); text-decoration: none; }
     <div class="total-card warn">
       <div class="tc-label">NSAID load</div>
       <div class="tc-val">225<span style="font-size:.4em;color:var(--cardiac);">mg/day</span></div>
-      <div class="tc-note">Carprofen only — no other NSAIDs on board. 4.2 mg/kg/day. Reduction being considered given Stage 2 CKD and rising ALT. Single source is manageable.</div>
+      <div class="tc-note">Carprofen stopped Sep 14 2026 (had been 150 mg/day, 4.2 mg/kg/day); no NSAID is on board now. A replacement is pending a specialist consult. Single source is manageable.</div>
     </div>
   </div>
   </div>
@@ -989,6 +989,13 @@ footer { background: #fff; border-top-color: var(--cw-line); color: var(--cw-mut
 footer a { color: var(--cw-blue); }
 
 /* ── Print: keep white + hidden prose ────────────────────────────────── */
+@media (max-width: 480px){
+  /* table.matrix carries min-width:520px by design; on a phone let it fit and wrap */
+  table.matrix{ min-width:0 !important; table-layout:fixed; width:100%; }
+  table.matrix td, table.matrix th{ overflow-wrap:anywhere; word-break:break-word; font-size:11.5px; padding:5px 4px; }
+  .matrix-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
+  .wrap{ max-width:100%; overflow-x:hidden; }
+}
 @media print {
   body, .wrap { background: #fff !important; box-shadow: none !important; border: none !important; margin: 0 !important; }
   .sh-food, .sh-matrix, .sh-totals, .sh-gaps, .cover { background: #fff !important; }
