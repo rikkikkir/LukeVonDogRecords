@@ -107,3 +107,25 @@ The state of the site before today's work is tagged **`before-2026-09-14`** (com
 - **To see the old version** without changing anything: `git show before-2026-09-14:luke-practitioner-packet.html`
 
 `git revert` adds new "undo" commits, so no history is lost and every step can itself be undone. GitHub Pages republishes within a minute or two of a push.
+
+---
+
+## 2026-09-15 — Sep 14 2026 Foothills bloodwork absorbed (commit 53b4936)
+
+**Source:** two in-house result reports from the Sep 14 2026 establish-care visit at Foothills Veterinary Hospital, Bozeman — IDEXX Catalyst One (chemistry, SDMA) and ProCyte One (CBC). The PDFs are kept privately with Luke's other source records and are **not** published; they carry Rikki's name and the clinic's account numbers.
+
+**Values added** (each with the flag its own analyzer assigned): creatinine 2.5 H · BUN 87 H · SDMA 19 H · ALT 251 H · monocytes 2.28 K/µL H · ALKP 63 · glucose 84 · total protein 5.8 · albumin 2.6 · globulin 3.2 · ALB/GLOB 0.8 · BUN/CREA 34 · sodium 148 · potassium 4.1 · chloride 111 · Na/K 36 · HCT 50.4 · HGB 16.8 · RBC 8.30 · MCV 60.8 · MCH 20.3 · MCHC 33.4 · RDW 19.0 · reticulocytes 15.9 · WBC 13.74 · neutrophils 10.41 K/µL · lymphocytes 0.77 K/µL · eosinophils 0.28 K/µL · basophils 0.00 K/µL · platelets 513. First-time markers: MPV 8.3 · PDW 11.0 · PCT 0.42 · %RETIC 0.2 · %NEU 75.8 · %LYM 5.6 · %MONO 16.6 · %EOS 2.0 · %BASO 0.0 · calculated osmolality 319.
+
+**Not in these reports, so unchanged:** phosphorus, calcium, bilirubin, lipase, amylase, GGT, T4, and any urinalysis or UPC.
+
+**Also corrected:** flags that the site was computing against the wrong lab's ranges; phosphorus shown as 5.1 (Sep '25) when the newest is 2.9 (Mar 9 2026); a BUN reference of 7–28 that appears in neither source; and prose contradicted by the new values.
+
+### How to pull this update back
+
+The site as it stood before this update is tagged **`before-2026-09-15`**. In `~/Downloads/LukeVonDogRecords`:
+
+- **Undo the whole lab update:** `git checkout main && git revert --no-edit 53b4936 && git push origin main`
+- **See the previous version without changing anything:** `git show before-2026-09-15:luke-at-a-glance.html`
+- **Undo everything from Sep 14 as well:** revert `53b4936`, then `4b44a57` and `75894bd`.
+
+`git revert` adds an undo commit, so nothing is lost and the undo can itself be undone.
