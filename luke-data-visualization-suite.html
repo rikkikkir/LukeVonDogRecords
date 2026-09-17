@@ -289,13 +289,13 @@ main { padding: 0 0 100px; min-width: 0; }
         <div class="s-top-row"><span class="s-badge">Cardiac</span> <span class="s-cat">Medication dose trajectory</span></div>
       </div>
       <div class="s-current">
-      <div class="val">300<small>mg/d</small></div>
+      <div class="val">320<small>mg/d</small></div>
       <div><span class="pill H">≈8.9 mg/kg/day</span></div>
-      <div class="pill-date">ACVIM Stage D threshold</div>
+      <div class="pill-date">above the ≥8 mg/kg/day ACVIM cites for Stage D</div>
     </div>
   </div>
   <div class="chart-card">
-    <div class="ch-meta"><span class="ch-title">Furosemide daily dose (mg/day)</span><span class="ch-ref">ACVIM Stage D threshold ≥8 mg/kg/day — Luke is at ≈8.9 mg/kg/day without adjunctive cardiac meds</span></div>
+    <div class="ch-meta"><span class="ch-title">Furosemide daily dose (mg/day)</span><span class="ch-ref">≈8.9 mg/kg/day — above the ≥8 mg/kg/day ACVIM cites in defining Stage D (a clinical definition, not an arithmetic one; no vet has assigned it), and without adjunctive cardiac meds</span></div>
     <div class="chart-inner" id="lasix-chart"></div>
   </div>
   <div class="prose-grid">
@@ -366,7 +366,7 @@ main { padding: 0 0 100px; min-width: 0; }
     </div>
     <div class="blk">
       <h4>How it is impacting Luke</h4>
-      <p>Luke is receiving approximately <em>132 mg/day</em> from his supplement stack (Wuffes products + Cosequin). The evidence-based cardiac dose for a dog of Luke's weight is approximately <strong>2,300 mg/day combined EPA+DHA</strong>. This gap — 94% of the indicated dose going unfilled — means Luke is receiving none of the documented anti-cachexia, cardiac anti-inflammatory, or renal-protective benefit of omega-3 therapy. This is the most fixable gap in his current protocol.</p>
+      <p>Luke is receiving approximately <em>132 mg/day</em> from his supplement stack (Wuffes products + Cosequin). The evidence-based cardiac dose for a dog of Luke's weight is approximately <strong>2,300 mg/day combined EPA+DHA</strong>. That is about 6% of the target — well below the doses at which the anti-cachexia, cardiac anti-inflammatory and renal-protective effects were demonstrated. This is the most fixable gap in his current protocol.</p>
     </div>
   </div>
   <div class="adjust">
@@ -688,11 +688,11 @@ main { padding: 0 0 100px; min-width: 0; }
   <div class="prose-grid">
     <div class="blk">
       <h4>What this measures</h4>
-      <p>ALT is an intracellular liver enzyme that leaks into the bloodstream when hepatocytes (liver cells) are damaged or stressed. Elevated ALT does not diagnose a specific liver disease — it indicates hepatocellular injury and warrants investigation of the cause. In dogs on long-term NSAIDs like carprofen, a rising ALT trend is a recognized adverse effect requiring monitoring and possible dose adjustment.</p>
+      <p>ALT is an intracellular liver enzyme that leaks into the bloodstream when hepatocytes (liver cells) are damaged or stressed. Elevated ALT does not diagnose a specific liver disease — it indicates hepatocellular injury and warrants investigation of the cause. In dogs on long-term NSAIDs like carprofen, a rising ALT trend is a recognized adverse effect requiring monitoring.</p>
     </div>
     <div class="blk">
       <h4>How it is impacting Luke</h4>
-      <p>The <em>46 → 121 → 128 trend</em> over twelve months is consistent with cumulative hepatocellular stress. At 128, Luke was just above the reference ceiling of 121. ALT was 98 on Mar 9 '26 and <strong>251 on Sep 14 '26</strong> (Foothills in-house, that analyzer's range 10–125). Dr. G's email (Mar '25) named "<em>early changes to his gallbladder and potentially his liver</em>" in response to the bilirubin spike at that same draw. <strong>Carprofen carries the clearest documented hepatotoxic risk of the drugs he was on</strong>, but no record names a cause. He stopped it on Sep 14 2026, so a repeat ALT would now be measured off the drug.</p>
+      <p>ALT rose <em>46 → 121 → 128</em> over twelve months (Sep '24 – Sep '25); at 128 he was just above that lab's reference ceiling of 121. ALT was 98 on Mar 9 '26 and <strong>251 on Sep 14 '26</strong> (Foothills in-house, that analyzer's range 10–125). Dr. G's email (Mar '25) named "<em>early changes to his gallbladder and potentially his liver</em>" in response to the bilirubin spike at that same draw. <strong>Carprofen carries the clearest documented hepatotoxic risk of the drugs he was on</strong>, but no record names a cause. He stopped it on Sep 14 2026, so a repeat ALT would now be measured off the drug.</p>
     </div>
   </div>
   <div class="adjust">
@@ -1217,7 +1217,7 @@ function renderChart(containerId, cfg) {
 // ── Furosemide dose ──────────────────────────────────────────
 renderChart('lasix-chart', {
   data: [
-    {d:'2023-10-30',v:50},{d:'2024-02-01',v:100},{d:'2024-12-02',v:300},{d:'2025-05-14',v:300},{d:'2026-03-09',v:300}
+    {d:'2023-10-30',v:50},{d:'2024-02-01',v:100},{d:'2024-12-02',v:300},{d:'2025-05-14',v:300},{d:'2026-03-09',v:300},{d:'2026-08-10',v:320}
   ],
   threshold: 8*35.9, thresholdLabel:'8 mg/kg threshold',
   yLabel: 'mg/day'

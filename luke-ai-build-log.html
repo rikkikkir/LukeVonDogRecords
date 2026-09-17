@@ -193,6 +193,54 @@ td.when{ white-space:nowrap; color:var(--muted); font-size:13px; }
         <td class="h">cbf44e6<br><span class="when">Sep 16 2026</span></td>
         <td>Audit pass.</td>
       </tr>
+      <tr>
+        <td><span class="sev high">false instruction</span><br><b>A taper instruction for a drug that was stopped outright.</b> What Could Help carried "Must not be stopped abruptly &mdash; taper with owner monitoring" and "Do not reduce without a clear pain management plan in place" as live constraints on carprofen. Carprofen was not tapered: the last dose was Sep 14 2026 and none remained. A reader could have understood a taper to be in progress.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Reading the sentences the first carprofen sweep had passed over.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">unsupported claim</span><br><b>"ACVIM Stage D" asserted as his diagnosis in seven more places</b>, after the same claim had been corrected elsewhere &mdash; "for a Stage D heart", "a Stage D heart at maximal diuresis", "Cardiac (Stage D)", "the threshold that <i>defines</i> Stage D", and a chart label reading "ACVIM Stage D threshold". The System Map states plainly that no stage has been assigned, so the archive both asserted and denied his cardiac stage.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Sweeping every page for the claim, not only the pages already corrected.</td>
+      </tr>
+      <tr>
+        <td><span class="sev high">stale dose</span><br><b>The furosemide chart never showed the escalation it was titled for.</b> "Furosemide Dose Escalation" ended at 300 mg/day (Mar 2026); the increase to 320 mg/day on Aug 10 2026 was missing from the data series, and the stat card beside it read 300 while its own badge read &asymp;8.9 mg/kg/day &mdash; a figure that can only come from 320.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Checking every chart's last data point against the current regimen.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">unsupported claim</span><br><b>Carprofen named as the cause of the liver values in six further places</b> &mdash; "likely contributor to ALT trend", "Likely driver of ALT trend", "a possible contributor" &mdash; including one stated under <i>What is known</i> on the System Map while the same page listed the question as unresolved under <i>What is not known</i> ten lines below. No record names a cause.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Re-reading the mentions an earlier pass had classified as sound.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">misleading comparison</span><br><b>Lipase shown as a spike that resolved</b>, in two more places &mdash; "spiked to 1,382, resolved to 110", and a green downward arrow reading "&darr; from 1,382" in the fast-read table. The two numbers come from different analysers with different ranges (in-clinic 200&ndash;1,800, unflagged; reference-lab 0&ndash;250). Neither was out of range for its own assay, and neither is a measurement of the other.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Comparing each value against the range its own laboratory printed.</td>
+      </tr>
+      <tr>
+        <td><span class="sev med">stale values</span><br><b>A diagnoses panel headed "Active diagnoses &middot; May 2026"</b> gave creatinine 1.8 (Sep 2025) and an ALT trend ending at 128 &mdash; values already superseded by the March 2026 panel when that heading was written, and by two panels now.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Checking dated summaries against the dataset rather than against their own dates.</td>
+      </tr>
+      <tr>
+        <td><span class="sev low">overstatement</span><br><b>"Luke is receiving none of the benefit" of omega-3</b>, written from a figure of 94% unfilled. Six per cent is not none. Now stated as the measured gap without the inference.</td>
+        <td class="h">d654e52<br><span class="when">Jun 24 2026</span></td>
+        <td class="h">this page<br><span class="when">Sep 16 2026</span></td>
+        <td>Checking conclusions against the arithmetic they rest on.</td>
+      </tr>
+      <tr>
+        <td><span class="sev low">wrong date</span><br><b>The urine sample recorded as submitted Sep 17 2026</b> on three pages, and an owner update attributed to the same date. It was submitted Sep 16. Dates one day in the future were introduced by this assistant, not by any record.</td>
+        <td class="h">&mdash;<br><span class="when">Sep 16 2026</span></td>
+        <td class="h">this page<br><span class="when">same day</span></td>
+        <td>Checking every date on the site against the calendar.</td>
+      </tr>
     </tbody>
   </table>
   </div>
@@ -221,7 +269,7 @@ td.when{ white-space:nowrap; color:var(--muted); font-size:13px; }
       <tr><td class="when">Sep 15 2026</td><td class="h">53b4936<br>e5bd71c</td><td><b>The Sep 14 Foothills panel absorbed</b> — 30 markers updated, 10 measured for the first time, a ninth column added to the ledger, sparklines regenerated. Flag logic corrected so a value is never flagged by a laboratory that did not flag it.</td></tr>
       <tr><td class="when">Sep 16 2026</td><td class="h">cbf44e6</td><td><b>Pedantic audit of the whole archive.</b> Both fabrications removed; carprofen, furosemide and phosphorus corrected across fourteen pages' worth of mentions; crossed thresholds restated; monocyte row added; expired dates fixed.</td></tr>
       <tr><td class="when">Sep 16 2026</td><td class="h">this page</td><td><b>This log created</b>, as document 11, generated from the repository's own history. In the same run, at Rikki's direction: <b>goals of care added to At a Glance and to the Bozeman emergency brief</b> (it had been on the home page only, and those are the two documents read in a hurry); <b>an authorship notice added to the five pages that carried none</b> — At a Glance, System Map, What Could Help, the Verbatim Timeline and the Bozeman brief; <b>four sentences on What Could Help reworded</b> that read as instructions rather than questions for the vet, including one that said an intervention needed no diagnostic workup and one that gave a starting dose for a drug Luke is not prescribed; and <b>a phone layout added to At a Glance</b>, which had no phone breakpoint at all and was cutting values mid-word on the page the travel brief tells vets to have in hand. Two further errors surfaced while checking that work, both caught by looking at the rendered pages rather than the source: the <b>Bozeman emergency brief still listed carprofen as "3 tablets"</b> — 225 mg/day, 50% above the prescribed maximum — on the one document written for an out-of-state clinic, and its medication card was still dated to the March 2026 visit; and the first attempt at the At a Glance phone layout did not work, because making a table scroll requires a wrapping container rather than the table itself, which left the page 468px wide at a 390px screen.</td></tr>
-      <tr><td class="when">Sep 17 2026</td><td class="h">this page</td><td><b>Value errors and unsupported assertions removed, at Rikki's direction.</b>
+      <tr><td class="when">Sep 16 2026</td><td class="h">this page</td><td><b>Value errors and unsupported assertions removed, at Rikki's direction.</b>
       <b>Corrected:</b> the BUN:creatinine ratio was quoting 35/1.8 — a March BUN paired with a September creatinine — and calling it "within normal range"; it now reports the Sep 14 2026 figure of 34, as that analyzer printed it.
       <b>Removed as unsupported:</b> "carprofen is the most likely driver/contributor" of the liver values, asserted as fact in six places across three pages (no record names a cause); a "resolved microcytic anemia" section reasoning from a 2023 specimen this archive's own dataset records as unreliable, and crediting a diet change for the recovery; a lipase value called "pancreatitis range" by measuring an in-clinic result against the reference lab's range, when on its own assay it was in range and unflagged; "the most likely driver is dietary phosphorus"; a platelet cause stated as likely; and a quotation attributed to "a longevity researcher" with no name, institution or date.
       <b>Clinical updates from the owner:</b> carprofen stopped Sep 14 2026 — last dose that day, none remaining, not refilled at Foothills, replacement pending a specialist consult — corrected across nine pages, including the emergency brief, which had said a multi-modal protocol including an NSAID was on board; amantadine refilled Sep 14; Bordetella given Sep 14 2026; a urine sample submitted Sep 17 2026, the first since Sep 6 2023.
@@ -231,6 +279,7 @@ td.when{ white-space:nowrap; color:var(--muted); font-size:13px; }
       <br><br><b>Phone layout:</b> every page now fits a 390px screen (375–378px). Two earlier attempts failed and are worth recording, because both looked correct in the source: setting <code>display:block</code> on a table leaves its row groups at full width, and a page can still scroll sideways when the overflow comes from a scrolled document rather than a wide element. The working fixes were <code>table-layout:fixed</code> with word breaking, a scrolling wrapper for the deliberately-wide matrix table, and clamping the document itself.
       <br><br><b>A final pass after the medication change</b> found twelve more statements still written as though carprofen were being given — "OA pain is currently managed (… carprofen)", "the primary stressors are furosemide and carprofen", "Carprofen is both the most effective pain agent and the most damaging", an open "carprofen dose review" question, and six places offering a dose reduction as an available lever. All now say it stopped on Sep 14 2026. A chart caption still reading "likely carprofen-related hepatocellular stress" was corrected too — the same causation claim that had already been removed from five other places.
       <br><br><b>Nine mentions were deliberately left alone,</b> because they are statements about the drug rather than about what he takes: that carprofen is hepatically metabolized, that it carries hepatotoxic risk, that it inhibits platelet aggregation (dated, so a surgeon knows when exposure ended), and the open question of whether the ALT rise is drug-driven or disease-driven. Distinguishing those from the stale claims is why this pass was done by reading each line rather than by find-and-replace.</td></tr>
+      <tr><td class="when">Sep 16 2026<br><span class="note">evening</span></td><td class="h">this page</td><td><b>A second sweep over the same ground, after the first reported itself finished.</b> The earlier pass had searched for phrases and treated a match as proof a sentence was sound. Re-reading the sentences it had <i>excluded</i> found <b>41 more corrections across eight pages</b>, described in the table above. The lesson is recorded here rather than quietly fixed: a search can only find what it is asked for, and the exclusions are where the errors were hiding.</td></tr>
     </tbody>
   </table>
   </div>
@@ -255,6 +304,7 @@ git diff before-2026-09-16 HEAD        # everything the audit changed</code></pr
       <tr><td class="h">before-2026-09-14</td><td>Before the theme unification and the dose corrections</td><td><code>git revert 4b44a57 75894bd</code></td></tr>
       <tr><td class="h">before-2026-09-15</td><td>Before the Foothills panel was absorbed</td><td><code>git revert 53b4936</code></td></tr>
       <tr><td class="h">before-2026-09-16</td><td>Before the audit corrections</td><td><code>git revert cbf44e6</code></td></tr>
+      <tr><td class="h">before-2026-09-16-evening</td><td>Before the second carprofen, Stage D and dose sweep</td><td><code>git revert HEAD</code></td></tr>
     </tbody>
   </table>
   </div>
@@ -265,10 +315,11 @@ git diff before-2026-09-16 HEAD        # everything the audit changed</code></pr
     <li><b>Explanatory prose is AI-written throughout</b> and has not been reviewed by a veterinarian.</li>
     <li><b>Some figures cannot be verified from any record</b> — notably the current 320 mg/day furosemide regimen, which postdates the clinic export and rests on Rikki's account, and the daily calorie figures.</li>
     <li>The dose figures appear in roughly eight places. They drift within days of a change; the home page carries the current list.</li>
+    <li><b>Three rollback tags are misnamed.</b> <code>before-2026-09-17</code>, <code>before-2026-09-18</code> and <code>before-2026-09-19</code> were all created on Sep 16 2026 &mdash; the dates in those names are days that had not happened. They mark real, working restore points and have been left in place rather than renamed, because a tag someone may already have written down should not change meaning. Use the descriptions in the table above, not the dates in the names.</li>
   </ul>
 
   <div class="footer">
-    Luke VonDog · Care Archive · AI Build &amp; Audit Log · generated from the repository's own history, last updated Sep 16 2026.
+    Luke VonDog · Care Archive · AI Build &amp; Audit Log · generated from the repository's own history, last updated Sep 16 2026 (evening).
     Owner-compiled with AI assistance — not a veterinary record or directive.
   </div>
 </div>
